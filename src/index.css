@@ -1,0 +1,100 @@
+body {
+    background: white;
+    font-family: "Lato", sans-serif;
+    color: black;
+    font-size: 16px;
+    margin: 70px 0;
+}
+
+.chatbar {
+    background: lightgrey;
+    border-top: 1px solid black;
+    bottom: 0;
+    display: flex;
+    left: 0;
+    padding: 5px;
+    position: fixed;
+    right: 0;
+}
+
+.chatbar-message,
+.chatbar-username {
+    border: 1px solid black;
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    margin: 5px;
+    padding: 0 9px;
+}
+
+.chatbar-message {
+    flex: 8;
+}
+
+.chatbar-username {
+    flex: 2;
+}
+
+.message {
+    display: flex;
+    padding: 5px;
+}
+
+.message-content,
+.message-username {
+    overflow: hidden;
+    margin: 5px;
+    padding: 0 10px;
+}
+
+.message-image {
+    flex: 8;
+}
+
+img {
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.message-content {
+    flex: 8;
+}
+
+.message-username {
+    flex: 2;
+    font-weight: 700;
+}
+
+.notification {
+    font-style: italic;
+    padding: 5px 20px;
+}
+
+.navbar {
+    background: #52364b;
+    color: white;
+    border-bottom: b0aeae1px solid grey;
+    height: 60px;
+    left: 0;
+    padding: 0 10px;
+    position: fixed;
+    right: 0;
+    top: 0;
+}
+
+.navbar-brand {
+    color: inherit;
+    display: block;
+    float: left;
+    font-weight: 600;
+    font-size: 28px;
+    height: 60px;
+    line-height: 60px;
+    padding: 0 10px;
+    text-decoration: none;
+}
+
+#userCount {
+    float: right;
+    margin: 20px;
+}
