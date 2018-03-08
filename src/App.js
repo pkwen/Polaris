@@ -27,9 +27,9 @@ class App extends Component {
   onChange = e => {
     const model = this.refs.monaco.editor.getModel();
     const value = model.getValue();
-    this.setState({
-      value: value
-    });
+    // this.setState({
+    //   value: value
+    // });
     console.log(this.state.value);
     this.socket.send(JSON.stringify(value));
   };
