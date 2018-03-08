@@ -66,7 +66,7 @@ wss.on('connection', (ws) => {
   //broadcast to all
   wss.broadcast = function broadcast(newMsg) {
     wss.clients.forEach(function each(client) {
-      if (client.readyState === ws.OPEN) {
+      if (client !== ws && client.readyState === ws.OPEN) {
         client.send(JSON.stringify(newMsg));
       }
     });
