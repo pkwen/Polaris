@@ -13,8 +13,9 @@ class App extends Component {
     };
   }
   componentWillMount() {
+    const url = "wss://secret-meadow-50707.herokuapp.com/";
+    this.socket = new WebSocket(url);
     this.socket.wsURL = "wss://secret-meadow-50707.herokuapp.com/";
-    this.socket = new WebSocket(this.socket.wsURL);
     this.socket.onopen = e => {
       console.log("opened");
     };
