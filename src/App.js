@@ -30,8 +30,8 @@ class App extends Component {
     // this.setState({
     //   value: value
     // });
-    console.log(this.state.value);
     this.socket.send(JSON.stringify(value));
+    console.log(this.state.value);
   };
   render() {
     const requireConfig = {
