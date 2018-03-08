@@ -63,6 +63,7 @@ const wss = new SocketServer({ server: serverOnPort });
 var code = '';
 wss.on('connection', (ws) => {
   console.log('Client connected');
+    console.log('Client count: ' + wss.clients.length);
   //broadcast to all
   wss.broadcast = function broadcast(newMsg) {
     wss.clients.forEach(function each(client) {
@@ -77,7 +78,7 @@ wss.on('connection', (ws) => {
     const newMsg = JSON.parse(message);
     code = newMsg;
     
-    wss.broadcast(newMsg);
+    wss.broadcast(code);
   })
 
 
