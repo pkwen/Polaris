@@ -67,16 +67,12 @@ wss.on('connection', (ws) => {
   //broadcast to all
   wss.broadcast = function broadcast(newMsg) {
     wss.clients.forEach(function each(client) {
-      if (client !== ws && client.readyState === ws.OPEN) {
+      if (client.readyState === ws.OPEN) {
         client.send(JSON.stringify(newMsg));
       }
     });
   };
-  wss.clients.forEach(function each(client) {
-    if (client.readyState === ws.OPEN) {
-      client.send(JSON.stringify(code));
-    }
-  });
+  wss.broadcast(code);
   // console.log(wss.clients);
   ws.on('message', (message) => {
     const newMsg = JSON.parse(message);
