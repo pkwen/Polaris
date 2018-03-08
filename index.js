@@ -72,7 +72,7 @@ wss.on('connection', (ws) => {
       }
     });
   };
-  ws.send(code);
+  ws.send(JSON.stringify(code));
   // wss.broadcast(code);
   // console.log(wss.clients);
   ws.on('message', (message) => {
