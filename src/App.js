@@ -13,7 +13,7 @@ class App extends Component {
     };
   }
   componentWillMount() {
-    this.socket = new WebSocket("wss://afternoon-waters-66838.herokuapp.com/");
+    this.socket = new WebSocket("wss://secret-meadow-50707.herokuapp.com/");
     this.socket.onopen = e => {
       console.log("opened");
     };
