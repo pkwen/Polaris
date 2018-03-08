@@ -72,7 +72,11 @@ wss.on('connection', (ws) => {
       }
     });
   };
-  wss.broadcast(code);
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === ws.OPEN) {
+      client.send(JSON.stringify(code));
+    }
+  });
   // console.log(wss.clients);
   ws.on('message', (message) => {
     const newMsg = JSON.parse(message);
