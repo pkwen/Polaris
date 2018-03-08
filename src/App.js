@@ -13,7 +13,8 @@ class App extends Component {
     };
   }
   componentWillMount() {
-    this.socket = new WebSocket("wss://secret-meadow-50707.herokuapp.com/");
+    this.socket.wsURL = "wss://secret-meadow-50707.herokuapp.com/";
+    this.socket = new WebSocket(this.socket.wsURL);
     this.socket.onopen = e => {
       console.log("opened");
     };
@@ -47,6 +48,7 @@ class App extends Component {
         </header> */}
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
+          {this.socket.wsURL}
         </p>
         <MonacoEditor
           ref="monaco"
