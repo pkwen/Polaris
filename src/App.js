@@ -12,24 +12,29 @@ class App extends Component {
       value: ""
     };
   }
-  componentWillMount() {
-    const url = "wss://secret-meadow-50707.herokuapp.com/";
-    this.socket = new WebSocket(url);
-    this.socket.wsURL = "wss://secret-meadow-50707.herokuapp.com/";
+
+  componentDidMount() {
+    let url = "wss://afternoon-waters-66838.herokuapp.com/";
+    this.socket = new WebSocket("wss://afternoon-waters-66838.herokuapp.com/");
     this.socket.onopen = e => {
       console.log("opened");
     };
     this.socket.onmessage = e => {
       const parsedData = JSON.parse(e.data);
+      console.log(Date.now() + ' state change observed');
       this.setState({ value: parsedData });
+      // setInterval(this.setState({ value: parsedData }), 500);
     };
   }
+
   onChange = e => {
     const model = this.refs.monaco.editor.getModel();
+    // console.log(model)
+    // model.validatePosition({ lineNumber: 1, column: 2 });
     const value = model.getValue();
-    // this.setState({
-    //   value: value
-    // });
+    this.setState({
+      value: value
+    });
     this.socket.send(JSON.stringify(value));
     console.log(this.state.value);
   };
