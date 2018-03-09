@@ -64,20 +64,24 @@ var code = '';
 wss.on('connection', (ws) => {
   console.log('Client connected');
   //broadcast to all
-  wss.broadcast = function broadcast(newMsg) {
-    wss.clients.forEach(function each(client) {
-      if (client !== ws && client.readyState === ws.OPEN) {
-        client.send(JSON.stringify(newMsg));
-      }
-    });
-  };
-  wss.broadcast(code);
+  // wss.broadcast = function broadcast(newMsg) {
+  //   wss.clients.forEach(function each(client) {
+  //     if (client !== ws && client.readyState === ws.OPEN) {
+  //       client.send(JSON.stringify(newMsg));
+  //     }
+  //   });
+  // };
+  ws.send(JSON.stringify(code));
   // console.log(wss.clients);
   ws.on('message', (message) => {
     const newMsg = JSON.parse(message);
     code = newMsg;
-    
-    wss.broadcast(newMsg);
+    wss.clients.forEach(function each(client) {
+      if (client !== ws && client.readyState === ws.OPEN) {
+        client.send(JSON.stringify(newMsg));
+        console.log(client + '\n' + ws)
+      }
+    });
   })
 
 
