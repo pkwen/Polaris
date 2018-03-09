@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import MonacoEditor from 'react-monaco-editor'
+import MonacoEditor from "react-monaco-editor";
 // import MessageList from "./MessageList.js";
 // import ChatBar from "./ChatBar.js";
 // import NavBar from "./NavBar.js";
-require('monaco-editor/min/vs/editor/editor.main.css')
+require("monaco-editor/min/vs/editor/editor.main.css");
 
 class App extends Component {
   constructor(props) {
@@ -36,7 +36,8 @@ class App extends Component {
       value: value
     });
     this.socket.send(JSON.stringify(value));
-    console.log(this.state.value);
+    // console.log(this.state.value);
+    console.log(model.getPosition());
   };
   render() {
     const requireConfig = {
@@ -53,8 +54,8 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header> */}
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-          App State: {this.state.value}
+          To get started, edit <code>src/App.js</code> and save to reload. App
+          State: {this.state.value}
         </p>
         <MonacoEditor
           ref="monaco"
