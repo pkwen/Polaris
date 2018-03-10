@@ -21,6 +21,10 @@ app.use(https).use(helmet());
 // app.get("/example-path", async (req, res, next) => {
 //   res.json({ message: "Hello World!" });
 // });
+app.get('/github', (req, res) => {
+  console.log('JASDFJSDLFKASD')
+  res.send(JSON.stringify('West'));
+})
 
 // Serve static assets built by create-react-app
 app.use(express.static("build"));
@@ -33,7 +37,6 @@ app.get("*", function(req, res) {
 app.use(notfound).use(errors);
 
 //
-
 // Create the WebSockets server
 const server = http.createServer(app);
 var serverOnPort = server.listen(PORT);
@@ -78,9 +81,8 @@ wss.on('connection', (ws) => {
     const newMsg = JSON.parse(message);
     code = newMsg;
     wss.clients.forEach(function each(client) {
-      if (client.readyState === ws.OPEN) {
-        client.send(JSON.stringify(newMsg));
-        console.log(client + '\n' + ws)
+      if (client !== ws && client.readyState === ws.OPEN) {
+        client.send(JSON.stringify(code));
       }
     });
   })

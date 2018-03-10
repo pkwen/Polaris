@@ -3,28 +3,75 @@ import MonacoEditor from "react-monaco-editor";
 // import MessageList from "./MessageList.js";
 // import ChatBar from "./ChatBar.js";
 // import NavBar from "./NavBar.js";
+import { Base64 } from "js-base64";
 require("monaco-editor/min/vs/editor/editor.main.css");
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: ""
+      res: "",
+      value: "",
+      sha: ""
     };
+  }
+
+
+  callApi = async () => {
+    const response = await fetch("https://api.github.com/repos/subclinical/day-one/contents/weakend.md");
+    console.log(response);
+    const body = await response.json();
+    console.log(body);
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+  };
+
+  pushData = async () => {
+    const response = await fetch(
+      "https://api.github.com/repos/subclinical/day-one/contents/weakend.md",
+      {
+        method: "PUT",
+        headers: {
+          "Authorization": "token " //Insert Token here to authenticate pushing 
+        },
+        body: JSON.stringify({
+          "content": Base64.encode(this.state.value),
+          "message": "yes pls",
+          "sha": this.state.sha
+        })
+      }
+    );
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+    return body;
   }
 
   componentDidMount() {
     let url = "wss://afternoon-waters-66838.herokuapp.com/";
-    this.socket = new WebSocket("wss://afternoon-waters-66838.herokuapp.com/");
+    this.socket = new WebSocket("ws://localhost:3001");
     this.socket.onopen = e => {
       console.log("opened");
     };
     this.socket.onmessage = e => {
       const parsedData = JSON.parse(e.data);
-      console.log(Date.now() + ' state change observed');
+      // console.log(Date.now() + " state change observed");
       this.setState({ value: parsedData });
       // setInterval(this.setState({ value: parsedData }), 500);
     };
+  }
+  
+  onPull = () => {
+    this.callApi()
+      .then(res => this.setState({ value: Base64.decode(res.content), sha: res.sha }))
+      .catch(err => console.log(err));
+    }
+  onPush = () => {
+    this.pushData()
+      .then(res => this.setState({ res: Base64.decode(res.content) }))
+      .catch(err => console.log(err));
   }
 
   onChange = e => {
@@ -37,7 +84,6 @@ class App extends Component {
     });
     this.socket.send(JSON.stringify(value));
     // console.log(this.state.value);
-    console.log(model.getPosition());
   };
   render() {
     const requireConfig = {
@@ -55,8 +101,11 @@ class App extends Component {
         </header> */}
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload. App
-          State: {this.state.value}
+          State: {this.state.res}
         </p>
+        {/* <p className="App-intro">{this.state.response}</p> */}
+        <button className="get-hub" onClick={this.onPull}>Fetch Data</button>
+        <button className="push-hub" onClick={this.onPush}>Update Data</button>
         <MonacoEditor
           ref="monaco"
           width="800"
