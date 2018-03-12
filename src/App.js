@@ -4,12 +4,18 @@ import MonacoEditor from "react-monaco-editor";
 // import ChatBar from "./ChatBar.js";
 // import NavBar from "./NavBar.js";
 import { Base64 } from "js-base64";
+import GitHub from './github.js';
 require("monaco-editor/min/vs/editor/editor.main.css");
+require('dotenv').config();
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      token: "",
+      file: "https://api.github.com/repos/subclinical/boat/contents/weakend.md",
       res: "",
       value: "",
       sha: ""
@@ -17,37 +23,53 @@ class App extends Component {
   }
 
 
-  callApi = async () => {
-    const response = await fetch("https://api.github.com/repos/subclinical/day-one/contents/weakend.md");
-    console.log(response);
-    const body = await response.json();
-    console.log(body);
+  // pullContent = async () => {
+  //   const response = await fetch("https://api.github.com/repos/subclinical/day-one/contents/weakend.md");
+  //   const body = await response.json();
+  //   console.log(body);
 
-    if (response.status !== 200) throw Error(body.message);
+  //   if (response.status !== 200) throw Error(body.message);
 
-    return body;
-  };
+  //   return body;
+  // };
 
-  pushData = async () => {
-    const response = await fetch(
-      "https://api.github.com/repos/subclinical/day-one/contents/weakend.md",
-      {
-        method: "PUT",
-        headers: {
-          "Authorization": "token " //Insert Token here to authenticate pushing 
-        },
-        body: JSON.stringify({
-          "content": Base64.encode(this.state.value),
-          "message": "yes pls",
-          "sha": this.state.sha
-        })
-      }
-    );
-    const body = await response.json();
+  // pushContent = async () => {
+  //   const response = await fetch(
+  //     "https://api.github.com/repos/subclinical/day-one/contents/weakend.md",
+  //     {
+  //       method: "PUT",
+  //       headers: {
+  //         "Authorization": "token " //Insert Token here to authenticate pushing 
+  //       },
+  //       body: JSON.stringify({
+  //         "content": Base64.encode(this.state.value),
+  //         "message": "Straight outta Polaris",
+  //         "sha": this.state.sha
+  //       })
+  //     }
+  //   );
+  //   const body = await response.json();
 
-    if (response.status !== 200) throw Error(body.message);
-    return body;
-  }
+  //   if (response.status !== 200) throw Error(body.message);
+  //   return body;
+  // }
+
+  // fetchToken = async () => {
+  //   this.clientCode = window.location.href.replace("http://localhost:3000/auth/login?code=", "");
+  //   this.urlurl = `https://github.com/login/oauth/access_token?client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&code=${this.clientCode}`;
+  //   const response = await fetch(
+  //     `https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token?client_id=2437e80c83661e9e530f&client_secret=b0ae333d9094c5597743cb2fd658cf8b5188aabb&code=${this.clientCode}`,
+  //     {
+  //       method: "POST",
+  //       headers: {
+  //         'Accept': 'application/json'
+  //       }
+  //     }
+  //   )
+  //   const body = await response.json();
+  //   console.log(this.clientCode.replace('http://localhost:3000/auth/login?code=', ''));
+  //   return body;
+  // }
 
   componentDidMount() {
     let url = "wss://afternoon-waters-66838.herokuapp.com/";
@@ -62,15 +84,29 @@ class App extends Component {
       // setInterval(this.setState({ value: parsedData }), 500);
     };
   }
+
   
   onPull = () => {
-    this.callApi()
+    GitHub.pullContent('subclinical', 'boat', 'weakend.md')
       .then(res => this.setState({ value: Base64.decode(res.content), sha: res.sha }))
       .catch(err => console.log(err));
-    }
+  }
+
+
   onPush = () => {
-    this.pushData()
+    GitHub.pushContent(this.state.file, 'Commit message', this.state.value, this.state.sha, this.state.token)
       .then(res => this.setState({ res: Base64.decode(res.content) }))
+      .catch(err => console.log(err));
+  }
+
+
+  onAuth = () => {
+    const clientCode = window.location.href.match(/\?code=(.*)/)[1];
+    GitHub.fetchToken(clientCode)
+      .then(res => {
+        this.setState({ token: res.access_token })
+        console.log(res)
+      })
       .catch(err => console.log(err));
   }
 
@@ -93,30 +129,29 @@ class App extends Component {
         vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.6.1/min/vs"
       }
     };
-    return (
-      <div className="App">
+    return <div className="App">
         {/* <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header> */}
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload. App
-          State: {this.state.res}
+          To get started, edit <code>src/App.js</code> and save to reload. App State: {this.state.res}
         </p>
         {/* <p className="App-intro">{this.state.response}</p> */}
-        <button className="get-hub" onClick={this.onPull}>Fetch Data</button>
-        <button className="push-hub" onClick={this.onPush}>Update Data</button>
-        <MonacoEditor
-          ref="monaco"
-          width="800"
-          height="600"
-          language="javascript"
-          value={this.state.value}
-          onChange={this.onChange}
-          requireConfig={requireConfig}
-        />
-      </div>
-    );
+        <a className="gh-login" href="https://github.com/login/oauth/authorize?client_id=2437e80c83661e9e530f">
+          Log In with GitHub
+        </a>
+        <button className="get-token" onClick={this.onAuth}>
+          Get Token
+        </button>
+        <button className="get-hub" onClick={this.onPull}>
+          Fetch Data
+        </button>
+        <button className="push-hub" onClick={this.onPush}>
+          Update Data
+        </button>
+        <MonacoEditor ref="monaco" width="800" height="600" language="javascript" value={this.state.value} onChange={this.onChange} requireConfig={requireConfig} />
+      </div>;
   }
 }
 //   constructor(props) {
