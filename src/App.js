@@ -85,21 +85,24 @@ class App extends Component {
     };
   }
 
-  
+  //GET request returning a file from github
   onPull = () => {
     GitHub.pullContent('subclinical', 'boat', 'weakend.md')
       .then(res => this.setState({ value: Base64.decode(res.content), sha: res.sha }))
       .catch(err => console.log(err));
   }
 
-
+  //PUT request updating the current file being edited
   onPush = () => {
-    GitHub.pushContent(this.state.file, 'Commit message', this.state.value, this.state.sha, this.state.token)
-      .then(res => this.setState({ res: Base64.decode(res.content) }))
+    GitHub.pushContent(this.state.file, 'Straight outta Polaris', this.state.value, this.state.sha, this.state.token)
+      .then(res => {
+        this.setState({ res: Base64.decode(res.content) });
+        console.log(res);
+      })
       .catch(err => console.log(err));
   }
 
-
+  //called after logging in with Github to retrieve a token used for further github auth
   onAuth = () => {
     const clientCode = window.location.href.match(/\?code=(.*)/)[1];
     GitHub.fetchToken(clientCode)
@@ -110,6 +113,7 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
+  //updates state and rerenders editor
   onChange = e => {
     const model = this.refs.monaco.editor.getModel();
     // console.log(model)
@@ -121,6 +125,18 @@ class App extends Component {
     this.socket.send(JSON.stringify(value));
     // console.log(this.state.value);
   };
+
+  growTree = () => {
+    // GitHub.populateTree('facebook', 'create-react-app')
+    GitHub.listRepos(this.state.token)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      });
+  }
+
   render() {
     const requireConfig = {
       url:
@@ -138,6 +154,9 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload. App State: {this.state.res}
         </p>
         {/* <p className="App-intro">{this.state.response}</p> */}
+        <button className="grow-tree" onClick={this.growTree}>
+          Populate Tree
+        </button>
         <a className="gh-login" href="https://github.com/login/oauth/authorize?client_id=2437e80c83661e9e530f">
           Log In with GitHub
         </a>
