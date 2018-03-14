@@ -125,9 +125,9 @@ const GitHubAPI = {
     if (body.length) {
       for (let i of body) {
         if (i.type === 'file') {
-          children.push({ name: i.name, path: i.path, fullName: fullName })
+          children.push({ name: i.name, path: i.path, fullName: fullName, type: "file" })
         } else if (i.type === 'dir') {
-          children.push({ name: i.name, path: i.path, children: [], fullName: fullName });
+          children.push({ name: i.name, path: i.path, children: [], fullName: fullName, type: "dir" });
         } else {
           throw new Error('Cannot access unknown element');
         }
@@ -152,7 +152,7 @@ const GitHubAPI = {
     data.name = user || 'root';
 
     for (let i of body) {
-      data.children.push({ name: i.name, fullName: i.full_name, children: [], path: "" });
+      data.children.push({ name: i.name, fullName: i.full_name, children: [], path: "", type: "repo" });
     }
     return data;
   },
@@ -174,7 +174,7 @@ const GitHubAPI = {
     const response = await fetch(targetFile, {
       method: "PUT",
       headers: {
-        Authorization: `token ${token}` //Insert Token here to authenticate pushing
+        Authorization: `${token}` //Insert Token here to authenticate pushing
       },
       body: JSON.stringify({
         content: Base64.encode(content),

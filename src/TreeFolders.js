@@ -87,6 +87,8 @@ class TreeFolders extends React.Component {
         console.log('Unable to attach children to parent.');
         node.loading = false;
       }
+    } else {
+      console.log(node);
     }
     this.setState({ cursor: node });
     // console.log("toggling (cursor):", this.state.cursor);
