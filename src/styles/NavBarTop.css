@@ -1,0 +1,20 @@
+.navbar-top {
+  background: #21252c;
+  border-bottom: 1px solid grey;
+  height: 60px;
+  left: 0;
+  padding: 0 10px;
+  position: absolute;
+  right: 0;
+  top: 0; }
+  .navbar-top h1 {
+    color: white; }
+  .navbar-top h2 {
+    color: lightgrey; }
+  .navbar-top .navbar-logo {
+    float: left;
+    margin: 20px;
+    padding: 0 10px; }
+  .navbar-top .navbar-login {
+    float: right;
+    margin: 20px; }

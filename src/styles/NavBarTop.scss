@@ -1,0 +1,26 @@
+$primaryColor: #21252c;
+.navbar-top {
+  background: $primaryColor;
+  border-bottom: 1px solid grey;
+  height: 60px;
+  left: 0;
+  padding: 0 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  h1 {
+    color: white;
+  }
+  h2 {
+    color: lightgrey;
+  }
+  .navbar-logo {
+    float: left;
+    margin: 20px;
+    padding: 0 10px;
+  }
+  .navbar-login {
+    float: right;
+    margin: 20px;
+  }
+}

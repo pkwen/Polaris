@@ -1,0 +1,19 @@
+$primaryColor: grey;
+.console {
+  .console-divider {
+    width: 1120px;
+    height: 30px;
+    position: absolute;
+    top: 610px;
+    left: 315px;
+    background-color: black;
+  }
+  .evaluated-code {
+    width: 1120px;
+    height: 120px;
+    position: absolute;
+    background-color: $primaryColor;
+    top: 640px;
+    left: 315px;
+  }
+}

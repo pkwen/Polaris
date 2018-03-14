@@ -1,0 +1,14 @@
+// import all scss files to be compiled to App.css
+@import "CodeEditor.scss";
+@import "Console.scss";
+@import "NavBarSide.scss";
+@import "NavBarTop.scss";
+@import "TreeFolders.scss";
+$primaryColor: #21252c;
+html {
+  background-color: $primaryColor;
+}
+
+body {
+  background-color: $primaryColor;
+}
