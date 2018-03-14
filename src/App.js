@@ -75,7 +75,7 @@ class App extends Component {
 
   growTree = () => {
     // GitHub.populateTree('facebook', 'create-react-app')
-    GitHub.accessElement('boat', '')
+    GitHub.accessElement("boat", "")
       .then(res => {
         console.log(res);
       })
