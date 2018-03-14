@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import MonacoEditor from "react-monaco-editor";
+
 import { Base64 } from "js-base64";
+import Form from "./Form.js";
 import GitHub from "./github.js";
 
 require("monaco-editor/min/vs/editor/editor.main.css");
@@ -80,21 +82,7 @@ class CodeEditor extends Component {
         <button className="push-hub" onClick={this.props.onPush}>
           Update Data
         </button>
-        {/* Modal */}
-        <div className="static-modal">
-          <Modal.Dialog>
-            <Modal.Header>
-              <Modal.Title>Modal title</Modal.Title>
-            </Modal.Header>
 
-            <Modal.Body>One fine body...</Modal.Body>
-
-            <Modal.Footer>
-              <Button>Close</Button>
-              <Button bsStyle="primary">Save changes</Button>
-            </Modal.Footer>
-          </Modal.Dialog>
-        </div>;
         <MonacoEditor
           ref="monaco"
           width="1120"
@@ -107,6 +95,7 @@ class CodeEditor extends Component {
           editorDidMount={this.editorDidMount}
           requireConfig={requireConfig}
         />
+        <Form />
       </div>
     );
   }
