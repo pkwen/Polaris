@@ -2,14 +2,28 @@
   width: 1120px;
   height: 30px;
   position: absolute;
-  top: 610px;
-  left: 315px;
+  top: 620px;
+  left: 318px;
   background-color: black; }
+
+.console .console-tab {
+  width: 80px;
+  height: 26px;
+  position: absolute;
+  left: 350px;
+  top: 622px;
+  background-color: #21252c;
+  left: 318px; }
 
 .console .evaluated-code {
   width: 1120px;
   height: 120px;
+  font-size: 13px;
+  font-weight: 200;
   position: absolute;
-  background-color: grey;
-  top: 640px;
-  left: 315px; }
+  color: white;
+  background-color: #21252c;
+  border-bottom: 2px solid black;
+  top: 650px;
+  left: 318px;
+  padding-left: 10px; }

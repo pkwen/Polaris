@@ -1,6 +1,14 @@
 import React, { Component } from "react";
-import MonacoEditor from "react-monaco-editor";
+// import MonacoEditor from "react-monaco-editor";
+import brace from "brace";
+import AceEditor from "react-ace";
+
+import "brace/mode/java";
+import "brace/theme/github";
+import "brace/theme/monokai";
+
 import { Base64 } from "js-base64";
+import Form from "./Form.js";
 import GitHub from "./github.js";
 
 require("monaco-editor/min/vs/editor/editor.main.css");
@@ -20,46 +28,61 @@ class CodeEditor extends Component {
     };
   }
 
+  onChange = e => {
+    const editor = this.refs.aceEditor.editor;
+    var code = editor.getValue();
+    var session = editor.getSession();
+    // var document = editor.getDocument();
+    var sessionDocument = editor.getSession().getDocument();
+    this.setState({ value: code });
+    console.log("code: ", code);
+    console.log("this.state: ", this.state.value);
+    this.socket.send(JSON.stringify(code));
+    // console.log("session: ", session);
+    // console.log("document: ", document);
+    // console.log("session.document: ", sessionDocument);
+  };
+
   componentDidMount() {
-    let url = "wss://afternoon-waters-66838.herokuapp.com/";
+    //   let url = "wss://afternoon-waters-66838.herokuapp.com/";
     this.socket = new WebSocket("ws://localhost:3001");
     this.socket.onopen = e => {
       console.log("opened");
     };
     this.socket.onmessage = e => {
       const parsedData = JSON.parse(e.data);
-      // console.log(Date.now() + " state change observed");
+      //     // console.log(Date.now() + " state change observed");
       this.setState({ value: parsedData });
-      // setInterval(this.setState({ value: parsedData }), 500);
+      //     // setInterval(this.setState({ value: parsedData }), 500);
     };
   }
 
-  editorDidMount(editor, monaco) {
-    console.log("editorDidMount", editor);
-    editor.focus();
-  }
+  // editorDidMount(editor, monaco) {
+  //   console.log("editorDidMount", editor);
+  //   editor.focus();
+  // }
 
   //updates state and rerenders editor
-  onChange = e => {
-    const model = this.refs.monaco.editor.getModel();
-    // console.log(model)
-    // model.validatePosition({ lineNumber: 1, column: 2 });
-    const value = model.getValue();
-    this.setState({
-      value: value
-    });
-    this.socket.send(JSON.stringify(value));
-    // console.log(this.state.value);
-  };
+  // onChange = e => {
+  //   const model = this.refs.monaco.editor.getModel();
+  //   // console.log(model)
+  //   // model.validatePosition({ lineNumber: 1, column: 2 });
+  //   const value = model.getValue();
+  //   this.setState({
+  //     value: value
+  //   });
+  //   this.socket.send(JSON.stringify(value));
+  //   // console.log(this.state.value);
+  // };
 
   render() {
-    const requireConfig = {
-      url:
-        "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.1/require.min.js",
-      paths: {
-        vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.6.1/min/vs"
-      }
-    };
+    // const requireConfig = {
+    //   url:
+    //     "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.1/require.min.js",
+    //   paths: {
+    //     vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.6.1/min/vs"
+    //   }
+    // };
     return (
       <div className="code-editor">
         <button className="grow-tree" onClick={this.props.growTree}>
@@ -80,17 +103,16 @@ class CodeEditor extends Component {
         <button className="push-hub" onClick={this.props.onPush}>
           Update Data
         </button>
-
-        <MonacoEditor
-          ref="monaco"
-          width="1120"
-          height="550"
-          language="javascript" //   theme="vs-dark"
-          value={this.state.value}
+        render(
+        <AceEditor
+          ref="aceEditor"
+          mode="javascript"
+          theme="monokai"
           onChange={this.onChange}
-          editorDidMount={this.editorDidMount}
-          requireConfig={requireConfig}
+          value={this.state.value}
+          editorProps={{ $blockScrolling: true }}
         />
+        <Form />
       </div>
     );
   }
