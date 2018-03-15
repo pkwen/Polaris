@@ -1,5 +1,16 @@
 import React, { Component } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  FormText
+} from "reactstrap";
 // import MonacoEditor from "react-monaco-editor";
 import brace from "brace";
 import AceEditor from "react-ace";
@@ -9,7 +20,7 @@ import "brace/theme/github";
 import "brace/theme/monokai";
 
 import { Base64 } from "js-base64";
-import FormModal from "./FormModal.js";
+// import FormModal from "./FormModal.js";
 import GitHub from "./github.js";
 
 // require("monaco-editor/min/vs/editor/editor.main.css");
@@ -26,7 +37,9 @@ class CodeEditor extends Component {
       res: "",
       value: "remove this text from CodeEditor state",
       sha: "",
-      show_modal: false
+      show_modal: false,
+      commit_msg: "",
+      path: ""
     };
   }
 
@@ -58,6 +71,27 @@ class CodeEditor extends Component {
       //     // setInterval(this.setState({ value: parsedData }), 500);
     };
   }
+
+  toggle = () => {
+    this.setState({ show_modal: !this.state.show_modal });
+  };
+
+  handleCommitChange = e => {
+    this.setState({ commit_msg: e.target.value });
+  };
+
+  handlePathChange = e => {
+    this.setState({ path: e.target.value });
+  };
+
+  onPushToggle = () => {
+    console.log("state in CodeEditor: ", this.state);
+    this.toggle();
+    this.props.onPush(
+      this.setState({ path: this.state.path }),
+      this.setState({ commit_msg: this.state.commit_msg })
+    );
+  };
 
   render() {
     return (
@@ -91,17 +125,48 @@ class CodeEditor extends Component {
           enableBasicAutocompletion="true"
           enableLiveAutocompletion="true"
         />
-        <FormModal className="form-modal" onPush={this.props.onPush} />
-        <button
-          type="button"
-          className="btn btn-primary"
-          data-toggle="modal"
-          // data-target="#exampleModalCenter"
-          data-target="/exampleModalCenter"
-          onClick={}
+        <Button color="danger" onClick={this.toggle}>
+          Commit + Push 3
+        </Button>
+        <Modal
+          isOpen={this.state.show_modal}
+          toggle={this.toggle}
+          className="test_modal"
         >
-          Commit + Push2
-        </button>
+          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalBody>
+            <Form>
+              <FormGroup>
+                <Label for="path">Path</Label>
+                <Input
+                  type="textarea"
+                  name="path"
+                  id="path"
+                  placeholder="path"
+                  onChange={this.handlePathChange}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="path">Commit Message</Label>
+                <Input
+                  type="textarea"
+                  name="commit_msg"
+                  id="commit_msg"
+                  placeholder="Enter commit message"
+                  onChange={this.handleCommitChange}
+                />
+              </FormGroup>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.onPushToggle}>
+              Done
+            </Button>{" "}
+            <Button color="secondary" onClick={this.toggle}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </Modal>
       </div>
     );
   }

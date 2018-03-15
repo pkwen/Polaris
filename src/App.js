@@ -18,7 +18,8 @@ class App extends Component {
       file: "https://api.github.com/repos/subclinical/boat/contents/weakend.md",
       res: "",
       value: "",
-      sha: ""
+      sha: "",
+      commit_msg: ""
     };
   }
   render() {
@@ -58,6 +59,7 @@ class App extends Component {
 
   //PUT request updating the current file being edited
   onPush = () => {
+    console.log("this.state at App: ", this.state);
     GitHub.pushContent(
       this.state.file,
       "Straight outta Polaris",
@@ -67,7 +69,7 @@ class App extends Component {
     )
       .then(res => {
         this.setState({ res: Base64.decode(res.content) });
-        console.log(res);
+        // console.log(res);
       })
       .catch(err => console.log(err));
   };
