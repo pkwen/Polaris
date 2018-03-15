@@ -12,9 +12,9 @@ import Form from "./Form.js";
 import GitHub from "./github.js";
 
 // require("monaco-editor/min/vs/editor/editor.main.css");
-require("dotenv").config();
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+// require("dotenv").config();
+// const CLIENT_ID = process.env.CLIENT_ID;
+// const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 class CodeEditor extends Component {
   constructor(props) {
