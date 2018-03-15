@@ -21,7 +21,22 @@ class App extends Component {
       sha: ""
     };
   }
+
+  componentDidMount() {
+    let clientCode = window.location.href.match(/\?code=(.*)/);
+    let code = "";
+    if(clientCode) {
+      code = clientCode[1];
+    }
+    console.log(code + ' : ' + this.state.token);
+    if (code && !this.state.token) {
+      this.onAuth();
+    }
+
+  }
+
   render() {
+
     return (
       <div className="App">
         <NavBarTop />
