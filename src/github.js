@@ -14,7 +14,7 @@ const GitHubAPI = {
     });
     const body = await response.json();
     token = `token ${body.access_token}`;
-    GitHubAPI.getUsername(token);
+    await GitHubAPI.getUsername(token);
     return body;
   },
 
@@ -158,9 +158,13 @@ const GitHubAPI = {
   },
 
   //pull content from github file, params: username, repository name, path of file
-  pullContent: async (user, repo, path) => {
-    const targetFile = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
-    const response = await fetch(targetFile);
+  pullContent: async (url) => {
+    // const targetFile = `https://api.github.com/repos/${fullName}/contents/${path}`;
+    const response = await fetch(url, {
+      headers: {
+        Authorization: token
+      }
+    });
     const body = await response.json();
     console.log(body);
 
@@ -170,11 +174,11 @@ const GitHubAPI = {
   },
 
   //push updates to github file, params: api URL, commit message, content, sha, user's github oauth token
-  pushContent: async (targetFile, message, content, sha, token) => {
-    const response = await fetch(targetFile, {
+  pushContent: async (url, message, content, sha, token) => {
+    const response = await fetch(url, {
       method: "PUT",
       headers: {
-        Authorization: `${token}` //Insert Token here to authenticate pushing
+        Authorization: token //Insert Token here to authenticate pushing
       },
       body: JSON.stringify({
         content: Base64.encode(content),

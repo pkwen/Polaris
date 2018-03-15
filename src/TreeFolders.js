@@ -3,29 +3,29 @@ import { Treebeard } from "react-treebeard";
 import { Base64 } from "js-base64";
 import GitHub from "./github.js";
 
-let data = {
-  name: "root",
-  toggled: true,
-  children: [
-    {
-      name: "parent",
-      children: [{ name: "child1" }, { name: "child2" }]
-    },
-    {
-      name: "loading parent",
-      children: []
-    },
-    {
-      name: "parent",
-      children: [
-        {
-          name: "nested parent",
-          children: [{ name: "nested child 1" }, { name: "nested child 2" }]
-        }
-      ]
-    }
-  ]
-};
+// let data = {
+//   name: "root",
+//   toggled: true,
+//   children: [
+//     {
+//       name: "parent",
+//       children: [{ name: "child1" }, { name: "child2" }]
+//     },
+//     {
+//       name: "loading parent",
+//       children: []
+//     },
+//     {
+//       name: "parent",
+//       children: [
+//         {
+//           name: "nested parent",
+//           children: [{ name: "nested child 1" }, { name: "nested child 2" }]
+//         }
+//       ]
+//     }
+//   ]
+// };
 
 class TreeFolders extends React.Component {
   constructor(props) {
@@ -39,6 +39,17 @@ class TreeFolders extends React.Component {
       }
     };
     this.onToggle = this.onToggle.bind(this);
+  }
+  
+  render() {
+    if (!this.state.loaded && this.props.token) this.syncUserRepos();
+    return (
+      <Treebeard
+        data={this.state.data}
+        onToggle={this.onToggle}
+        className="tree-folders"
+      />
+    );
   }
 
   //find parent node and add children
@@ -64,6 +75,7 @@ class TreeFolders extends React.Component {
     return false;
   }
 
+  //when navigator tree is clicked, make api calls to github and render children of target
   async onToggle(node, toggled) {
     if (this.state.cursor) {
       this.state.cursor.active = false;
@@ -74,12 +86,8 @@ class TreeFolders extends React.Component {
       node.toggled = toggled;
       node.loading = true;
     }
-    // if(node.fullName) {
     if (node.type !== 'file') {
       let children = await GitHub.accessElement(node.fullName, node.path);
-      // } else {
-      //   let children = await GitHub.accessElement(node.name, node.path);
-      // }
       if (this.attachChildren(this.state.data, node.name, children)) {
         console.log('Loading children...');
         node.loading = false;
@@ -88,26 +96,14 @@ class TreeFolders extends React.Component {
         node.loading = false;
       }
     } else {
-      console.log(node);
+      let url = `https://api.github.com/repos/${node.fullName}/contents/${node.path}`;
+      this.props.onPull(url);
     }
     this.setState({ cursor: node });
-    // console.log("toggling (cursor):", this.state.cursor);
-    // console.log("toggling (cursor.node):", this.state.cursor.node);
-    // console.log("toggling (cursor.node.name):", this.state.cursor.node.name);
   }
 
-
-  render() {
-    if (!this.state.loaded && this.props.token) this.sync();
-    return (
-      <Treebeard
-        data={this.state.data}
-        onToggle={this.onToggle}
-        className="tree-folders"
-      />
-    );
-  }
-  async sync() {
+  //list all repos upon successful login
+  async syncUserRepos() {
     this.setState({
       data: await GitHub.listRepos(this.props.token),
       loaded: true
