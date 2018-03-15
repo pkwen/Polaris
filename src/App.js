@@ -17,22 +17,32 @@ class App extends Component {
       token: "",
       file: "https://api.github.com/repos/subclinical/boat/contents/weakend.md",
       res: "",
-      value: "function() {}",
+      value: "",
       sha: ""
     };
   }
   render() {
     return (
-      <div className="App">
-        <NavBarTop />
-        <NavBarSide token={this.state.token} />
-        <CodeEditor
-          onPull={this.onPull}
-          onPush={this.onPush}
-          onAuth={this.onAuth}
-          growTree={this.growTree}
-        />
-        <Console />
+      <div className="App container">
+        <div className="row">
+          <div className="col-lg-12">
+            <NavBarTop />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-3">
+            <NavBarSide token={this.state.token} />
+          </div>
+          <div className="col-lg-9">
+            <CodeEditor
+              onPull={this.onPull}
+              onPush={this.onPush}
+              onAuth={this.onAuth}
+              growTree={this.growTree}
+            />
+            <Console />
+          </div>
+        </div>
       </div>
     );
   }

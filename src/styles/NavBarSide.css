@@ -1,11 +1,8 @@
 .navbar-side {
   background-color: #21252c;
-  position: absolute;
+  height: 700px;
   border-right: 2px solid black;
   border-bottom: 2px solid black;
-  top: 62px;
-  padding-left: 15px;
-  height: 708px;
-  width: 300px; }
+  padding-left: 15px; }
   .navbar-side h1 {
     color: grey; }

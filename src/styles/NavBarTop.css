@@ -1,11 +1,7 @@
 .navbar-top {
   background: #21252c;
   border-bottom: 2px solid black;
-  height: 60px;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0; }
+  height: 60px; }
   .navbar-top h1 {
     color: white; }
   .navbar-top h2 {

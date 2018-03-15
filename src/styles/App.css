@@ -1,60 +1,36 @@
-.code-editor {
-  position: absolute;
-  left: 320px;
-  top: 60px; }
-  .code-editor h1 {
-    color: red; }
+.code-editor h1 {
+  color: red; }
 
 .console .console-divider {
-  width: 1120px;
   height: 30px;
-  position: absolute;
-  top: 620px;
-  left: 318px;
   background-color: black; }
 
 .console .console-tab {
-  width: 80px;
   height: 26px;
-  position: absolute;
-  left: 350px;
-  top: 622px;
-  background-color: #21252c;
-  left: 318px; }
+  background-color: #21252c; }
 
 .console .evaluated-code {
-  width: 1120px;
   height: 120px;
   font-size: 13px;
   font-weight: 200;
-  position: absolute;
   color: white;
   background-color: #21252c;
   border-bottom: 2px solid black;
-  top: 650px;
-  left: 318px;
   padding-left: 10px; }
 
 .navbar-side {
   background-color: #21252c;
-  position: absolute;
+  height: 700px;
   border-right: 2px solid black;
   border-bottom: 2px solid black;
-  top: 62px;
-  padding-left: 15px;
-  height: 708px;
-  width: 300px; }
+  padding-left: 15px; }
   .navbar-side h1 {
     color: grey; }
 
 .navbar-top {
   background: #21252c;
   border-bottom: 2px solid black;
-  height: 60px;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0; }
+  height: 60px; }
   .navbar-top h1 {
     color: white; }
   .navbar-top h2 {
