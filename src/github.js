@@ -14,12 +14,12 @@ const GitHubAPI = {
     });
     const body = await response.json();
     token = `token ${body.access_token}`;
-    GitHubAPI.getUsername(token);
+    await GitHubAPI.getUsername(token);
     return body;
   },
 
   //fetch username
-  getUsername: async (token) => {
+  getUsername: async token => {
     let url = `${baseURL}/user`;
     const response = await fetch(url, {
       headers: {
@@ -80,17 +80,13 @@ const GitHubAPI = {
     const body = await response.json();
     if (!body.message) {
       for (let i of body) {
-        let url = `https://api.github.com/repos/${fullName}/contents/${
-          i.path
-          }`;
+        let url = `https://api.github.com/repos/${fullName}/contents/${i.path}`;
         let children = await GitHubAPI.traverseTree(url, i.name, i.path);
         tree.children.push(children);
       }
     } else {
       console.log(body.message);
     }
-    // tree.children = await GitHubAPI.traverseTree(endpoint);
-    console.log(tree);
     return tree;
   },
 
@@ -124,12 +120,23 @@ const GitHubAPI = {
     const body = await response.json();
     if (body.length) {
       for (let i of body) {
-        if (i.type === 'file') {
-          children.push({ name: i.name, path: i.path, fullName: fullName, type: "file" })
-        } else if (i.type === 'dir') {
-          children.push({ name: i.name, path: i.path, children: [], fullName: fullName, type: "dir" });
+        if (i.type === "file") {
+          children.push({
+            name: i.name,
+            path: i.path,
+            fullName: fullName,
+            type: "file"
+          });
+        } else if (i.type === "dir") {
+          children.push({
+            name: i.name,
+            path: i.path,
+            children: [],
+            fullName: fullName,
+            type: "dir"
+          });
         } else {
-          throw new Error('Cannot access unknown element');
+          throw new Error("Cannot access unknown element");
         }
       }
     } else {
@@ -149,20 +156,28 @@ const GitHubAPI = {
       headers: { Authorization: `token ${token}` }
     });
     const body = await response.json();
-    data.name = user || 'root';
+    data.name = user || "root";
 
     for (let i of body) {
-      data.children.push({ name: i.name, fullName: i.full_name, children: [], path: "", type: "repo" });
+      data.children.push({
+        name: i.name,
+        fullName: i.full_name,
+        children: [],
+        path: "",
+        type: "repo"
+      });
     }
     return data;
   },
 
   //pull content from github file, params: username, repository name, path of file
-  pullContent: async (user, repo, path) => {
-    const targetFile = `https://api.github.com/repos/${user}/${repo}/contents/${path}`;
-    const response = await fetch(targetFile);
+  pullContent: async url => {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: token
+      }
+    });
     const body = await response.json();
-    console.log(body);
 
     if (response.status !== 200) throw Error(body.message);
 
@@ -170,11 +185,11 @@ const GitHubAPI = {
   },
 
   //push updates to github file, params: api URL, commit message, content, sha, user's github oauth token
-  pushContent: async (targetFile, message, content, sha, token) => {
-    const response = await fetch(targetFile, {
+  pushContent: async (url, message, content, sha, token) => {
+    const response = await fetch(url, {
       method: "PUT",
       headers: {
-        Authorization: `${token}` //Insert Token here to authenticate pushing
+        Authorization: `token ${token}` //Insert Token here to authenticate pushing
       },
       body: JSON.stringify({
         content: Base64.encode(content),

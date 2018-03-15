@@ -10,7 +10,11 @@ class NavBarSide extends Component {
 
         {isLoggedIn ? <p /> : <button>login to see repo</button>}
 
-        <TreeFolders token={this.props.token} />
+        <TreeFolders 
+          token={this.props.token} 
+          onPull={this.props.onPull}
+          updateState={this.props.updateState}
+        />
       </div>
     );
   }

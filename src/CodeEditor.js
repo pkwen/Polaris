@@ -14,29 +14,22 @@ import {
 // import MonacoEditor from "react-monaco-editor";
 import brace from "brace";
 import AceEditor from "react-ace";
-
 import "brace/mode/java";
 import "brace/theme/github";
 import "brace/theme/monokai";
-
 import { Base64 } from "js-base64";
 // import FormModal from "./FormModal.js";
 import GitHub from "./github.js";
 
 // require("monaco-editor/min/vs/editor/editor.main.css");
-require("dotenv").config();
-const CLIENT_ID = process.env.CLIENT_ID;
-const CLIENT_SECRET = process.env.CLIENT_SECRET;
+// require("dotenv").config();
+// const CLIENT_ID = process.env.CLIENT_ID;
+// const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 class CodeEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: "",
-      file: "https://api.github.com/repos/subclinical/boat/contents/weakend.md",
-      res: "",
-      value: "remove this text from CodeEditor state",
-      sha: "",
       show_modal: false,
       commit_msg: "",
       path: ""
@@ -47,15 +40,8 @@ class CodeEditor extends Component {
     const editor = this.refs.aceEditor.editor;
     var code = editor.getValue();
     var session = editor.getSession();
-    // var document = editor.getDocument();
     var sessionDocument = editor.getSession().getDocument();
-    this.setState({ value: code });
-    console.log("code: ", code);
-    console.log("this.state: ", this.state.value);
-    this.socket.send(JSON.stringify(code));
-    // console.log("session: ", session);
-    // console.log("document: ", document);
-    // console.log("session.document: ", sessionDocument);
+    this.props.updateState(code);
   };
 
   componentDidMount() {
@@ -87,40 +73,27 @@ class CodeEditor extends Component {
   onPushToggle = () => {
     console.log("state in CodeEditor: ", this.state);
     this.toggle();
-    this.props.onPush(
-      this.setState({ path: this.state.path }),
-      this.setState({ commit_msg: this.state.commit_msg })
-    );
+    this.props.onPush(this.state.path, this.state.commit_msg);
   };
 
   render() {
     return (
       <div className="code-editor">
-        <button className="grow-tree" onClick={this.props.growTree}>
-          Populate Tree
-        </button>
         <a
           className="gh-login"
           href="https://github.com/login/oauth/authorize?client_id=2437e80c83661e9e530f"
         >
           Log In with GitHub
         </a>
-        <button className="get-token" onClick={this.props.onAuth}>
-          Get Token
-        </button>
-        <button className="get-hub" onClick={this.props.onPull}>
-          Fetch Data
-        </button>
         <button className="push-hub" onClick={this.props.onPush}>
           Update Data
         </button>
-        render(
         <AceEditor
           ref="aceEditor"
           mode="javascript"
           theme="monokai"
           onChange={this.onChange}
-          value={this.state.value}
+          value={this.props.content}
           enableBasicAutocompletion="true"
           editorProps={{ $blockScrolling: true }}
           enableBasicAutocompletion="true"
