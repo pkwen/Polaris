@@ -121,6 +121,7 @@ class CodeEditor extends Component {
           theme="monokai"
           onChange={this.onChange}
           value={this.state.value}
+          enableBasicAutocompletion="true"
           editorProps={{ $blockScrolling: true }}
           enableBasicAutocompletion="true"
           enableLiveAutocompletion="true"
