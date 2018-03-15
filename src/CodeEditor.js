@@ -45,7 +45,7 @@ class CodeEditor extends Component {
 
   componentDidMount() {
     //   let url = "wss://afternoon-waters-66838.herokuapp.com/";
-    this.socket = new WebSocket("ws://localhost:3001");
+    this.socket = new WebSocket("wss://enigmatic-woodland-25659.herokuapp.com/");
     this.socket.onopen = e => {
       console.log("opened");
     };
