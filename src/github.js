@@ -89,8 +89,6 @@ const GitHubAPI = {
     } else {
       console.log(body.message);
     }
-    // tree.children = await GitHubAPI.traverseTree(endpoint);
-    console.log(tree);
     return tree;
   },
 
@@ -159,14 +157,12 @@ const GitHubAPI = {
 
   //pull content from github file, params: username, repository name, path of file
   pullContent: async (url) => {
-    // const targetFile = `https://api.github.com/repos/${fullName}/contents/${path}`;
     const response = await fetch(url, {
       headers: {
         Authorization: token
       }
     });
     const body = await response.json();
-    console.log(body);
 
     if (response.status !== 200) throw Error(body.message);
 

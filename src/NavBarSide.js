@@ -13,6 +13,7 @@ class NavBarSide extends Component {
         <TreeFolders 
           token={this.props.token} 
           onPull={this.props.onPull}
+          updateState={this.props.updateState}
         />
       </div>
     );

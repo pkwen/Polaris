@@ -14,9 +14,6 @@ import GitHub from "./github.js";
 // const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
 class CodeEditor extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
 
   onChange = e => {
     const editor = this.refs.aceEditor.editor;
@@ -25,10 +22,6 @@ class CodeEditor extends Component {
     var sessionDocument = editor.getSession().getDocument();
     this.props.updateState(code);
   };
-
-  // componentDidMount() {
-  //   //   let url = "wss://afternoon-waters-66838.herokuapp.com/"
-  // }
 
   render() {
     return (
