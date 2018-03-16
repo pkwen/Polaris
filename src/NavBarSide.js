@@ -14,6 +14,7 @@ class NavBarSide extends Component {
           token={this.props.token} 
           onPull={this.props.onPull}
           updateState={this.props.updateState}
+          user={this.props.user}
         />
       </div>
     );

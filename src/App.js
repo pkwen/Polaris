@@ -18,16 +18,17 @@ class App extends Component {
       roomID: "polaris",
       user: "",
       token: "",
-      content: "func",
+      content: "",
       sha: ""
     };
   }
 
   componentDidMount() {
     //get github verification code from url
-    let gitToken = cookies.get("user");
+    let gitToken = cookies.get("token");
+    let username = cookies.get("user");
     if (gitToken) {
-      this.setState({ token: gitToken });
+      this.setState({ token: gitToken, user: username });
     }
     console.log(gitToken);
 
@@ -77,6 +78,7 @@ class App extends Component {
               token={this.state.token}
               onPull={this.onPull}
               updateState={this.updateState}
+              user={this.state.user}
             />
           </div>
           <div className="col-lg-9">
@@ -137,8 +139,10 @@ class App extends Component {
     const clientCode = window.location.href.match(/\?code=(.*)/)[1];
     GitHub.fetchToken(clientCode)
       .then(res => {
-        this.setState({ token: res.access_token });
+        this.setState({ token: res.access_token, user: res.username });
         console.log(res);
+        cookies.set("user", res.username);
+        cookies.set("token", res.access_token);
       })
       .then(() => {
         let roomID = generateRandomString();
@@ -155,8 +159,8 @@ class App extends Component {
         );
       })
       .then(() => {
-        cookies.set("user", this.state.token);
-        console.log(cookies.get("user"));
+        // cookies.set("user", this.state.token);
+        // console.log(cookies.get("user"));
         // fetch(`token/${this.state.token}`).then(res => { console.log(res) });
       })
       .catch(err => console.log(err));

@@ -14,7 +14,7 @@ const GitHubAPI = {
     });
     const body = await response.json();
     token = `token ${body.access_token}`;
-    await GitHubAPI.getUsername(token);
+    body.username = await GitHubAPI.getUsername(token);
     return body;
   },
 
@@ -30,6 +30,7 @@ const GitHubAPI = {
     if (response.status !== 200) throw Error(body.message);
 
     user = body.login;
+    return user;
   },
 
   //recursive method for traversing the tree data structure of repositories
@@ -146,7 +147,7 @@ const GitHubAPI = {
   },
 
   //list all repo names of user
-  listRepos: async token => {
+  listRepos: async (username = "root", token) => {
     const data = {
       toggled: true,
       children: []
@@ -156,9 +157,14 @@ const GitHubAPI = {
       headers: { Authorization: `token ${token}` }
     });
     const body = await response.json();
-    data.name = user || "root";
+    data.name = username;
 
+    
     for (let i of body) {
+      console.log(i);
+      if(i.private) {
+        continue;
+      }
       data.children.push({
         name: i.name,
         fullName: i.full_name,
@@ -167,6 +173,7 @@ const GitHubAPI = {
         type: "repo"
       });
     }
+    console.log(data);
     return data;
   },
 

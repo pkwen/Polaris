@@ -86,7 +86,7 @@ class TreeFolders extends React.Component {
       node.toggled = toggled;
       node.loading = true;
     }
-    if (node.type !== 'file') {
+    if (node.type !== 'file' && node.toggled) {
       let children = await GitHub.accessElement(node.fullName, node.path);
       if (this.attachChildren(this.state.data, node.name, children)) {
         console.log('Loading children...');
@@ -95,7 +95,7 @@ class TreeFolders extends React.Component {
         console.log('Unable to attach children to parent.');
         node.loading = false;
       }
-    } else {
+    } else if (node.type === 'file') {
       let url = `https://api.github.com/repos/${node.fullName}/contents/${node.path}`;
       this.props.onPull(url);
     }
@@ -105,7 +105,7 @@ class TreeFolders extends React.Component {
   //list all repos upon successful login
   async syncUserRepos() {
     this.setState({
-      data: await GitHub.listRepos(this.props.token),
+      data: await GitHub.listRepos(this.props.user, this.props.token),
       loaded: true
     });
   }
