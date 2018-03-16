@@ -126,7 +126,7 @@ class App extends Component {
       this.state.token
     )
       .then(res => {
-        this.setState({ res: Base64.decode(res.content) });
+        // this.setState({ sha: Base64.decode(res.sha) });
         // console.log(res);
       })
       .catch(err => console.log(err));

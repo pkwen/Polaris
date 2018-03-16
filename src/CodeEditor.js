@@ -81,7 +81,7 @@ class CodeEditor extends Component {
       <div className="code-editor">
         <a
           className="gh-login"
-          href="https://github.com/login/oauth/authorize?client_id=2437e80c83661e9e530f"
+          href="https://github.com/login/oauth/authorize?client_id=2437e80c83661e9e530f&scope=repo"
         >
           Log In with GitHub
         </a>
