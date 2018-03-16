@@ -85,8 +85,8 @@ class CodeEditor extends Component {
         >
           Log In with GitHub
         </a>
-        <button className="push-hub" onClick={this.props.onPush}>
-          Update Data
+        <button className="push-hub" onClick={this.props.signOut}>
+          Log out
         </button>
         <AceEditor
           ref="aceEditor"

@@ -100,8 +100,11 @@ wss.on("connection", ws => {
   ws.send(JSON.stringify(codebase[ws.roomID]));
   ws.on("message", message => {
     const newMsg = JSON.parse(message);
-    if (!newMsg.type) {
+    if (!newMsg.type && newMsg.content) {
       codebase[newMsg.roomID].content = newMsg.content;
+      if(newMsg.sha) {
+        codebase[newMsg.roomID].sha = newMsg.sha;
+      }
       // console.log(wss.clients);
       wss.clients.forEach(function each(client) {
         if (

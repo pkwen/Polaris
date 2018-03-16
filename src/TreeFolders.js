@@ -52,6 +52,40 @@ class TreeFolders extends React.Component {
     );
   }
 
+  //find parent node and add newly created child
+  attachChild(data, name, child) {
+    if (data.children) {
+      loop: for (const i of data.children) {
+        if (i.name === name) {
+          console.log(i.children)
+          if(i.children.length) {
+            //if file already in directory, abort
+            for (const j of i.children) {
+              if(j.name === child.name) {
+                break loop;
+              }
+            };
+            i.children.splice(i.children.length - 1, 0, child);
+          } else {
+            i.children = [child];
+          }
+          console.log(data + "found");
+          return data;
+        } else if (i.children) {
+          console.log(data + "data has children");
+          this.attachChild(i, name, child);
+        }
+      }
+    } else {
+      if (data.name === name) {
+        console.log("data without children found" + data);
+        data.children.push(child);
+        return data;
+      }
+    }
+    return false;
+  }
+
   //find parent node and add children
   attachChildren(data, name, children) {
     if (data.children) {
@@ -86,7 +120,7 @@ class TreeFolders extends React.Component {
       node.toggled = toggled;
       node.loading = true;
     }
-    if (node.type !== 'file' && node.toggled) {
+    if (node.type && node.type !== 'file' && node.type !== 'new' && node.toggled) {
       let children = await GitHub.accessElement(node.fullName, node.path);
       if (this.attachChildren(this.state.data, node.name, children)) {
         console.log('Loading children...');
@@ -98,6 +132,26 @@ class TreeFolders extends React.Component {
     } else if (node.type === 'file') {
       let url = `https://api.github.com/repos/${node.fullName}/contents/${node.path}`;
       this.props.onPull(url);
+    } else if (node.type === 'new') {
+      let file = {
+        name: 'Danny',
+        type: 'file',
+        fullName: node.fullName
+      }
+      let parentPath = `https://api.github.com/repos/${node.fullName}/contents/${node.path}`;
+      let url = parentPath.match(/\/$/) ? `${parentPath}${file.name}` : `${parentPath}/${file.name}`;
+      file.path = `${node.path}/${file.name}`
+      await this.props.newFile(url, 'test msg');
+      this.attachChild(this.state.data, node.parent, file);
+      // let children = await GitHub.accessElement(node.fullName, node.path);
+      // if (await this.attachChildren(this.state.data, node.parent, children)) {
+      //   console.log('Loading children...');
+      //   node.loading = false;
+      // }
+      setTimeout(
+        this.props.getSha(url),
+        30000
+      )
     }
     this.setState({ cursor: node });
   }

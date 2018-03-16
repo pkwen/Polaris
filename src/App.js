@@ -77,6 +77,8 @@ class App extends Component {
             <NavBarSide
               token={this.state.token}
               onPull={this.onPull}
+              getSha={this.getSha}
+              newFile={this.newFile}
               updateState={this.updateState}
               user={this.state.user}
             />
@@ -90,7 +92,7 @@ class App extends Component {
               token={this.state.token}
               sha={this.state.sha}
               updateState={this.updateState}
-              // growTree={this.growTree}
+              signOut={this.signOut}
             />
             <Console />
           </div>
@@ -110,7 +112,25 @@ class App extends Component {
         this.socket.send(
           JSON.stringify({
             content: this.state.content,
-            roomID: this.state.roomID
+            roomID: this.state.roomID,
+            sha: this.state.sha
+          })
+        );
+      })
+      .catch(err => console.log(err));
+  };
+
+  //GET request updating the sha of current file
+  getSha = url => {
+    GitHub.pullContent(url)
+      .then(res =>
+        this.setState({ sha: res.sha })
+      )
+      .then(() => {
+        console.log(this.state.sha);
+        this.socket.send(
+          JSON.stringify({
+            sha: this.state.sha
           })
         );
       })
@@ -134,13 +154,27 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
+  //create new file
+  newFile = (url, commit_msg) => {
+    GitHub.pushContent(
+      url,
+      commit_msg,
+      this.state.content,
+      "",
+      this.state.token
+    )
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => console.log(err));
+  };
+
   //called after logging in with Github to retrieve a token used for further github auth
   onAuth = () => {
     const clientCode = window.location.href.match(/\?code=(.*)/)[1];
     GitHub.fetchToken(clientCode)
       .then(res => {
         this.setState({ token: res.access_token, user: res.username });
-        console.log(res);
         cookies.set("user", res.username);
         cookies.set("token", res.access_token);
       })
@@ -158,12 +192,20 @@ class App extends Component {
           })
         );
       })
-      .then(() => {
-        // cookies.set("user", this.state.token);
-        // console.log(cookies.get("user"));
-        // fetch(`token/${this.state.token}`).then(res => { console.log(res) });
-      })
+      // .then(() => {
+      //   // cookies.set("user", this.state.token);
+      //   // console.log(cookies.get("user"));
+      //   // fetch(`token/${this.state.token}`).then(res => { console.log(res) });
+      // })
       .catch(err => console.log(err));
+  };
+
+  //log out function
+  signOut = () => {
+    this.setState({ token: "", user: "" });
+    cookies.remove("user");
+    cookies.remove("token");
+    setTimeout(window.location.assign("http://localhost:3000"), 500);
   };
 
   //called when code in editor is updated to broadcast change to all connected users in real time
