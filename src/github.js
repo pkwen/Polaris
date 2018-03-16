@@ -119,6 +119,7 @@ const GitHubAPI = {
       headers: { Authorization: `${token}` }
     });
     const body = await response.json();
+    let parentName = url.match(/repos\/.*\/.*\/contents\/$/) ? fullName.replace(/.*\//, "") : path;
     if (body.length) {
       for (let i of body) {
         if (i.type === "file") {
@@ -140,8 +141,24 @@ const GitHubAPI = {
           throw new Error("Cannot access unknown element");
         }
       }
+      children.push({
+        name: "[Add new file]",
+        path: path,
+        fullName: fullName,
+        type: "new",
+        parent: parentName
+      });
+    } else if (body.message === "This repository is empty.") {
+      let parentName = url.match(/repos\/.*\/.*\/contents\/$/) ? fullName.replace(/.*\//, "") : path;
+      children.push({
+        name: "[Add new file]",
+        path: path,
+        fullName: fullName,
+        type: "new",
+        parent: parentName
+      });
     } else {
-      children.push(body);
+      console.log("Error");
     }
     return children;
   },
@@ -192,17 +209,21 @@ const GitHubAPI = {
   },
 
   //push updates to github file, params: api URL, commit message, content, sha, user's github oauth token
-  pushContent: async (url, message, content, sha, token) => {
+  pushContent: async (url, message, content, sha = "", token) => {
+    const parameters = {
+      content: Base64.encode(content),
+      message: message
+    }
+    //if function is used to update existing file
+    if(sha) {
+      parameters.sha = sha;
+    }
     const response = await fetch(url, {
       method: "PUT",
       headers: {
         Authorization: `token ${token}` //Insert Token here to authenticate pushing
       },
-      body: JSON.stringify({
-        content: Base64.encode(content),
-        message: message,
-        sha: sha
-      })
+      body: JSON.stringify(parameters)
     });
     const body = await response.json();
 
