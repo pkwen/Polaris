@@ -5,13 +5,13 @@ class NavBarSide extends Component {
   render() {
     const isLoggedIn = this.props.token;
     return (
-      <div className="navbar-side">
+      <div>
         {/* <h1> This is NavBarSide </h1> */}
 
         {isLoggedIn ? <p /> : <button>login to see repo</button>}
 
-        <TreeFolders 
-          token={this.props.token} 
+        <TreeFolders
+          token={this.props.token}
           onPull={this.props.onPull}
           updateState={this.props.updateState}
           user={this.props.user}

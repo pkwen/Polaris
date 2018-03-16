@@ -9,9 +9,18 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText
+  FormText,
+  FormFeedback
 } from "reactstrap";
-// import MonacoEditor from "react-monaco-editor";
+import {
+  AvForm,
+  AvField,
+  AvGroup,
+  AvInput,
+  AvFeedback,
+  AvRadioGroup,
+  AvRadio
+} from "availity-reactstrap-validation";
 import brace from "brace";
 import AceEditor from "react-ace";
 import "brace/mode/java";
@@ -72,35 +81,52 @@ class CodeEditor extends Component {
 
   onPushToggle = () => {
     console.log("state in CodeEditor: ", this.state);
-    this.toggle();
-    this.props.onPush(this.state.path, this.state.commit_msg);
+    if (this.state.commit_msg) {
+      this.toggle();
+      this.props.onPush(this.state.path, this.state.commit_msg);
+    } else {
+      //show invalid message
+    }
   };
+
+  handleValidSubmit(event, values) {
+    this.setState({ values });
+  }
 
   render() {
     return (
-      <div className="code-editor">
-        <a
+      <div>
+        {/* <a
           className="gh-login"
           href="https://github.com/login/oauth/authorize?client_id=2437e80c83661e9e530f&scope=repo"
         >
           Log In with GitHub
-        </a>
-        <button className="push-hub" onClick={this.props.onPush}>
+        </a> */}
+        {/* <button className="push-hub" onClick={this.props.onPush}>
           Update Data
-        </button>
+        </button> */}
         <AceEditor
           ref="aceEditor"
           mode="javascript"
           theme="monokai"
+          font-family="Roboto Mono"
+          width="1080px"
+          height="550px"
           onChange={this.onChange}
           value={this.props.content}
-          enableBasicAutocompletion="true"
           editorProps={{ $blockScrolling: true }}
-          enableBasicAutocompletion="true"
-          enableLiveAutocompletion="true"
+          setOptions={{
+            // fontFamily: "Roboto",
+            fontSize: 14,
+            showPrintMargin: false,
+            focus: true,
+            minLines: 25,
+            enableBasicAutocompletion: true,
+            enableLiveAutocompletion: true
+          }}
         />
-        <Button color="danger" onClick={this.toggle}>
-          Commit + Push 3
+        <Button color="danger" className="commit-push" onClick={this.toggle}>
+          Commit + Push
         </Button>
         <Modal
           isOpen={this.state.show_modal}
@@ -109,13 +135,37 @@ class CodeEditor extends Component {
         >
           <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
           <ModalBody>
-            <Form>
+            <AvForm onValidSubmit={this.onPushToggle} model={this.state}>
+              <AvGroup>
+                <Label for="path">Repository Path</Label>
+                <AvInput
+                  name="path"
+                  id="path"
+                  onChange={this.handlePathChange}
+                  required
+                />
+                <AvFeedback>Please enter a commit message</AvFeedback>
+              </AvGroup>
+              <AvGroup>
+                <Label for="commit_msg">Commit Message</Label>
+                <AvInput
+                  name="commit_msg"
+                  id="commit_msg"
+                  onChange={this.handleCommitChange}
+                  required
+                />
+                <AvFeedback>Please enter a commit message</AvFeedback>
+              </AvGroup>
+            </AvForm>
+
+            {/* <Form>
               <FormGroup>
                 <Label for="path">Path</Label>
                 <Input
                   type="textarea"
                   name="path"
                   id="path"
+                  defaultValue={this.state.path}
                   placeholder="path"
                   onChange={this.handlePathChange}
                 />
@@ -123,22 +173,26 @@ class CodeEditor extends Component {
               <FormGroup>
                 <Label for="path">Commit Message</Label>
                 <Input
+                  invalid
                   type="textarea"
                   name="commit_msg"
                   id="commit_msg"
                   placeholder="Enter commit message"
                   onChange={this.handleCommitChange}
                 />
+                <FormFeedback>Commit message cannot be empty</FormFeedback>
               </FormGroup>
-            </Form>
+            </Form> */}
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.onPushToggle}>
-              Done
-            </Button>{" "}
-            <Button color="secondary" onClick={this.toggle}>
-              Cancel
-            </Button>
+            <FormGroup>
+              <Button color="primary" onClick={this.onPushToggle}>
+                Submit
+              </Button>{" "}
+              <Button color="secondary" onClick={this.toggle}>
+                Cancel
+              </Button>
+            </FormGroup>
           </ModalFooter>
         </Modal>
       </div>

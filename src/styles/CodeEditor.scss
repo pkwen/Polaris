@@ -1,8 +1,18 @@
-$marginLeft: 318px;
+// .ace_editor {
+//     font-family: monospace !important;
+// }
+// .ace_content {
+//   font-family: monospace !important;
+// }
+#brace-editor {
+    margin: 0px;
+}
+
 .code-editor {
-  // float: right; //   left: 320px;
-  //   top: 60px; // margin-top: 60px;
-  h1 {
-    color: red;
-  }
+    padding-left: 0px;
+    padding-right: 0px;
+    .commit-push {
+        float: right;
+        margin-right: 10px;
+    }
 }

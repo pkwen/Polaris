@@ -1,21 +1,30 @@
-.code-editor h1 {
-  color: red; }
+#brace-editor {
+  margin: 0px; }
+
+.code-editor {
+  padding-left: 0px;
+  padding-right: 0px; }
+  .code-editor .commit-push {
+    float: right;
+    margin-right: 10px; }
 
 .console .console-divider {
-  height: 30px;
+  height: 40px;
+  width: 1070px;
   background-color: black; }
-
-.console .console-tab {
-  height: 26px;
-  background-color: #21252c; }
+  .console .console-divider .run-button {
+    margin: 5px 10px 5px 10px; }
+  .console .console-divider .clear-button {
+    margin: 5px 10px 5px 10px; }
 
 .console .evaluated-code {
   height: 120px;
+  width: 1070px;
   font-size: 13px;
   font-weight: 200;
   color: white;
   background-color: #21252c;
-  border-bottom: 2px solid black;
+  border: 2px solid black;
   padding-left: 10px; }
 
 .navbar-side {
@@ -23,7 +32,8 @@
   height: 700px;
   border-right: 2px solid black;
   border-bottom: 2px solid black;
-  padding-left: 15px; }
+  padding-left: 15px;
+  padding-right: 0px; }
   .navbar-side h1 {
     color: grey; }
 
@@ -52,4 +62,5 @@ html {
   background-color: #21252c; }
 
 body {
-  background-color: #21252c; }
+  background-color: #21252c;
+  margin: 0px; }

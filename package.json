@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "availity-reactstrap-validation": "^1.4.3",
     "express": "^4.15.4",
     "express-enforces-ssl": "^1.1.0",
     "helmet": "^3.8.1",

@@ -1,2 +1,9 @@
-.code-editor h1 {
-  color: red; }
+#brace-editor {
+  margin: 0px; }
+
+.code-editor {
+  padding-left: 0px;
+  padding-right: 0px; }
+  .code-editor .commit-push {
+    float: right;
+    margin-right: 10px; }

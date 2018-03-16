@@ -18,7 +18,7 @@ class NavBarTop extends Component {
             }
             className="navbar-login"
           >
-            <img src="/assets/github_signin_logo.jpg" />
+            {/* <img src="/assets/github_signin_logo.jpg" /> */}
           </a>
         </nav>
       </div>

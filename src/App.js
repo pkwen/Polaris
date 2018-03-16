@@ -66,14 +66,14 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App container">
+      <div className="App">
         <div className="row">
           <div className="col-lg-12">
             <NavBarTop />
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3">
+          <div className="col-lg-3 navbar-side">
             <NavBarSide
               token={this.state.token}
               onPull={this.onPull}
@@ -81,7 +81,7 @@ class App extends Component {
               user={this.state.user}
             />
           </div>
-          <div className="col-lg-9">
+          <div className="col-lg-9 code-editor">
             <CodeEditor
               onPull={this.onPull}
               onPush={this.onPush}
@@ -92,7 +92,7 @@ class App extends Component {
               updateState={this.updateState}
               // growTree={this.growTree}
             />
-            <Console />
+            <Console content={this.state.content} />
           </div>
         </div>
       </div>

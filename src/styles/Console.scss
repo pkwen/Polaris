@@ -1,31 +1,29 @@
 $primaryColor: #21252c;
 $marginLeft: 318px;
 .console {
-    .console-divider {
-        // z-index: -5;
-        // width: 1120px;
-        height: 30px; // position: absolute;
-        // top: 620px; // left: $marginLeft;
-        background-color: black;
+  .console-divider {
+    height: 40px;
+    width: 1070px;
+    background-color: black;
+    .run-button {
+      margin: 5px 10px 5px 10px;
     }
-    .console-tab {
-        // z-index: -5;
-        // width: 80px;
-        height: 26px; // position: absolute;
-        // left: 350px;
-        // top: 622px;
-        background-color: $primaryColor; // left: $marginLeft;
+    .clear-button {
+      margin: 5px 10px 5px 10px;
     }
-    .evaluated-code {
-        // z-index: -5;
-        // width: 1120px;
-        height: 120px;
-        font-size: 13px;
-        font-weight: 200; // position: absolute;
-        color: white;
-        background-color: $primaryColor;
-        border-bottom: 2px solid black; // top: 650px;
-        // left: $marginLeft;
-        padding-left: 10px;
-    }
+  } //   .console-tab {
+  //     width: 80px;
+  //     height: 26px;
+  //     background-color: $primaryColor;
+  //   }
+  .evaluated-code {
+    height: 120px;
+    width: 1070px;
+    font-size: 13px;
+    font-weight: 200;
+    color: white;
+    background-color: $primaryColor;
+    border: 2px solid black;
+    padding-left: 10px;
+  }
 }
