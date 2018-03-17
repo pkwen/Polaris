@@ -27,8 +27,10 @@ class App extends Component {
     //get github verification code from url
     let gitToken = cookies.get("token");
     let username = cookies.get("user");
+    console.log(gitToken);
     if (gitToken) {
       this.setState({ token: gitToken, user: username });
+      console.log(this.state)
     }
     console.log(gitToken);
 
@@ -103,7 +105,7 @@ class App extends Component {
 
   //GET request returning a file from github
   onPull = url => {
-    GitHub.pullContent(url)
+    GitHub.pullContent(url, this.state.token)
       .then(res =>
         this.setState({ content: Base64.decode(res.content), sha: res.sha })
       )
@@ -122,7 +124,7 @@ class App extends Component {
 
   //GET request updating the sha of current file
   getSha = url => {
-    GitHub.pullContent(url)
+    GitHub.pullContent(url, this.state.token)
       .then(res =>
         this.setState({ sha: res.sha })
       )
@@ -138,14 +140,14 @@ class App extends Component {
   };
 
   //PUT request updating the current file being edited
-  onPush = (url, commit_msg) => {
-    console.log("this.state at App: ", this.state);
+  onPush = (url, commit_msg, branch = "") => {
     GitHub.pushContent(
       url,
       commit_msg,
       this.state.content,
       this.state.sha,
-      this.state.token
+      this.state.token,
+      branch
     )
       .then(res => {
         // this.setState({ sha: Base64.decode(res.sha) });
@@ -155,13 +157,14 @@ class App extends Component {
   };
 
   //create new file
-  newFile = (url, commit_msg) => {
+  newFile = (url, commit_msg, branch = "") => {
     GitHub.pushContent(
       url,
       commit_msg,
       this.state.content,
       "",
-      this.state.token
+      this.state.token,
+      branch
     )
       .then(res => {
         console.log(res);

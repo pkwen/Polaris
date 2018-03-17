@@ -13,7 +13,7 @@ const GitHubAPI = {
       }
     });
     const body = await response.json();
-    token = `token ${body.access_token}`;
+    token = body.access_token;
     body.username = await GitHubAPI.getUsername(token);
     return body;
   },
@@ -23,7 +23,7 @@ const GitHubAPI = {
     let url = `${baseURL}/user`;
     const response = await fetch(url, {
       headers: {
-        Authorization: token
+        Authorization: `token ${token}`
       }
     });
     const body = await response.json();
@@ -37,7 +37,7 @@ const GitHubAPI = {
   traverseTree: async (uri, dirname, path) => {
     const response = await fetch(uri, {
       headers: {
-        Authorization: token
+        Authorization: `token ${token}`
       }
     });
     const body = await response.json();
@@ -112,11 +112,11 @@ const GitHubAPI = {
   },
 
   //open directory/pull file
-  accessElement: async (fullName, path) => {
+  accessElement: async (fullName, path, token) => {
     let url = `${baseURL}/repos/${fullName}/contents/${path}`;
     const children = [];
     const response = await fetch(url, {
-      headers: { Authorization: `${token}` }
+      headers: { Authorization: `token ${token}` }
     });
     const body = await response.json();
     let parentName = url.match(/repos\/.*\/.*\/contents\/$/) ? fullName.replace(/.*\//, "") : path;
@@ -178,7 +178,6 @@ const GitHubAPI = {
 
     
     for (let i of body) {
-      console.log(i);
       if(i.private) {
         continue;
       }
@@ -190,15 +189,19 @@ const GitHubAPI = {
         type: "repo"
       });
     }
-    console.log(data);
     return data;
   },
 
+  //find public branches on repo
+  listBranches: async (repo, token) => {
+
+  },
+
   //pull content from github file, params: username, repository name, path of file
-  pullContent: async url => {
+  pullContent: async (url, token) => {
     const response = await fetch(url, {
       headers: {
-        Authorization: token
+        Authorization: `token ${token}`
       }
     });
     const body = await response.json();
@@ -209,7 +212,7 @@ const GitHubAPI = {
   },
 
   //push updates to github file, params: api URL, commit message, content, sha, user's github oauth token
-  pushContent: async (url, message, content, sha = "", token) => {
+  pushContent: async (url, message, content, sha = "", token, branch = "") => {
     const parameters = {
       content: Base64.encode(content),
       message: message
@@ -217,6 +220,9 @@ const GitHubAPI = {
     //if function is used to update existing file
     if(sha) {
       parameters.sha = sha;
+    }
+    if(branch) {
+      parameters.branch = branch;
     }
     const response = await fetch(url, {
       method: "PUT",

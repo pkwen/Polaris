@@ -121,7 +121,7 @@ class TreeFolders extends React.Component {
       node.loading = true;
     }
     if (node.type && node.type !== 'file' && node.type !== 'new' && node.toggled) {
-      let children = await GitHub.accessElement(node.fullName, node.path);
+      let children = await GitHub.accessElement(node.fullName, node.path, this.props.token);
       if (this.attachChildren(this.state.data, node.name, children)) {
         console.log('Loading children...');
         node.loading = false;
@@ -131,7 +131,7 @@ class TreeFolders extends React.Component {
       }
     } else if (node.type === 'file') {
       let url = `https://api.github.com/repos/${node.fullName}/contents/${node.path}`;
-      this.props.onPull(url);
+      this.props.onPull(url, this.props.token);
     } else if (node.type === 'new') {
       let file = {
         name: 'Danny',
