@@ -24,9 +24,9 @@ import AceEditor from "react-ace";
 import "brace/mode/java";
 import "brace/theme/github";
 import "brace/theme/monokai";
-import { Base64 } from "js-base64";
+// import { Base64 } from "js-base64";
 // import FormModal from "./FormModal.js";
-import GitHub from "./github.js";
+// import GitHub from "./github.js";
 
 // require("monaco-editor/min/vs/editor/editor.main.css");
 // require("dotenv").config();
@@ -46,8 +46,8 @@ class CodeEditor extends Component {
   onChange = e => {
     const editor = this.refs.aceEditor.editor;
     var code = editor.getValue();
-    var session = editor.getSession();
-    var sessionDocument = editor.getSession().getDocument();
+    // var session = editor.getSession();
+    // var sessionDocument = editor.getSession().getDocument();
     this.props.updateState(code);
   };
 
@@ -95,15 +95,6 @@ class CodeEditor extends Component {
   render() {
     return (
       <div>
-        {/* <a
-          className="gh-login"
-          href="https://github.com/login/oauth/authorize?client_id=2437e80c83661e9e530f&scope=repo"
-        >
-          Log In with GitHub
-        </a> */}
-        {/* <button className="push-hub" onClick={this.props.onPush}>
-          Update Data
-        </button> */}
         <AceEditor
           ref="aceEditor"
           mode="javascript"
@@ -132,7 +123,7 @@ class CodeEditor extends Component {
           toggle={this.toggle}
           className="test_modal"
         >
-          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Commit - Details</ModalHeader>
           <ModalBody>
             <AvForm onValidSubmit={this.onPushToggle}>
               <AvGroup>
@@ -140,14 +131,20 @@ class CodeEditor extends Component {
                 <AvInput
                   name="path"
                   id="path"
+                  onChange={this.handlePathChange}
                   value={this.props.path}
                   required
                 />
-                <AvFeedback>Please enter a commit message</AvFeedback>
+                <AvFeedback>Please enter a valid repository path</AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="commit_msg">Commit Message</Label>
-                <AvInput name="commit_msg" id="commit_msg" required />
+                <AvInput
+                  name="commit_msg"
+                  id="commit_msg"
+                  onChange={this.handleCommitChange}
+                  required
+                />
                 <AvFeedback>Please enter a commit message</AvFeedback>
               </AvGroup>
               <FormGroup>
@@ -157,32 +154,6 @@ class CodeEditor extends Component {
                 </Button>
               </FormGroup>
             </AvForm>
-
-            {/* <Form>
-              <FormGroup>
-                <Label for="path">Path</Label>
-                <Input
-                  type="textarea"
-                  name="path"
-                  id="path"
-                  defaultValue={this.state.path}
-                  placeholder="path"
-                  onChange={this.handlePathChange}
-                />
-              </FormGroup>
-              <FormGroup>
-                <Label for="path">Commit Message</Label>
-                <Input
-                  invalid
-                  type="textarea"
-                  name="commit_msg"
-                  id="commit_msg"
-                  placeholder="Enter commit message"
-                  onChange={this.handleCommitChange}
-                />
-                <FormFeedback>Commit message cannot be empty</FormFeedback>
-              </FormGroup>
-            </Form> */}
           </ModalBody>
           <ModalFooter />
         </Modal>

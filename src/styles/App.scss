@@ -6,10 +6,14 @@
 @import "TreeFolders.scss";
 $primaryColor: #21252c;
 html {
-    background-color: $primaryColor;
+  background-color: $primaryColor;
 }
 
 body {
-    background-color: $primaryColor;
-    margin: 0px;
+  background-color: $primaryColor;
+  margin: 0px;
+}
+
+.invalid-feedback {
+  display: block;
 }

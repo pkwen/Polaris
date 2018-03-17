@@ -65,3 +65,6 @@ html {
 body {
   background-color: #21252c;
   margin: 0px; }
+
+.invalid-feedback {
+  display: block; }
