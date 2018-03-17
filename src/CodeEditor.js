@@ -12,6 +12,7 @@ import {
   FormText,
   FormFeedback
 } from "reactstrap";
+
 import {
   AvForm,
   AvField,
@@ -19,16 +20,13 @@ import {
   AvInput,
   AvFeedback
 } from "availity-reactstrap-validation";
-import brace from "brace";
-import AceEditor from "react-ace";
-import "brace/mode/java";
-import "brace/theme/github";
-import "brace/theme/monokai";
-// import { Base64 } from "js-base64";
-// import FormModal from "./FormModal.js";
-// import GitHub from "./github.js";
 
-// require("monaco-editor/min/vs/editor/editor.main.css");
+import AceEditor from "react-ace";
+import brace from "brace";
+import "brace/ext/language_tools";
+import "brace/mode/javascript";
+import "brace/theme/monokai";
+
 // require("dotenv").config();
 // const CLIENT_ID = process.env.CLIENT_ID;
 // const CLIENT_SECRET = process.env.CLIENT_SECRET;
@@ -102,14 +100,14 @@ class CodeEditor extends Component {
           font-family="Roboto Mono"
           width="1080px"
           height="550px"
+          focus={true}
           onChange={this.onChange}
           value={this.props.content}
           editorProps={{ $blockScrolling: true }}
           setOptions={{
             // fontFamily: "Roboto",
-            fontSize: 14,
+            fontSize: 16,
             showPrintMargin: false,
-            focus: true,
             minLines: 25,
             enableBasicAutocompletion: true,
             enableLiveAutocompletion: true
