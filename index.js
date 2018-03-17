@@ -105,6 +105,9 @@ wss.on("connection", ws => {
       if(newMsg.sha) {
         codebase[newMsg.roomID].sha = newMsg.sha;
       }
+      if(newMsg.branch) {
+        codebase[newMsg.roomID].branch = newMsg.branch;
+      }
       // console.log(wss.clients);
       wss.clients.forEach(function each(client) {
         if (

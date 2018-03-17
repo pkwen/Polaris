@@ -48,21 +48,28 @@ class App extends Component {
     this.socket.onopen = e => {
       console.log("opened");
       let roomed = window.location.href.match(/room\/(.*)/);
-      let roomID = "";
-      if (roomed) {
-        roomID = roomed[1];
-        this.setState({ roomID: roomID });
-        this.socket.send(
-          JSON.stringify({
-            type: "system",
-            roomID: roomID
-          })
-        );
-      }
+      let roomID = roomed ? roomed[1] : generateRandomString();
+      this.setState({ roomID: roomID });
+      window.history.replaceState("", "", `http://localhost:3000/room/${roomID}`);
+      this.socket.send(
+        JSON.stringify({
+          type: "system",
+          roomID: roomID
+        })
+      );
+      
     };
     this.socket.onmessage = e => {
       const parsedData = JSON.parse(e.data);
-      this.setState({ content: parsedData.content });
+      if(parsedData.content) {
+        this.setState({ content: parsedData.content });
+      }
+      if (parsedData.sha) {
+        this.setState({ sha: parsedData.sha });
+      }
+      if (parsedData.branch) {
+        this.setState({ branch: parsedData.branch });
+      }
     };
   }
 
@@ -81,6 +88,7 @@ class App extends Component {
               onPull={this.onPull}
               getSha={this.getSha}
               newFile={this.newFile}
+              setBranch={this.setBranch}
               updateState={this.updateState}
               user={this.state.user}
             />
@@ -115,7 +123,8 @@ class App extends Component {
           JSON.stringify({
             content: this.state.content,
             roomID: this.state.roomID,
-            sha: this.state.sha
+            sha: this.state.sha,
+            branch: this.state.branch
           })
         );
       })
@@ -140,20 +149,25 @@ class App extends Component {
   };
 
   //PUT request updating the current file being edited
-  onPush = (url, commit_msg, branch = "") => {
+  onPush = (url, commit_msg) => {
     GitHub.pushContent(
       url,
       commit_msg,
       this.state.content,
       this.state.sha,
       this.state.token,
-      branch
+      this.state.branch
     )
       .then(res => {
         // this.setState({ sha: Base64.decode(res.sha) });
         // console.log(res);
       })
       .catch(err => console.log(err));
+  };
+
+  //set branch to whatever branch file was pulled from
+  setBranch = branch => {
+    this.setState({ branch: branch });
   };
 
   //create new file
@@ -181,20 +195,20 @@ class App extends Component {
         cookies.set("user", res.username);
         cookies.set("token", res.access_token);
       })
-      .then(() => {
-        let roomID = generateRandomString();
-        window.history.replaceState(
-          "",
-          "",
-          `http://localhost:3000/room/${roomID}`
-        );
-        this.socket.send(
-          JSON.stringify({
-            type: "system",
-            roomID: roomID
-          })
-        );
-      })
+      // .then(() => {
+      //   let roomID = generateRandomString();
+      //   window.history.replaceState(
+      //     "",
+      //     "",
+      //     `http://localhost:3000/room/${roomID}`
+      //   );
+      //   this.socket.send(
+      //     JSON.stringify({
+      //       type: "system",
+      //       roomID: roomID
+      //     })
+      //   );
+      // })
       // .then(() => {
       //   // cookies.set("user", this.state.token);
       //   // console.log(cookies.get("user"));
@@ -213,7 +227,6 @@ class App extends Component {
 
   //called when code in editor is updated to broadcast change to all connected users in real time
   updateState = (content = this.state.content) => {
-    console.log(content);
     let roomed = window.location.href.match(/room\/(.*)/);
     let roomID = "polaris";
     if (roomed) {

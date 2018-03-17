@@ -112,31 +112,33 @@ const GitHubAPI = {
   },
 
   //open directory/pull file
-  accessElement: async (fullName, path, token) => {
+  accessElement: async (fullName, path, branch = "", token) => {
     let url = `${baseURL}/repos/${fullName}/contents/${path}`;
+    // let parentName = url.match(/repos\/.*\/.*\/contents\/$/) ? fullName.replace(/.*\//, "") : path;
+    let parentName = path ? path : branch;
+    if(branch){
+      url += `?ref=${branch}`;
+    }
     const children = [];
     const response = await fetch(url, {
       headers: { Authorization: `token ${token}` }
     });
     const body = await response.json();
-    let parentName = url.match(/repos\/.*\/.*\/contents\/$/) ? fullName.replace(/.*\//, "") : path;
     if (body.length) {
       for (let i of body) {
+        let child = {
+          name: i.name,
+          path: i.path,
+          fullName: fullName,
+          branch: branch
+        };
         if (i.type === "file") {
-          children.push({
-            name: i.name,
-            path: i.path,
-            fullName: fullName,
-            type: "file"
-          });
+          child.type = "file";
+          children.push(child);
         } else if (i.type === "dir") {
-          children.push({
-            name: i.name,
-            path: i.path,
-            children: [],
-            fullName: fullName,
-            type: "dir"
-          });
+          child.type = "dir";
+          child.children = [];
+          children.push(child);
         } else {
           throw new Error("Cannot access unknown element");
         }
@@ -146,6 +148,7 @@ const GitHubAPI = {
         path: path,
         fullName: fullName,
         type: "new",
+        branch: branch,
         parent: parentName
       });
     } else if (body.message === "This repository is empty.") {
@@ -155,6 +158,7 @@ const GitHubAPI = {
         path: path,
         fullName: fullName,
         type: "new",
+        branch: branch,
         parent: parentName
       });
     } else {
@@ -193,8 +197,30 @@ const GitHubAPI = {
   },
 
   //find public branches on repo
-  listBranches: async (repo, token) => {
+  listBranches: async (fullName, token) => {
+    let url = `${baseURL}/repos/${fullName}/branches`;
+    let branches = [];
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `token ${token}`
+      }
+    });
+    const body = await response.json();
 
+    if (response.status !== 200) throw Error(body.message);
+
+    for (let i of body) {
+      branches.push({
+        name: i.name,
+        fullName: fullName,
+        children: [],
+        type: "branch",
+        path: "",
+        branch: i.name
+      })
+    }
+
+    return branches;
   },
 
   //pull content from github file, params: username, repository name, path of file

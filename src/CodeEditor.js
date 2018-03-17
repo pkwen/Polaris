@@ -73,7 +73,7 @@ class CodeEditor extends Component {
   onPushToggle = () => {
     console.log("state in CodeEditor: ", this.state);
     this.toggle();
-    this.props.onPush(this.state.path, this.state.commit_msg, 'features');
+    this.props.onPush(this.state.path, this.state.commit_msg);
   };
 
   render() {
