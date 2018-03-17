@@ -19,6 +19,7 @@ class App extends Component {
       user: "",
       token: "",
       content: "",
+      path: "",
       sha: ""
     };
   }
@@ -89,6 +90,7 @@ class App extends Component {
               onPush={this.onPush}
               onAuth={this.onAuth}
               content={this.state.content}
+              path={this.state.path}
               token={this.state.token}
               sha={this.state.sha}
               updateState={this.updateState}
@@ -103,12 +105,14 @@ class App extends Component {
 
   //GET request returning a file from github
   onPull = url => {
+    console.log("url: ", url);
+    this.setState({ path: url });
+
     GitHub.pullContent(url)
       .then(res =>
         this.setState({ content: Base64.decode(res.content), sha: res.sha })
       )
       .then(() => {
-        console.log(this.state.content);
         this.socket.send(
           JSON.stringify({
             content: this.state.content,
@@ -116,6 +120,7 @@ class App extends Component {
             sha: this.state.sha
           })
         );
+        console.log("this.state (after setting path to url): ", this.state);
       })
       .catch(err => console.log(err));
   };
@@ -123,9 +128,7 @@ class App extends Component {
   //GET request updating the sha of current file
   getSha = url => {
     GitHub.pullContent(url)
-      .then(res =>
-        this.setState({ sha: res.sha })
-      )
+      .then(res => this.setState({ sha: res.sha }))
       .then(() => {
         console.log(this.state.sha);
         this.socket.send(

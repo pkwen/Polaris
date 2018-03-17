@@ -17,9 +17,7 @@ import {
   AvField,
   AvGroup,
   AvInput,
-  AvFeedback,
-  AvRadioGroup,
-  AvRadio
+  AvFeedback
 } from "availity-reactstrap-validation";
 import brace from "brace";
 import AceEditor from "react-ace";
@@ -41,7 +39,7 @@ class CodeEditor extends Component {
     this.state = {
       show_modal: false,
       commit_msg: "",
-      path: ""
+      path: this.props.path
     };
   }
 
@@ -68,6 +66,7 @@ class CodeEditor extends Component {
   }
 
   toggle = () => {
+    console.log("this.props.path: ", this.props.path);
     this.setState({ show_modal: !this.state.show_modal });
   };
 
@@ -135,27 +134,28 @@ class CodeEditor extends Component {
         >
           <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
           <ModalBody>
-            <AvForm onValidSubmit={this.onPushToggle} model={this.state}>
+            <AvForm onValidSubmit={this.onPushToggle}>
               <AvGroup>
                 <Label for="path">Repository Path</Label>
                 <AvInput
                   name="path"
                   id="path"
-                  onChange={this.handlePathChange}
+                  value={this.props.path}
                   required
                 />
                 <AvFeedback>Please enter a commit message</AvFeedback>
               </AvGroup>
               <AvGroup>
                 <Label for="commit_msg">Commit Message</Label>
-                <AvInput
-                  name="commit_msg"
-                  id="commit_msg"
-                  onChange={this.handleCommitChange}
-                  required
-                />
+                <AvInput name="commit_msg" id="commit_msg" required />
                 <AvFeedback>Please enter a commit message</AvFeedback>
               </AvGroup>
+              <FormGroup>
+                <Button color="primary">Submit</Button>{" "}
+                <Button color="secondary" onClick={this.toggle}>
+                  Cancel
+                </Button>
+              </FormGroup>
             </AvForm>
 
             {/* <Form>
@@ -184,16 +184,7 @@ class CodeEditor extends Component {
               </FormGroup>
             </Form> */}
           </ModalBody>
-          <ModalFooter>
-            <FormGroup>
-              <Button color="primary" onClick={this.onPushToggle}>
-                Submit
-              </Button>{" "}
-              <Button color="secondary" onClick={this.toggle}>
-                Cancel
-              </Button>
-            </FormGroup>
-          </ModalFooter>
+          <ModalFooter />
         </Modal>
       </div>
     );

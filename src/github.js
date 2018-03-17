@@ -119,7 +119,9 @@ const GitHubAPI = {
       headers: { Authorization: `${token}` }
     });
     const body = await response.json();
-    let parentName = url.match(/repos\/.*\/.*\/contents\/$/) ? fullName.replace(/.*\//, "") : path;
+    let parentName = url.match(/repos\/.*\/.*\/contents\/$/)
+      ? fullName.replace(/.*\//, "")
+      : path;
     if (body.length) {
       for (let i of body) {
         if (i.type === "file") {
@@ -149,7 +151,9 @@ const GitHubAPI = {
         parent: parentName
       });
     } else if (body.message === "This repository is empty.") {
-      let parentName = url.match(/repos\/.*\/.*\/contents\/$/) ? fullName.replace(/.*\//, "") : path;
+      let parentName = url.match(/repos\/.*\/.*\/contents\/$/)
+        ? fullName.replace(/.*\//, "")
+        : path;
       children.push({
         name: "[Add new file]",
         path: path,
@@ -176,10 +180,8 @@ const GitHubAPI = {
     const body = await response.json();
     data.name = username;
 
-    
     for (let i of body) {
-      console.log(i);
-      if(i.private) {
+      if (i.private) {
         continue;
       }
       data.children.push({
@@ -213,9 +215,9 @@ const GitHubAPI = {
     const parameters = {
       content: Base64.encode(content),
       message: message
-    }
+    };
     //if function is used to update existing file
-    if(sha) {
+    if (sha) {
       parameters.sha = sha;
     }
     const response = await fetch(url, {
