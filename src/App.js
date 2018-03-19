@@ -178,16 +178,9 @@ class App extends Component {
 
   //create new file
   newFile = (url, commit_msg, branch = "") => {
-    GitHub.pushContent(
-      url,
-      commit_msg,
-      this.state.content,
-      "",
-      this.state.token,
-      branch
-    )
+    GitHub.pushContent(url, commit_msg, "", "", this.state.token, branch)
       .then(res => {
-        console.log(res);
+        console.log("$$$$$$$$", res);
       })
       .catch(err => console.log(err));
   };

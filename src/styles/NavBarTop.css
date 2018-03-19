@@ -15,4 +15,8 @@
     float: right;
     background-color: grey;
     width: 180px;
-    height: 60px; }
+    height: 58px; }
+  .navbar-top .btn.navbar-signout {
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px; }

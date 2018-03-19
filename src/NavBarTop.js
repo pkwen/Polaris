@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button } from "reactstrap";
 
 class NavBarTop extends Component {
   render() {
@@ -21,13 +22,15 @@ class NavBarTop extends Component {
           >
             {/* <img src="/assets/github_signin_logo.jpg" /> */}
           </a>
-          <button
+          <Button
+            className="navbar-signout"
+            color="secondary"
             onClick={this.props.signOut}
             style={{ display: this.props.user ? "block" : "none" }}
           >
             {" "}
             Sign Out
-          </button>
+          </Button>
         </nav>
       </div>
     );

@@ -3,29 +3,27 @@ import { Treebeard } from "react-treebeard";
 import { Base64 } from "js-base64";
 import GitHub from "./github.js";
 
-// let data = {
-//   name: "root",
-//   toggled: true,
-//   children: [
-//     {
-//       name: "parent",
-//       children: [{ name: "child1" }, { name: "child2" }]
-//     },
-//     {
-//       name: "loading parent",
-//       children: []
-//     },
-//     {
-//       name: "parent",
-//       children: [
-//         {
-//           name: "nested parent",
-//           children: [{ name: "nested child 1" }, { name: "nested child 2" }]
-//         }
-//       ]
-//     }
-//   ]
-// };
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  FormText,
+  FormFeedback
+} from "reactstrap";
+
+import {
+  AvForm,
+  AvField,
+  AvGroup,
+  AvInput,
+  AvFeedback
+} from "availity-reactstrap-validation";
 
 class TreeFolders extends React.Component {
   constructor(props) {
@@ -37,7 +35,10 @@ class TreeFolders extends React.Component {
       spinner: false,
       cursor: {
         active: true
-      }
+      },
+      show_modal: false,
+      file_name: "",
+      node: {}
     };
     this.onToggle = this.onToggle.bind(this);
   }
@@ -64,9 +65,86 @@ class TreeFolders extends React.Component {
           onToggle={this.onToggle}
           className="tree-folders"
         />
+        <Modal
+          isOpen={this.state.show_modal}
+          toggle={this.toggle}
+          className="test_modal"
+        >
+          <ModalHeader toggle={this.toggle}>Create new file</ModalHeader>
+          <ModalBody>
+            <AvForm onValidSubmit={this.createFile}>
+              <AvGroup>
+                <Label for="path">File Name</Label>
+                <AvInput
+                  name="path"
+                  id="path"
+                  onChange={this.handleFileChange}
+                  placeholder="Enter a file name"
+                  required
+                />{" "}
+                <AvFeedback>Please enter a file name</AvFeedback>
+              </AvGroup>
+
+              <FormGroup>
+                <FormGroup>
+                  <Label for="branch">Branch</Label>
+                  <Input plaintext>{this.state.node.branch}</Input>
+                </FormGroup>
+              </FormGroup>
+
+              <FormGroup>
+                <Button color="primary">Create</Button>{" "}
+                <Button color="secondary" onClick={this.toggle}>
+                  Cancel
+                </Button>
+              </FormGroup>
+            </AvForm>
+          </ModalBody>
+          <ModalFooter />
+        </Modal>
       </div>
     );
   }
+
+  toggle = () => {
+    // console.log("this.props.path: ", this.props.path);
+    this.setState({ show_modal: !this.state.show_modal });
+  };
+
+  handleFileChange = e => {
+    this.setState({ file_name: e.target.value });
+  };
+
+  createFile = async () => {
+    this.toggle();
+    console.log("node:", this.state.node);
+
+    this.props.setBranch(this.state.node.branch);
+    let file = {
+      name: this.state.file_name,
+      type: "file",
+      fullName: this.state.node.fullName,
+      branch: this.state.node.branch
+    };
+    let parentPath = `https://api.github.com/repos/${
+      this.state.node.fullName
+    }/contents/${this.state.node.path}`;
+    let url = parentPath.match(/\/$/)
+      ? `${parentPath}${file.name}`
+      : `${parentPath}/${file.name}`;
+    // url += `?ref=${node.branch}`
+    file.path = `${this.state.node.path}/${file.name}`;
+    await this.props.newFile(url, "initial commit", this.state.node.branch);
+    // await this.props.newFile(url, "initial commit", node.branch);
+    this.attachChild(this.state.data, this.state.node.parent, file);
+    // let children = await GitHub.accessElement(node.fullName, node.path);
+    // if (await this.attachChildren(this.state.data, node.parent, children)) {
+    //   console.log('Loading children...');
+    //   node.loading = false;
+    // }
+    this.setState({ node: this.state.node });
+    // setTimeout(this.props.getSha(url), 30000);
+  };
 
   //find parent node and add newly created child
   attachChild(data, name, child) {
@@ -130,7 +208,7 @@ class TreeFolders extends React.Component {
     if (this.state.cursor) {
       this.state.cursor.active = false;
     }
-    console.log(node);
+    // console.log(node);
     node.active = true;
     if (node.children) {
       node.toggled = toggled;
@@ -182,29 +260,9 @@ class TreeFolders extends React.Component {
       }?ref=${node.branch}`;
       this.props.onPull(url, this.props.token);
     } else if (node.type === "new") {
-      this.props.setBranch(node.branch);
-      let file = {
-        name: "Danny",
-        type: "file",
-        fullName: node.fullName,
-        branch: node.branch
-      };
-      let parentPath = `https://api.github.com/repos/${
-        node.fullName
-      }/contents/${node.path}`;
-      let url = parentPath.match(/\/$/)
-        ? `${parentPath}${file.name}`
-        : `${parentPath}/${file.name}`;
-      // url += `?ref=${node.branch}`
-      file.path = `${node.path}/${file.name}`;
-      await this.props.newFile(url, "test msg", node.branch);
-      this.attachChild(this.state.data, node.parent, file);
-      // let children = await GitHub.accessElement(node.fullName, node.path);
-      // if (await this.attachChildren(this.state.data, node.parent, children)) {
-      //   console.log('Loading children...');
-      //   node.loading = false;
-      // }
-      setTimeout(this.props.getSha(url), 30000);
+      //show modal
+      this.toggle();
+      this.setState({ node: node });
     }
     this.setState({ cursor: node });
   }
