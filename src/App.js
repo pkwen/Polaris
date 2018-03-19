@@ -179,7 +179,7 @@ class App extends Component {
     GitHub.pushContent(
       url,
       commit_msg,
-      this.state.content,
+      "",
       "",
       this.state.token,
       branch
