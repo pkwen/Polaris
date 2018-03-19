@@ -136,13 +136,38 @@ class TreeFolders extends React.Component {
       node.toggled = toggled;
       node.loading = true;
     }
-    if (
-      node.type &&
-      node.type !== "file" &&
-      node.type !== "new" &&
-      node.toggled
-    ) {
-      let children = await GitHub.accessElement(node.fullName, node.path);
+    if (node.type === "repo" && node.toggled) {
+      let children = await GitHub.listBranches(node.fullName, this.props.token);
+      if (this.attachChildren(this.state.data, node.name, children)) {
+        console.log("Loading children...");
+        node.loading = false;
+      } else {
+        console.log("Unable to attach children to parent.");
+        node.loading = false;
+      }
+    } else if (node.type === "branch" && node.toggled) {
+      this.props.setBranch(node.branch);
+      let children = await GitHub.accessElement(
+        node.fullName,
+        node.path,
+        node.branch,
+        this.props.token
+      );
+      if (this.attachChildren(this.state.data, node.name, children)) {
+        console.log("Loading children...");
+        node.loading = false;
+      } else {
+        console.log("Unable to attach children to parent.");
+        node.loading = false;
+      }
+    } else if (node.type === "dir" && node.toggled) {
+      this.props.setBranch(node.branch);
+      let children = await GitHub.accessElement(
+        node.fullName,
+        node.path,
+        node.branch,
+        this.props.token
+      );
       if (this.attachChildren(this.state.data, node.name, children)) {
         console.log("Loading children...");
         node.loading = false;
@@ -151,15 +176,18 @@ class TreeFolders extends React.Component {
         node.loading = false;
       }
     } else if (node.type === "file") {
+      this.props.setBranch(node.branch);
       let url = `https://api.github.com/repos/${node.fullName}/contents/${
         node.path
-      }`;
-      this.props.onPull(url);
+      }?ref=${node.branch}`;
+      this.props.onPull(url, this.props.token);
     } else if (node.type === "new") {
+      this.props.setBranch(node.branch);
       let file = {
         name: "Danny",
         type: "file",
-        fullName: node.fullName
+        fullName: node.fullName,
+        branch: node.branch
       };
       let parentPath = `https://api.github.com/repos/${
         node.fullName
@@ -167,8 +195,9 @@ class TreeFolders extends React.Component {
       let url = parentPath.match(/\/$/)
         ? `${parentPath}${file.name}`
         : `${parentPath}/${file.name}`;
+      // url += `?ref=${node.branch}`
       file.path = `${node.path}/${file.name}`;
-      await this.props.newFile(url, "test msg");
+      await this.props.newFile(url, "test msg", node.branch);
       this.attachChild(this.state.data, node.parent, file);
       // let children = await GitHub.accessElement(node.fullName, node.path);
       // if (await this.attachChildren(this.state.data, node.parent, children)) {

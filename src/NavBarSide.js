@@ -14,6 +14,7 @@ class NavBarSide extends Component {
           token={this.props.token}
           onPull={this.props.onPull}
           getSha={this.props.getSha}
+          setBranch={this.props.setBranch}
           newFile={this.props.newFile}
           updateState={this.props.updateState}
           user={this.props.user}

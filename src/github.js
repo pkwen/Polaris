@@ -13,7 +13,7 @@ const GitHubAPI = {
       }
     });
     const body = await response.json();
-    token = `token ${body.access_token}`;
+    token = body.access_token;
     body.username = await GitHubAPI.getUsername(token);
     return body;
   },
@@ -23,7 +23,7 @@ const GitHubAPI = {
     let url = `${baseURL}/user`;
     const response = await fetch(url, {
       headers: {
-        Authorization: token
+        Authorization: `token ${token}`
       }
     });
     const body = await response.json();
@@ -37,7 +37,7 @@ const GitHubAPI = {
   traverseTree: async (uri, dirname, path) => {
     const response = await fetch(uri, {
       headers: {
-        Authorization: token
+        Authorization: `token ${token}`
       }
     });
     const body = await response.json();
@@ -112,33 +112,33 @@ const GitHubAPI = {
   },
 
   //open directory/pull file
-  accessElement: async (fullName, path) => {
+  accessElement: async (fullName, path, branch = "", token) => {
     let url = `${baseURL}/repos/${fullName}/contents/${path}`;
+    // let parentName = url.match(/repos\/.*\/.*\/contents\/$/) ? fullName.replace(/.*\//, "") : path;
+    let parentName = path ? path : branch;
+    if (branch) {
+      url += `?ref=${branch}`;
+    }
     const children = [];
     const response = await fetch(url, {
-      headers: { Authorization: `${token}` }
+      headers: { Authorization: `token ${token}` }
     });
     const body = await response.json();
-    let parentName = url.match(/repos\/.*\/.*\/contents\/$/)
-      ? fullName.replace(/.*\//, "")
-      : path;
     if (body.length) {
       for (let i of body) {
+        let child = {
+          name: i.name,
+          path: i.path,
+          fullName: fullName,
+          branch: branch
+        };
         if (i.type === "file") {
-          children.push({
-            name: i.name,
-            path: i.path,
-            fullName: fullName,
-            type: "file"
-          });
+          child.type = "file";
+          children.push(child);
         } else if (i.type === "dir") {
-          children.push({
-            name: i.name,
-            path: i.path,
-            children: [],
-            fullName: fullName,
-            type: "dir"
-          });
+          child.type = "dir";
+          child.children = [];
+          children.push(child);
         } else {
           throw new Error("Cannot access unknown element");
         }
@@ -148,6 +148,7 @@ const GitHubAPI = {
         path: path,
         fullName: fullName,
         type: "new",
+        branch: branch,
         parent: parentName
       });
     } else if (body.message === "This repository is empty.") {
@@ -159,6 +160,7 @@ const GitHubAPI = {
         path: path,
         fullName: fullName,
         type: "new",
+        branch: branch,
         parent: parentName
       });
     } else {
@@ -192,15 +194,41 @@ const GitHubAPI = {
         type: "repo"
       });
     }
-    console.log(data);
     return data;
   },
 
-  //pull content from github file, params: username, repository name, path of file
-  pullContent: async url => {
+  //find public branches on repo
+  listBranches: async (fullName, token) => {
+    let url = `${baseURL}/repos/${fullName}/branches`;
+    let branches = [];
     const response = await fetch(url, {
       headers: {
-        Authorization: token
+        Authorization: `token ${token}`
+      }
+    });
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    for (let i of body) {
+      branches.push({
+        name: i.name,
+        fullName: fullName,
+        children: [],
+        type: "branch",
+        path: "",
+        branch: i.name
+      });
+    }
+
+    return branches;
+  },
+
+  //pull content from github file, params: username, repository name, path of file
+  pullContent: async (url, token) => {
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `token ${token}`
       }
     });
     const body = await response.json();
@@ -211,7 +239,7 @@ const GitHubAPI = {
   },
 
   //push updates to github file, params: api URL, commit message, content, sha, user's github oauth token
-  pushContent: async (url, message, content, sha = "", token) => {
+  pushContent: async (url, message, content, sha = "", token, branch = "") => {
     const parameters = {
       content: Base64.encode(content),
       message: message
@@ -219,6 +247,9 @@ const GitHubAPI = {
     //if function is used to update existing file
     if (sha) {
       parameters.sha = sha;
+    }
+    if (branch) {
+      parameters.branch = branch;
     }
     const response = await fetch(url, {
       method: "PUT",
