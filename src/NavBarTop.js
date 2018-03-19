@@ -17,9 +17,17 @@ class NavBarTop extends Component {
               clientID
             }
             className="navbar-login"
+            style={{ display: this.props.user ? "none" : "block" }}
           >
             {/* <img src="/assets/github_signin_logo.jpg" /> */}
           </a>
+          <button
+            onClick={this.props.signOut}
+            style={{ display: this.props.user ? "block" : "none" }}
+          >
+            {" "}
+            Sign Out
+          </button>
         </nav>
       </div>
     );

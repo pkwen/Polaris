@@ -82,7 +82,7 @@ class App extends Component {
       <div className="App">
         <div className="row">
           <div className="col-xl-12">
-            <NavBarTop />
+            <NavBarTop signOut={this.signOut} user={this.state.user} />
           </div>
         </div>
         <div className="row">
@@ -107,7 +107,7 @@ class App extends Component {
               token={this.state.token}
               sha={this.state.sha}
               updateState={this.updateState}
-              signOut={this.signOut}
+              branch={this.state.branch}
             />
             <Console content={this.state.content} />
           </div>
@@ -228,7 +228,7 @@ class App extends Component {
     this.setState({ token: "", user: "" });
     cookies.remove("user");
     cookies.remove("token");
-    setTimeout(window.location.assign("http://localhost:3000"), 500);
+    setTimeout(window.location.assign("http://localhost:3000"), 1000);
   };
 
   //called when code in editor is updated to broadcast change to all connected users in real time

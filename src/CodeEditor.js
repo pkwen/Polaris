@@ -37,10 +37,9 @@ class CodeEditor extends Component {
     this.state = {
       show_modal: false,
       commit_msg: "",
-      path: this.props.path,
       repo: "",
       directory: "",
-      branches: ["master", "deploy", "QA"]
+      branch: ["master", "deploy", "QA"]
     };
   }
 
@@ -85,7 +84,7 @@ class CodeEditor extends Component {
   onPushToggle = () => {
     console.log("state in CodeEditor: ", this.state);
     this.toggle();
-    this.props.onPush(this.state.path, this.state.commit_msg);
+    this.props.onPush(this.props.path, this.state.commit_msg);
     //replace this.state.path with a concat of repo and directory to form path
   };
 
@@ -129,9 +128,10 @@ class CodeEditor extends Component {
                   name="path"
                   id="path"
                   onChange={this.handleRepoChange}
-                  value={this.props.path} //regex for repo
+                  value={this.props.path}
                   required
-                />
+                />{" "}
+                //regex for repo
                 <AvFeedback>Please enter a valid repository</AvFeedback>
               </AvGroup>
               <AvGroup>
@@ -140,20 +140,19 @@ class CodeEditor extends Component {
                   name="path"
                   id="path"
                   onChange={this.handleDirectoryChange}
-                  value={this.props.path} //regex for directory
+                  value={this.props.path}
                   required
-                />
+                />{" "}
+                //regex for directory
                 <AvFeedback>
                   Please enter a valid directory/file path
                 </AvFeedback>
               </AvGroup>
               <FormGroup>
-                <Label for="branch"> Select Branch</Label>
-                <Input type="select" name="select" id="branch-select">
-                  {this.state.branches.map(name => (
-                    <option value={name}>{name}</option>
-                  ))}
-                </Input>
+                <FormGroup>
+                  <Label for="branch">Branch</Label>
+                  <Input plaintext>{this.props.branch}</Input>
+                </FormGroup>
               </FormGroup>
               <AvGroup>
                 <Label for="commit_msg">Commit Message</Label>
