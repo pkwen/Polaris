@@ -18,13 +18,14 @@
     margin: 5px 10px 5px 10px; }
 
 .console .evaluated-code {
-  height: 120px;
+  height: 110px;
   width: 1070px;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 200;
-  color: white;
-  background-color: #21252c;
+  color: darkgrey;
+  background-color: #272922;
   border: 2px solid black;
+  padding-top: 10px;
   padding-left: 10px; }
 
 .navbar-side {
@@ -33,15 +34,16 @@
   height: 700px;
   border-right: 2px solid black;
   border-bottom: 2px solid black;
-  padding-left: 15px;
+  padding-left: 25px;
   padding-right: 0px; }
   .navbar-side h1 {
     color: grey; }
 
 .navbar-top {
-  background: #21252c;
+  background: #272922;
   border-bottom: 2px solid black;
-  height: 60px; }
+  height: 60px;
+  margin-bottom: 0px; }
   .navbar-top h1 {
     color: white; }
   .navbar-top h2 {
@@ -65,6 +67,14 @@ html {
 body {
   background-color: #21252c;
   margin: 0px; }
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px; }
+
+.col-lg-12 {
+  padding-left: 0px;
+  padding-right: 0px; }
 
 .invalid-feedback {
   display: block; }

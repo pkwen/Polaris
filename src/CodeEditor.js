@@ -37,7 +37,10 @@ class CodeEditor extends Component {
     this.state = {
       show_modal: false,
       commit_msg: "",
-      path: this.props.path
+      path: this.props.path,
+      repo: "",
+      directory: "",
+      branches: ["master", "deploy", "QA"]
     };
   }
 
@@ -57,14 +60,13 @@ class CodeEditor extends Component {
     };
     this.socket.onmessage = e => {
       const parsedData = JSON.parse(e.data);
-      //     // console.log(Date.now() + " state change observed");
       this.setState({ value: parsedData });
-      //     // setInterval(this.setState({ value: parsedData }), 500);
+      // setInterval(this.setState({ value: parsedData }), 500);
     };
   }
 
   toggle = () => {
-    console.log("this.props.path: ", this.props.path);
+    // console.log("this.props.path: ", this.props.path);
     this.setState({ show_modal: !this.state.show_modal });
   };
 
@@ -72,23 +74,20 @@ class CodeEditor extends Component {
     this.setState({ commit_msg: e.target.value });
   };
 
-  handlePathChange = e => {
-    this.setState({ path: e.target.value });
+  handleRepoChange = e => {
+    this.setState({ repo: e.target.value });
+  };
+
+  handleDirectoryChange = e => {
+    this.setState({ directory: e.target.value });
   };
 
   onPushToggle = () => {
     console.log("state in CodeEditor: ", this.state);
-    if (this.state.commit_msg) {
-      this.toggle();
-      this.props.onPush(this.state.path, this.state.commit_msg);
-    } else {
-      //show invalid message
-    }
+    this.toggle();
+    this.props.onPush(this.state.path, this.state.commit_msg);
+    //replace this.state.path with a concat of repo and directory to form path
   };
-
-  handleValidSubmit(event, values) {
-    this.setState({ values });
-  }
 
   render() {
     return (
@@ -125,16 +124,37 @@ class CodeEditor extends Component {
           <ModalBody>
             <AvForm onValidSubmit={this.onPushToggle}>
               <AvGroup>
-                <Label for="path">Repository Path</Label>
+                <Label for="path">Repository Name</Label>
                 <AvInput
                   name="path"
                   id="path"
-                  onChange={this.handlePathChange}
-                  value={this.props.path}
+                  onChange={this.handleRepoChange}
+                  value={this.props.path} //regex for repo
                   required
                 />
-                <AvFeedback>Please enter a valid repository path</AvFeedback>
+                <AvFeedback>Please enter a valid repository</AvFeedback>
               </AvGroup>
+              <AvGroup>
+                <Label for="path">Directory/File Path</Label>
+                <AvInput
+                  name="path"
+                  id="path"
+                  onChange={this.handleDirectoryChange}
+                  value={this.props.path} //regex for directory
+                  required
+                />
+                <AvFeedback>
+                  Please enter a valid directory/file path
+                </AvFeedback>
+              </AvGroup>
+              <FormGroup>
+                <Label for="branch"> Select Branch</Label>
+                <Input type="select" name="select" id="branch-select">
+                  {this.state.branches.map(name => (
+                    <option value={name}>{name}</option>
+                  ))}
+                </Input>
+              </FormGroup>
               <AvGroup>
                 <Label for="commit_msg">Commit Message</Label>
                 <AvInput

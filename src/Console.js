@@ -43,8 +43,13 @@ class Console extends Component {
   }
 
   evaluate = () => {
-    let output = eval(this.props.content);
-    this.setState({ evaluated_code: output });
+    try {
+      let output = eval(this.props.content);
+      this.setState({ evaluated_code: output });
+    } catch (error) {
+      let error_msg = `${error.name}: ${error.message}`;
+      this.setState({ evaluated_code: error_msg });
+    }
   };
   clear = () => {
     this.setState({ evaluated_code: "" });

@@ -1,5 +1,4 @@
 $primaryColor: #21252c;
-$marginLeft: 318px;
 .console {
   .console-divider {
     height: 40px;
@@ -17,13 +16,14 @@ $marginLeft: 318px;
   //     background-color: $primaryColor;
   //   }
   .evaluated-code {
-    height: 120px;
+    height: 110px;
     width: 1070px;
-    font-size: 13px;
+    font-size: 16px;
     font-weight: 200;
-    color: white;
-    background-color: $primaryColor;
+    color: darkgrey;
+    background-color: #272922;
     border: 2px solid black;
+    padding-top: 10px;
     padding-left: 10px;
   }
 }

@@ -1,14 +1,14 @@
 $primaryColor: #21252c;
 .navbar-side {
-  overflow: auto;
-  background-color: $primaryColor; // float: left;
-  // float: left;
-  height: 700px;
-  border-right: 2px solid black;
-  border-bottom: 2px solid black; // top: 62px;
-  padding-left: 15px; // height: 708px;
-  padding-right: 0px; // width: 300px;
-  h1 {
-    color: grey;
-  }
+    overflow: auto;
+    background-color: $primaryColor; // float: left;
+    // float: left;
+    height: 700px;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black; // top: 62px;
+    padding-left: 25px; // height: 708px;
+    padding-right: 0px; // width: 300px;
+    h1 {
+        color: grey;
+    }
 }

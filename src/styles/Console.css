@@ -8,11 +8,12 @@
     margin: 5px 10px 5px 10px; }
 
 .console .evaluated-code {
-  height: 120px;
+  height: 110px;
   width: 1070px;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 200;
-  color: white;
-  background-color: #21252c;
+  color: darkgrey;
+  background-color: #272922;
   border: 2px solid black;
+  padding-top: 10px;
   padding-left: 10px; }

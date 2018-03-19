@@ -69,12 +69,12 @@ class App extends Component {
     return (
       <div className="App">
         <div className="row">
-          <div className="col-lg-12">
+          <div className="col-xl-12">
             <NavBarTop />
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3 navbar-side">
+          <div className="col-xl-3 navbar-side">
             <NavBarSide
               token={this.state.token}
               onPull={this.onPull}
@@ -84,7 +84,7 @@ class App extends Component {
               user={this.state.user}
             />
           </div>
-          <div className="col-lg-9 code-editor">
+          <div className="col-xl-9 code-editor">
             <CodeEditor
               onPull={this.onPull}
               onPush={this.onPush}
