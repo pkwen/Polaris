@@ -204,7 +204,7 @@ class TreeFolders extends React.Component {
       //   console.log('Loading children...');
       //   node.loading = false;
       // }
-      setTimeout(this.props.getSha(url), 30000);
+      // setTimeout(this.props.getSha(url), 30000);
     }
     this.setState({ cursor: node });
   }

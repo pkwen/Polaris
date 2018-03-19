@@ -51,19 +51,6 @@ class CodeEditor extends Component {
     this.props.updateState(code);
   };
 
-  componentDidMount() {
-    //   let url = "wss://afternoon-waters-66838.herokuapp.com/";
-    this.socket = new WebSocket("ws://localhost:3001");
-    this.socket.onopen = e => {
-      console.log("opened");
-    };
-    this.socket.onmessage = e => {
-      const parsedData = JSON.parse(e.data);
-      this.setState({ value: parsedData });
-      // setInterval(this.setState({ value: parsedData }), 500);
-    };
-  }
-
   toggle = () => {
     // console.log("this.props.path: ", this.props.path);
     this.setState({ show_modal: !this.state.show_modal });
