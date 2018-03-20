@@ -24,6 +24,7 @@ class NavBarTop extends Component {
           </a>
           <Button
             className="navbar-signout"
+            outline
             color="secondary"
             onClick={this.props.signOut}
             style={{ display: this.props.user ? "block" : "none" }}

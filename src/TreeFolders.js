@@ -53,7 +53,7 @@ class TreeFolders extends React.Component {
       this.syncUserRepos();
     }
     return (
-      <div className="tree-folders">
+      <div id="tree-folders">
         <div className="container">
           <div
             className="spinner"
@@ -72,9 +72,16 @@ class TreeFolders extends React.Component {
         >
           <ModalHeader toggle={this.toggle}>Create new file</ModalHeader>
           <ModalBody>
+            <b>Branch</b>
+            <br />
+            <i>{this.state.node.branch}</i>
+            <br />
             <AvForm onValidSubmit={this.createFile}>
               <AvGroup>
-                <Label for="path">File Name</Label>
+                <Label for="path">
+                  <br />
+                  <b>File Name</b>
+                </Label>
                 <AvInput
                   name="path"
                   id="path"
@@ -84,23 +91,16 @@ class TreeFolders extends React.Component {
                 />{" "}
                 <AvFeedback>Please enter a file name</AvFeedback>
               </AvGroup>
-
-              <FormGroup>
-                <FormGroup>
-                  <Label for="branch">Branch</Label>
-                  <Input plaintext>{this.state.node.branch}</Input>
-                </FormGroup>
-              </FormGroup>
-
-              <FormGroup>
-                <Button color="primary">Create</Button>{" "}
-                <Button color="secondary" onClick={this.toggle}>
-                  Cancel
-                </Button>
-              </FormGroup>
             </AvForm>
           </ModalBody>
-          <ModalFooter />
+          <ModalFooter>
+            <FormGroup>
+              <Button color="success">Create</Button>{" "}
+              <Button color="secondary" onClick={this.toggle}>
+                Cancel
+              </Button>
+            </FormGroup>
+          </ModalFooter>
         </Modal>
       </div>
     );

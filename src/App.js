@@ -107,6 +107,7 @@ class App extends Component {
               onAuth={this.onAuth}
               content={this.state.content}
               path={this.state.path}
+              user={this.state.user}
               token={this.state.token}
               sha={this.state.sha}
               updateState={this.updateState}
@@ -170,7 +171,7 @@ class App extends Component {
       .then(res => {
         console.log(res.content.sha);
         this.setState({ sha: res.content.sha });
-        // console.log(res);
+        console.log("successfully committed");
       })
       .catch(err => console.log(err));
   };
