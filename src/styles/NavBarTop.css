@@ -1,6 +1,7 @@
 .navbar-top {
   background: #272922;
   border-bottom: 2px solid black;
+  box-shadow: 0 8px 6px -6px black;
   height: 60px;
   margin-bottom: 0px; }
   .navbar-top h1 {

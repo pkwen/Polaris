@@ -1,6 +1,7 @@
 .navbar-top {
   background: #272922;
   border-bottom: 2px solid black;
+  box-shadow: 0 8px 6px -6px black;
   height: 60px;
   margin-bottom: 0px; }
   .navbar-top h1 {
@@ -53,7 +54,9 @@
 
 .console .console-divider {
   height: 48px;
-  background-color: black;
+  background-color: #21252c;
+  border-top: 1px solid #21258c;
+  border-bottom: 1px solid #21258c;
   margin-right: 0px; }
   .console .console-divider .run-button {
     margin: 5px 10px 5px 10px; }

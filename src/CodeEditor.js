@@ -111,12 +111,7 @@ class CodeEditor extends Component {
             enableLiveAutocompletion: true
           }}
         />
-        <Button
-          outline
-          color="success"
-          className="commit-push"
-          onClick={this.toggle}
-        >
+        <Button color="success" className="commit-push" onClick={this.toggle}>
           Commit + Push
         </Button>
         <Modal
