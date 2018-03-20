@@ -7,7 +7,8 @@ import Console from "./Console.js";
 import GitHub from "./github.js";
 import Cookies from "universal-cookie";
 
-import "./styles/App.css"; //import App.css which is a compilation of all scss files
+//import App.css which is a compilation of all scss files
+import "./styles/App.css";
 
 const cookies = new Cookies();
 

@@ -18,9 +18,6 @@ const app = express();
 app.use(https).use(helmet());
 
 //cookie sesions
-
-// Application-specific routes
-// Add your own routes here!
 // app.get("/example-path", async (req, res, next) => {
 //   res.json({ message: "Hello World!" });
 // });
@@ -43,14 +40,8 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
     console.error("Failed to connect.");
     throw err;
   }
-
   console.log("Connected to mongodb.");
 
-  // app.get("/danny", (req, res) => {
-  //   // db.collection('rooms').insertOne({ id: 1, creator: 'creator', content: 'content', sha: 'sha', token: 'token' });
-  //   console.log("In");
-  //   res.status(211).send(JSON.stringify("Weird"));
-  // });
   // If no explicit matches were found, serve index.html
   app.get("*", function(req, res) {
     res.sendFile(__dirname + "/build/index.html");
@@ -58,7 +49,6 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 
   app.use(notfound).use(errors);
 
-  //
   // Create the WebSockets server
   const server = http.createServer(app);
   var serverOnPort = server.listen(PORT);
@@ -106,10 +96,8 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   // load each room's info into server
   const syncServer = res => {
     if (err) throw new Error("Database sync failed.");
-    // console.log(res);
     res.forEach(room => {
       codebase[room.roomID] = room;
-      // console.log('Current Room: ', codebase)
     });
   };
 
@@ -234,8 +222,6 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
       // });
     });
   });
-
-  //
 
   // app.listen(PORT, () => console.log(`Listening on ${PORT}`));
   server.listen(PORT, () => console.log(`Listening on ${PORT}`));

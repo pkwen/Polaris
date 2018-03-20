@@ -4,25 +4,25 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
-  Form,
+  // ModalFooter,
+  // Form,
   FormGroup,
-  Label,
-  Input,
-  FormText,
-  FormFeedback
+  Label
+  // Input,
+  // FormText,
+  // FormFeedback
 } from "reactstrap";
 
 import {
   AvForm,
-  AvField,
+  // AvField,
   AvGroup,
   AvInput,
   AvFeedback
 } from "availity-reactstrap-validation";
 
 import AceEditor from "react-ace";
-import brace from "brace";
+// import brace from "brace";
 import "brace/ext/language_tools";
 import "brace/mode/javascript";
 import "brace/theme/monokai";
@@ -119,7 +119,7 @@ class CodeEditor extends Component {
           toggle={this.toggle}
           className="commit"
         >
-          <ModalHeader toggle={this.toggle}>Commit - Details</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Commit/Push - Details</ModalHeader>
           <ModalBody>
             <b>Repo</b>
             <br />
@@ -163,8 +163,8 @@ class CodeEditor extends Component {
           <ModalBody>
             Successfully committed and pushed to GitHub!
             <FormGroup>
+              <br />
               <Button color="secondary" onClick={this.toggleSuccess}>
-                <br />
                 Close
               </Button>
             </FormGroup>

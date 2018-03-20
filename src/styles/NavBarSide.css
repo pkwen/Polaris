@@ -4,8 +4,11 @@
   height: 700px;
   border-right: 2px solid black;
   border-bottom: 2px solid black;
-  padding-left: 25px;
+  padding-left: 0px;
   padding-right: 0px; }
+  .navbar-side .side-login {
+    margin-top: 180px; }
   .navbar-side .fa-github {
     color: white;
-    font-size: 70px; }
+    margin-bottom: 8px;
+    font-size: 100px; }

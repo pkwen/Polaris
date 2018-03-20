@@ -4,14 +4,16 @@ import { Button } from "reactstrap";
 
 class NavBarSide extends Component {
   render() {
-    const isLoggedIn = this.props.token;
+    let clientCode = window.location.href.match(/\?code=(.*)/);
+    const isLoggedIn = this.props.user;
     return (
       <div>
-        {isLoggedIn ? (
+        {clientCode || isLoggedIn ? (
           <p />
         ) : (
-          <div>
+          <div className="side-login text-center">
             <i className="fab fa-github" />
+            <br />
             <Button
               outline
               color="secondary"
@@ -22,16 +24,17 @@ class NavBarSide extends Component {
             </Button>
           </div>
         )}
-
-        <TreeFolders
-          token={this.props.token}
-          onPull={this.props.onPull}
-          getSha={this.props.getSha}
-          setBranch={this.props.setBranch}
-          newFile={this.props.newFile}
-          updateState={this.props.updateState}
-          user={this.props.user}
-        />
+        <div className="tree-folders">
+          <TreeFolders
+            token={this.props.token}
+            onPull={this.props.onPull}
+            getSha={this.props.getSha}
+            setBranch={this.props.setBranch}
+            newFile={this.props.newFile}
+            updateState={this.props.updateState}
+            user={this.props.user}
+          />
+        </div>
       </div>
     );
   }

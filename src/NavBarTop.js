@@ -6,8 +6,6 @@ class NavBarTop extends Component {
     const clientID = "2437e80c83661e9e530f";
     return (
       <div className="navbar-top">
-        {/* <h1>This is NavBarTop h1</h1>
-        <h2>This is NavBarTop h2</h2> */}
         <nav>
           <a href="/" className="navbar-logo">
             Logo Here
@@ -19,9 +17,7 @@ class NavBarTop extends Component {
             }
             className="navbar-login"
             style={{ display: this.props.user ? "none" : "block" }}
-          >
-            {/* <img src="/assets/github_signin_logo.jpg" /> */}
-          </a>
+          />
           <Button
             className="navbar-signout"
             outline

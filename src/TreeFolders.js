@@ -1,6 +1,6 @@
 import React from "react";
 import { Treebeard } from "react-treebeard";
-import { Base64 } from "js-base64";
+// import { Base64 } from "js-base64";
 import GitHub from "./github.js";
 
 import {
@@ -9,17 +9,12 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Form,
   FormGroup,
-  Label,
-  Input,
-  FormText,
-  FormFeedback
+  Label
 } from "reactstrap";
 
 import {
   AvForm,
-  AvField,
   AvGroup,
   AvInput,
   AvFeedback
@@ -53,7 +48,7 @@ class TreeFolders extends React.Component {
       this.syncUserRepos();
     }
     return (
-      <div id="tree-folders">
+      <div className="tree-folders">
         <div className="container">
           <div
             className="spinner"
@@ -107,7 +102,6 @@ class TreeFolders extends React.Component {
   }
 
   toggle = () => {
-    // console.log("this.props.path: ", this.props.path);
     this.setState({ show_modal: !this.state.show_modal });
   };
 
@@ -132,16 +126,9 @@ class TreeFolders extends React.Component {
     let url = parentPath.match(/\/$/)
       ? `${parentPath}${file.name}`
       : `${parentPath}/${file.name}`;
-    // url += `?ref=${node.branch}`
     file.path = `${this.state.node.path}/${file.name}`;
     await this.props.newFile(url, "initial commit", this.state.node.branch);
-    // await this.props.newFile(url, "initial commit", node.branch);
     this.attachChild(this.state.data, this.state.node.parent, file);
-    // let children = await GitHub.accessElement(node.fullName, node.path);
-    // if (await this.attachChildren(this.state.data, node.parent, children)) {
-    //   console.log('Loading children...');
-    //   node.loading = false;
-    // }
     this.setState({ node: this.state.node });
     // setTimeout(this.props.getSha(url), 30000);
   };
@@ -208,7 +195,6 @@ class TreeFolders extends React.Component {
     if (this.state.cursor) {
       this.state.cursor.active = false;
     }
-    // console.log(node);
     node.active = true;
     if (node.children) {
       node.toggled = toggled;
