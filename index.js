@@ -189,7 +189,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
     ws.send(JSON.stringify(codebase[ws.roomID]));
     ws.on("message", message => {
       const newMsg = JSON.parse(message);
-      if (!newMsg.type && (newMsg.content || newMsg.content === "")) {
+      if (!newMsg.type && newMsg.content !== undefined)) {
         codebase[newMsg.roomID].content = newMsg.content;
         if (newMsg.sha) {
           codebase[newMsg.roomID].sha = newMsg.sha;
