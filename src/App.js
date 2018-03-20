@@ -46,7 +46,7 @@ class App extends Component {
     }
     //websocket
     //https://enigmatic-woodland-25659.herokuapp.com/
-    this.socket = new WebSocket("ws:localhost:3001");
+    this.socket = new WebSocket("wss://warm-plateau-87726.herokuapp.com/");
     this.socket.onopen = e => {
       console.log("opened");
       let roomed = window.location.href.match(/room\/(.*)/);
