@@ -10,7 +10,7 @@ const SocketServer = WebSocket.Server;
 const uuidv1 = require("uuid/v1");
 const MongoClient = require("mongodb").MongoClient;
 const MONGODB_URI =
-  "mongodb://heroku_nz74nszl:march142018@ds125555.mlab.com:25555/heroku_nz74nszl";
+  "mongodb://heroku_gzrz45rc:qj6deuc7i8bf0iaklikem8fql9@ds125555.mlab.com:25555/heroku_gzrz45rc";
 //
 
 const app = express();
