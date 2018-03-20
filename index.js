@@ -9,7 +9,8 @@ const WebSocket = require("ws");
 const SocketServer = WebSocket.Server;
 const uuidv1 = require("uuid/v1");
 const MongoClient = require("mongodb").MongoClient;
-const MONGODB_URI = "mongodb://localhost:27017/polaris";
+const MONGODB_URI =
+  "mongodb://heroku_nz74nszl:march142018@ds125555.mlab.com:25555/heroku_nz74nszl";
 //
 
 const app = express();
