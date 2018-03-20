@@ -9,7 +9,7 @@
     "helmet": "^3.8.1",
     "js-base64": "^2.4.3",
     "monaco-editor": "^0.10.1",
-    "mongodb": "^3.0.4",
+    "mongodb": "^2.2.33",
     "node-sass-chokidar": "^1.1.0",
     "npm-run-all": "^4.1.2",
     "passport": "^0.4.0",

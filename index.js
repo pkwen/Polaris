@@ -8,8 +8,8 @@ const http = require("http");
 const WebSocket = require("ws");
 const SocketServer = WebSocket.Server;
 const uuidv1 = require("uuid/v1");
-// const MongoClient = require("mongodb").MongoClient;
-// const MONGODB_URI = "mongodb://localhost:27017/polaris";
+const MongoClient = require("mongodb").MongoClient;
+const MONGODB_URI = "mongodb://localhost:27017/polaris";
 //
 
 const app = express();
@@ -24,134 +24,222 @@ app.use(https).use(helmet());
 // app.get("/example-path", async (req, res, next) => {
 //   res.json({ message: "Hello World!" });
 // });
-app.get("/token/:id", (req, res) => {
-  req.session.token = req.params.id;
-  console.log(req.session);
-  res.send(
-    JSON.stringify({
-      token: req.session.token
-    })
-  );
-});
+// app.get("/token/:id", (req, res) => {
+//   req.session.token = req.params.id;
+//   console.log(req.session);
+//   res.send(
+//     JSON.stringify({
+//       token: req.session.token
+//     })
+//   );
+// });
 
 // Serve static assets built by create-react-app
 app.use(express.static("build"));
 
 //connect to mongodb
-// MongoClient.connect(MONGODB_URI, (err, db) => {
-//   if(err) {
-//     console.error('Failed to connect.');
-//     throw err;
-//   }
-
-//   console.log('Connected to mongodb.');
-
-app.get("/danny", (req, res) => {
-  // db.collection('rooms').insertOne({ id: 1, creator: 'creator', content: 'content', sha: 'sha', token: 'token' });
-  console.log("In");
-  res.status(211).send(JSON.stringify("Weird"));
-});
-// If no explicit matches were found, serve index.html
-app.get("*", function(req, res) {
-  res.sendFile(__dirname + "/build/index.html");
-});
-
-app.use(notfound).use(errors);
-
-//
-// Create the WebSockets server
-const server = http.createServer(app);
-var serverOnPort = server.listen(PORT);
-const wss = new SocketServer({ server: serverOnPort });
-
-// Set up a callback that will run when a client connects to the server
-// When a client connects they are assigned a socket, represented by
-// the ws parameter in the callback.
-
-// let userCount = 0;
-
-// wss.on("connection", ws => {
-//   console.log("Client connected");
-
-//   userCount++;
-//   console.log("userCount:", userCount);
-
-//   //add userCount (to parsedMessage) to be passed to each client
-//   let userCountObj = {
-//     type: "userCount",
-//     userCount: userCount
-//   };
-
-//   console.log("userCountObj:", userCountObj);
-
-//send message to client (userCount number)
-var codebase = {
-  // id: "",
-  polaris: {
-    content: `
-      Welcome to Polaris.
-      Please log in with your GitHub account.
-      `
+MongoClient.connect(MONGODB_URI, (err, db) => {
+  if (err) {
+    console.error("Failed to connect.");
+    throw err;
   }
-};
-wss.on("connection", ws => {
-  console.log("Client connected");
-  ws.roomID = "polaris";
-  ws.send(JSON.stringify(codebase[ws.roomID]));
-  ws.on("message", message => {
-    const newMsg = JSON.parse(message);
-    if (!newMsg.type && newMsg.content) {
-      codebase[newMsg.roomID].content = newMsg.content;
-      if(newMsg.sha) {
-        codebase[newMsg.roomID].sha = newMsg.sha;
-      }
-      if(newMsg.branch) {
-        codebase[newMsg.roomID].branch = newMsg.branch;
-      }
-      // console.log(wss.clients);
-      wss.clients.forEach(function each(client) {
-        if (
-          client !== ws &&
-          client.readyState === ws.OPEN &&
-          client.roomID === ws.roomID
-        ) {
-          client.send(JSON.stringify(codebase[newMsg.roomID]));
-        }
-      });
-    } else if (newMsg.type === "system") {
-      ws.roomID = newMsg.roomID;
-      if (codebase[ws.roomID]) {
-      } else {
-        codebase[ws.roomID] = {
-          content: ""
-        };
-      }
-      ws.send(JSON.stringify(codebase[ws.roomID]));
-      console.log(ws.roomID);
+
+  console.log("Connected to mongodb.");
+
+  // app.get("/danny", (req, res) => {
+  //   // db.collection('rooms').insertOne({ id: 1, creator: 'creator', content: 'content', sha: 'sha', token: 'token' });
+  //   console.log("In");
+  //   res.status(211).send(JSON.stringify("Weird"));
+  // });
+  // If no explicit matches were found, serve index.html
+  app.get("*", function(req, res) {
+    res.sendFile(__dirname + "/build/index.html");
+  });
+
+  app.use(notfound).use(errors);
+
+  //
+  // Create the WebSockets server
+  const server = http.createServer(app);
+  var serverOnPort = server.listen(PORT);
+  const wss = new SocketServer({ server: serverOnPort });
+
+  //send message to client (userCount number)
+  var codebase = {
+    polaris: {
+      roomID: "polaris",
+      content: `
+            Welcome to Polaris.
+            Please log in with your GitHub account.
+            `,
+      sha: "randomString",
+      branch: "master"
+    },
+
+    danny: {
+      roomID: "danny",
+      content: "ugh... just lemme get five more minutes...",
+      sha: "unbruteforceablehash"
+    },
+
+    michael: {
+      roomID: "michael",
+      content: "vancouver > toronto, apparently",
+      sha: "plsdontnameme"
     }
+  };
+  // initiate database with sample data
+  // for(let i in codebase) {
+  //   db.collection('rooms').insertOne(codebase[i]);
+  // }
+
+  // find all rooms in mongo collection
+  const findAllRooms = callback => {
+    db
+      .collection("rooms")
+      .find({})
+      .toArray((err, res) => {
+        callback(res);
+      });
+  };
+
+  // load each room's info into server
+  const syncServer = res => {
+    if (err) throw new Error("Database sync failed.");
+    // console.log(res);
+    res.forEach(room => {
+      codebase[room.roomID] = room;
+      // console.log('Current Room: ', codebase)
+    });
+  };
+
+  // load all rooms from mongo to codebase variable
+  findAllRooms(syncServer);
+  setTimeout(() => {
+    console.log(codebase);
+  }, 2000);
+
+  const intervalSync = callback => {
+    for (let j in codebase) {
+      if (codebase[j].content) {
+        db
+          .collection("rooms")
+          .update({ roomID: codebase[j].roomID }, codebase[j], {
+            upsert: true
+          });
+      }
+    }
+    callback(null, true);
+    console.log("Data back-up sync complete.");
+  };
+
+  setInterval(() => {
+    intervalSync(err => {
+      console.log(err);
+    });
+  }, 60000);
+
+  // const getRoom = (roomID, callback) => {
+  //   db.collection('rooms').find({ roomID: roomID }).toArray((err, res) => {
+  //     callback(err, res);
+  //   });
+  // };
+
+  // const saveRoom = (room, callback) => {
+  //   db.collection('rooms').insertOne(room);
+  //   callback(null, true);
+  // }
+
+  // const syncContent = (roomID, change, callback) => {
+  //   db.collection('rooms').update({ roomID: roomID }, { $set: { content: change.content }});
+  //   callback(null, true);
+  // }
+
+  // const syncBranch = (roomID, change, callback) => {
+  //   db
+  //     .collection("rooms")
+  //     .update(
+  //       { roomID: roomID },
+  //       { $set: { branch: change.branch } }
+  //     );
+  //     callback(null, true);
+  // }
+
+  // const syncSha = (roomID, change, callback) => {
+  //   db
+  //     .collection("rooms")
+  //     .update(
+  //       { roomID: roomID },
+  //       { $set: { sha: change.sha } }
+  //     );
+  //     callback(null, true);
+  // };
+
+  // const collection = db.collection('rooms');
+  // collection.insert(codebase.polaris, (err, res) => {
+  //   collection.find().toArray((err, res) => {
+  //     console.log(res);
+  //   });
+  // });
+
+  wss.on("connection", ws => {
+    console.log("Client connected");
+    ws.roomID = "polaris";
+    ws.send(JSON.stringify(codebase[ws.roomID]));
+    ws.on("message", message => {
+      const newMsg = JSON.parse(message);
+      if (!newMsg.type && newMsg.content) {
+        codebase[newMsg.roomID].content = newMsg.content;
+        if (newMsg.sha) {
+          codebase[newMsg.roomID].sha = newMsg.sha;
+        }
+        if (newMsg.branch) {
+          codebase[newMsg.roomID].branch = newMsg.branch;
+        }
+        // console.log(wss.clients);
+        wss.clients.forEach(function each(client) {
+          if (
+            client !== ws &&
+            client.readyState === ws.OPEN &&
+            client.roomID === ws.roomID
+          ) {
+            client.send(JSON.stringify(codebase[newMsg.roomID]));
+          }
+        });
+      } else if (newMsg.type === "system") {
+        ws.roomID = newMsg.roomID;
+        if (codebase[ws.roomID]) {
+        } else {
+          codebase[ws.roomID] = {
+            roomID: ws.roomID,
+            content: "",
+            sha: ""
+          };
+        }
+        ws.send(JSON.stringify(codebase[ws.roomID]));
+      }
+    });
+
+    //error catcher
+    ws.on("error", () => console.log("errored"));
+
+    // Set up a callback for when a client closes the socket. This usually means they closed their browser.
+    ws.on("close", () => {
+      console.log("Client disconnected");
+      // const msg = { name: username, type: 'incomingLogOut', userCount: wss.clients.size, id: uuidv4() };
+      // wss.clients.forEach(function each(client) {
+      //   if (client !== ws && client.readyState === ws.OPEN) {
+      //     client.send(JSON.stringify(msg));
+      //   }
+      // });
+    });
   });
 
-  //error catcher
-  ws.on("error", () => console.log("errored"));
+  //
 
-  // Set up a callback for when a client closes the socket. This usually means they closed their browser.
-  ws.on("close", () => {
-    console.log("Client disconnected");
-    // const msg = { name: username, type: 'incomingLogOut', userCount: wss.clients.size, id: uuidv4() };
-    // wss.clients.forEach(function each(client) {
-    //   if (client !== ws && client.readyState === ws.OPEN) {
-    //     client.send(JSON.stringify(msg));
-    //   }
-    // });
-  });
+  // app.listen(PORT, () => console.log(`Listening on ${PORT}`));
+  server.listen(PORT, () => console.log(`Listening on ${PORT}`));
 });
-
-//
-
-// app.listen(PORT, () => console.log(`Listening on ${PORT}`));
-server.listen(PORT, () => console.log(`Listening on ${PORT}`));
-
-// });
 
 function https(req, res, next) {
   if (process.env.NODE_ENV === "production") {

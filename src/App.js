@@ -45,6 +45,7 @@ class App extends Component {
       this.onAuth();
     }
     //websocket
+    //https://enigmatic-woodland-25659.herokuapp.com/
     this.socket = new WebSocket("ws:localhost:3001");
     this.socket.onopen = e => {
       console.log("opened");
@@ -64,6 +65,8 @@ class App extends Component {
       );
     };
     this.socket.onmessage = e => {
+      console.log("e.data:", e.data);
+      console.log("e.data(parsed):", JSON.parse(e.data));
       const parsedData = JSON.parse(e.data);
       if (parsedData.content) {
         this.setState({ content: parsedData.content });
@@ -165,7 +168,8 @@ class App extends Component {
       this.state.branch
     )
       .then(res => {
-        // this.setState({ sha: Base64.decode(res.sha) });
+        console.log(res.content.sha);
+        this.setState({ sha: res.content.sha });
         // console.log(res);
       })
       .catch(err => console.log(err));
