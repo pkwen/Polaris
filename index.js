@@ -59,10 +59,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   var codebase = {
     polaris: {
       roomID: "polaris",
-      content: `
-            Welcome to Polaris.
-            Please log in with your GitHub account.
-            `,
+      content: "Welcome to Polaris.Please log in with your GitHub account.",
       sha: "randomString",
       branch: "master"
     },

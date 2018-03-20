@@ -159,9 +159,9 @@ class CodeEditor extends Component {
           toggle={this.toggleSuccess}
           className="success_modal"
         >
-          <ModalHeader toggle={this.toggleSuccess} />
+          <ModalHeader toggle={this.toggleSuccess}> Success </ModalHeader>
           <ModalBody>
-            Successfully committed and pushed to GitHub!
+            Committed and pushed to GitHub!
             <FormGroup>
               <br />
               <Button color="secondary" onClick={this.toggleSuccess}>

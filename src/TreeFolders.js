@@ -86,16 +86,14 @@ class TreeFolders extends React.Component {
                 />{" "}
                 <AvFeedback>Please enter a file name</AvFeedback>
               </AvGroup>
+              <FormGroup>
+                <Button color="success">Create</Button>{" "}
+                <Button color="secondary" onClick={this.toggle}>
+                  Cancel
+                </Button>
+              </FormGroup>
             </AvForm>
           </ModalBody>
-          <ModalFooter>
-            <FormGroup>
-              <Button color="success">Create</Button>{" "}
-              <Button color="secondary" onClick={this.toggle}>
-                Cancel
-              </Button>
-            </FormGroup>
-          </ModalFooter>
         </Modal>
       </div>
     );
