@@ -1,1 +1,0 @@
-Michael made us sit in the kids section
