@@ -29,6 +29,9 @@
   border-bottom: 2px solid black;
   padding-left: 25px;
   padding-right: 0px; }
+  .navbar-side .fa-github {
+    color: white;
+    font-size: 70px; }
 
 .tree-folders h1 {
   color: green; }
@@ -37,14 +40,19 @@
   margin: 0px; }
 
 .code-editor {
+  font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
   padding-left: 0px;
   padding-right: 0px; }
   .code-editor .commit-push {
     float: right;
+    margin-top: 5px;
     margin-right: 10px; }
 
+.ace_editor {
+  font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace; }
+
 .console .console-divider {
-  height: 40px;
+  height: 48px;
   background-color: black;
   margin-right: 0px; }
   .console .console-divider .run-button {
@@ -54,11 +62,12 @@
 
 .console .evaluated-code {
   height: 110px;
-  font-size: 16px;
+  font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
   font-weight: 200;
   color: darkgrey;
   background-color: #272922;
-  border: 2px solid black;
+  border-bottom: 2px solid black;
+  border-right: 2px solid black;
   padding-top: 10px;
   padding-left: 10px;
   margin-right: 0px; }
@@ -75,6 +84,7 @@ body {
   margin-right: 0px; }
 
 .col-xl-12 {
+  height: 60px;
   padding-left: 0px;
   padding-right: 0px; }
 

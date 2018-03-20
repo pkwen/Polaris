@@ -97,7 +97,7 @@ class CodeEditor extends Component {
           theme="monokai"
           font-family="Roboto Mono"
           width="1080px"
-          height="550px"
+          height="542px"
           focus={true}
           onChange={this.onChange}
           value={this.props.content}
@@ -111,7 +111,12 @@ class CodeEditor extends Component {
             enableLiveAutocompletion: true
           }}
         />
-        <Button color="success" className="commit-push" onClick={this.toggle}>
+        <Button
+          outline
+          color="success"
+          className="commit-push"
+          onClick={this.toggle}
+        >
           Commit + Push
         </Button>
         <Modal

@@ -5,14 +5,20 @@
 //   font-family: monospace !important;
 // }
 #brace-editor {
-  margin: 0px;
+    margin: 0px;
 }
 
 .code-editor {
-  padding-left: 0px;
-  padding-right: 0px;
-  .commit-push {
-    float: right;
-    margin-right: 10px;
-  }
+    font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
+    padding-left: 0px;
+    padding-right: 0px;
+    .commit-push {
+        float: right;
+        margin-top: 5px;
+        margin-right: 10px;
+    }
+}
+
+.ace_editor {
+    font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
 }

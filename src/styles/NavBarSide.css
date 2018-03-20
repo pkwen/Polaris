@@ -6,3 +6,6 @@
   border-bottom: 2px solid black;
   padding-left: 25px;
   padding-right: 0px; }
+  .navbar-side .fa-github {
+    color: white;
+    font-size: 70px; }

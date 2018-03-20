@@ -2,8 +2,13 @@
   margin: 0px; }
 
 .code-editor {
+  font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
   padding-left: 0px;
   padding-right: 0px; }
   .code-editor .commit-push {
     float: right;
+    margin-top: 5px;
     margin-right: 10px; }
+
+.ace_editor {
+  font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace; }

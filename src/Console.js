@@ -13,6 +13,7 @@ class Console extends Component {
       <div className="console">
         <div className="console-divider">
           <Button
+            outline
             color="secondary"
             className="run-button"
             onClick={this.evaluate}
@@ -20,6 +21,7 @@ class Console extends Component {
             Run
           </Button>
           <Button
+            outline
             color="secondary"
             className="clear-button"
             onClick={this.clear}
