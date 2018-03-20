@@ -9,7 +9,8 @@ const WebSocket = require("ws");
 const SocketServer = WebSocket.Server;
 const uuidv1 = require("uuid/v1");
 const MongoClient = require("mongodb").MongoClient;
-const MONGODB_URI = "mongodb://localhost:27017/polaris";
+const MONGODB_URI =
+  "mongodb://heroku_gzrz45rc:qj6deuc7i8bf0iaklikem8fql9@ds125555.mlab.com:25555/heroku_gzrz45rc";
 //
 
 const app = express();
@@ -176,7 +177,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
     ws.send(JSON.stringify(codebase[ws.roomID]));
     ws.on("message", message => {
       const newMsg = JSON.parse(message);
-      if (!newMsg.type && newMsg.content) {
+      if (!newMsg.type && (newMsg.content || newMsg.content === "")) {
         codebase[newMsg.roomID].content = newMsg.content;
         if (newMsg.sha) {
           codebase[newMsg.roomID].sha = newMsg.sha;
