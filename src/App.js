@@ -53,7 +53,12 @@ class App extends Component {
       let roomed = window.location.href.match(/room\/(.*)/);
       let roomID = roomed ? roomed[1] : generateRandomString();
       this.setState({ roomID: roomID });
-      window.history.replaceState("", "", `https://warm-plateau-87726.herokuapp.com/room/${roomID}`);
+      // window.history.replaceState("", "", `https://warm-plateau-87726.herokuapp.com/room/${roomID}`);
+      window.history.replaceState(
+        "",
+        "",
+        `http://localhost:3000/room/${roomID}`
+      );
       this.socket.send(
         JSON.stringify({
           type: "system",
@@ -223,7 +228,10 @@ class App extends Component {
     this.setState({ token: "", user: "" });
     cookies.remove("user");
     cookies.remove("token");
-    setTimeout(window.location.assign("https://warm-plateau-87726.herokuapp.com/"), 1000);
+    setTimeout(
+      window.location.assign("https://warm-plateau-87726.herokuapp.com/"),
+      1000
+    );
   };
 
   //called when code in editor is updated to broadcast change to all connected users in real time
