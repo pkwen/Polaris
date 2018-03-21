@@ -29,7 +29,7 @@ class App extends Component {
     //get github verification code from url
     let gitToken = cookies.get("token");
     let username = cookies.get("user");
-    console.log(gitToken);
+    // console.log(gitToken);
     if (gitToken) {
       this.setState({ token: gitToken, user: username });
       console.log(this.state);

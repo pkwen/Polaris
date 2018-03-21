@@ -10,6 +10,14 @@ class NavBarTop extends Component {
           <a href="/" className="navbar-logo">
             Logo Here
           </a>
+          <Button
+            outline
+            color="secondary"
+            className="navbar-login"
+            onClick={this.githubRedirect}
+          >
+            <i className="fab fa-github" />
+          </Button>
           <a
             href={
               "https://github.com/login/oauth/authorize?scope=repo&client_id=" +
@@ -32,6 +40,13 @@ class NavBarTop extends Component {
       </div>
     );
   }
+
+  githubRedirect = () => {
+    const clientID = "2437e80c83661e9e530f";
+    window.location =
+      "https://github.com/login/oauth/authorize?scope=repo&client_id=" +
+      clientID;
+  };
 }
 
 export default NavBarTop;

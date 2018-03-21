@@ -26,8 +26,8 @@ class TreeFolders extends React.Component {
     this.state = {
       owner: "",
       loaded: false,
+      // spinner: false,
       data: {},
-      spinner: false,
       cursor: {
         active: true
       },
@@ -40,7 +40,10 @@ class TreeFolders extends React.Component {
 
   componentWillMount() {
     let clientCode = window.location.href.match(/\?code=(.*)/);
-    if (!this.state.spinner && clientCode) this.setState({ spinner: true });
+    if (!this.state.spinner && clientCode) {
+      this.props.toggleSpinner();
+      console.log("toggled spinner at CWM");
+    }
   }
 
   render() {
@@ -49,12 +52,12 @@ class TreeFolders extends React.Component {
     }
     return (
       <div>
-        <div className="container">
+        {/* <div className="container">
           <div
             className="spinner"
             style={{ display: this.state.spinner ? "block" : "none" }}
           />
-        </div>
+        </div> */}
         <Treebeard
           data={this.state.data}
           onToggle={this.onToggle}
@@ -253,11 +256,14 @@ class TreeFolders extends React.Component {
 
   //list all repos upon successful login
   async syncUserRepos() {
-    this.setState({
-      data: await GitHub.listRepos(this.props.user, this.props.token),
-      loaded: true,
-      spinner: false
-    });
+    this.setState(
+      {
+        loaded: true,
+        data: await GitHub.listRepos(this.props.user, this.props.token)
+        // spinner: false
+      },
+      this.props.toggleSpinner()
+    );
   }
 }
 

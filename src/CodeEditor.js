@@ -105,6 +105,7 @@ class CodeEditor extends Component {
           width="1080px"
           height="542px"
           focus={true}
+          wrapEnabled={true}
           onChange={this.onChange}
           value={this.props.content}
           editorProps={{ $blockScrolling: true }}
