@@ -165,13 +165,14 @@ class TreeFolders extends React.Component {
         ? `${this.state.node.path}${file.name}`
         : `${this.state.node.path}/${file.name}`;
     await this.props.newFile(url, "initial commit", this.state.node.branch);
-    this.attachChild(this.state.data, this.state.node.parent, file);
-    this.setState({ node: this.state.node });
+    await this.attachChild(this.state.data, this.state.node.parent, file);
+    this.setState({ data: this.state.data });
     // setTimeout(this.props.getSha(url), 30000);
   };
 
   //find parent node and add newly created child
   attachChild(data, name, child) {
+    child.type = "file";
     if (data.children) {
       loop: for (const i of data.children) {
         if (i.name === name) {
@@ -183,7 +184,7 @@ class TreeFolders extends React.Component {
                 break loop;
               }
             }
-            i.children.splice(i.children.length - 1, 0, child);
+            i.children.splice(i.children.length, 0, child);
           } else {
             i.children = [child];
           }
@@ -229,6 +230,7 @@ class TreeFolders extends React.Component {
 
   //when navigator tree is clicked, make api calls to github and render children of target
   async onToggle(node, toggled) {
+    console.log(node);
     if(node.type === "root") {
       return;
     }

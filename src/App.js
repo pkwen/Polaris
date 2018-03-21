@@ -46,15 +46,15 @@ class App extends Component {
       this.onAuth();
     }
     //websocket
-    //https://enigmatic-woodland-25659.herokuapp.com/
     this.socket = new WebSocket("wss://polaris-editor.herokuapp.com");
+    // this.socket = new WebSocket("ws://localhost:3001");
     this.socket.onopen = e => {
       console.log("opened");
       let roomed = window.location.href.match(/room\/(.*)/);
       let roomID = roomed ? roomed[1] : generateRandomString();
       this.setState({ roomID: roomID });
       window.history.replaceState("", "", `https://polaris-editor.herokuapp.com/room/${roomID}`);
-      // window.history.replaceState("", "", `https://warm-plateau-87726.herokuapp.com/room/${roomID}`);
+      // window.history.replaceState("", "", `http://localhost:3000/room/${roomID}`);
       this.socket.send(
         JSON.stringify({
           type: "system",
