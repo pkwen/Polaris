@@ -11,10 +11,12 @@
     float: left; }
   .navbar-top .github-button {
     float: right;
+    width: 120px;
     margin-right: 20px;
     margin-top: 10px; }
   .navbar-top .btn.navbar-signout {
     float: right;
+    width: 120px;
     margin-right: 20px;
     margin-top: 10px; }
 
@@ -62,8 +64,8 @@
 .console .console-divider {
   height: 48px;
   background-color: #21252c;
-  border-top: 1px solid #21258c;
-  border-bottom: 1px solid #21258c;
+  border-top: 1px solid #191919;
+  border-bottom: 1px solid #191919;
   margin-right: 0px; }
   .console .console-divider .run-button {
     margin: 4px 5px 5px 5px; }

@@ -11,9 +11,11 @@
     float: left; }
   .navbar-top .github-button {
     float: right;
+    width: 120px;
     margin-right: 20px;
     margin-top: 10px; }
   .navbar-top .btn.navbar-signout {
     float: right;
+    width: 120px;
     margin-right: 20px;
     margin-top: 10px; }
