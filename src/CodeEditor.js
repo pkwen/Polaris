@@ -7,6 +7,7 @@ import {
   // ModalFooter,
   // Form,
   FormGroup,
+  Tooltip,
   Label
   // Input,
   // FormText,
@@ -38,6 +39,7 @@ class CodeEditor extends Component {
       show_modal: false,
       show_success: false,
       commit_msg: "",
+      tooltipOpen: false,
       repo: "",
       directory: "",
       branch: ["master", "deploy", "QA"]
@@ -55,6 +57,11 @@ class CodeEditor extends Component {
   toggle = () => {
     console.log("this.props.path: ", this.props.path);
     this.setState({ show_modal: !this.state.show_modal });
+  };
+
+  toggleTooltip = () => {
+    // console.log("this.props.path: ", this.props.path);
+    this.setState({ tooltipOpen: !this.state.tooltipOpen });
   };
 
   toggleSuccess = () => {
@@ -133,7 +140,18 @@ class CodeEditor extends Component {
               <AvGroup>
                 <Label for="commit_msg">
                   <br />
-                  <b>Commit Message</b>
+                  <b>Commit Message</b>{" "}
+                  <a href="#" id="commit-tooltip">
+                    <i class="fas fa-info-circle" />
+                  </a>
+                  <Tooltip
+                    placement="right"
+                    isOpen={this.state.tooltipOpen}
+                    target="commit-tooltip"
+                    toggle={this.toggleTooltip}
+                  >
+                    A commit message is mandatory
+                  </Tooltip>
                 </Label>
                 <AvInput
                   name="commit_msg"

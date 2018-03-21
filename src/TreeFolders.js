@@ -48,7 +48,7 @@ class TreeFolders extends React.Component {
       this.syncUserRepos();
     }
     return (
-      <div className="tree-folders">
+      <div>
         <div className="container">
           <div
             className="spinner"
