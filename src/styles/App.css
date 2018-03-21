@@ -65,9 +65,9 @@
   border-bottom: 1px solid black;
   margin-right: 0px; }
   .console .console-divider .run-button {
-    margin: 5px 10px 5px 10px; }
+    margin: 5px 5px 5px 5px; }
   .console .console-divider .clear-button {
-    margin: 5px 10px 5px 10px; }
+    margin: 5px 5px 5px 5px; }
 
 .console .evaluated-code {
   height: 110px;
