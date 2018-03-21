@@ -1,5 +1,5 @@
 import React from "react";
-import { Treebeard } from "react-treebeard";
+import { Treebeard, decorators } from "react-treebeard";
 // import { Base64 } from "js-base64";
 import GitHub from "./github.js";
 import Cookies from "universal-cookie";
@@ -19,6 +19,38 @@ import {
   AvInput,
   AvFeedback
 } from "availity-reactstrap-validation";
+
+
+// Example: Customising The Header Decorator To Include Icons
+decorators.Header = ({style, node}) => {
+  var iconType = ""
+    switch (node.type) {
+      case "root": iconType = "far fa-user";
+        break;
+      case "branch": iconType = "fas fa-code-branch";
+        break;
+      case "dir": iconType = "far fa-folder";
+        break;
+      case "file": iconType = "far fa-file-alt";
+        break;
+      case "new": iconType = "fas fa-plus";
+        break;
+      default: break;
+    }
+    const iconClass = `${iconType}`;
+    const iconStyle = {marginRight: '5px'};
+
+    return (
+        <div style={style.base}>
+            <div style={style.title}>
+                <i className={iconClass} style={iconStyle}/>
+
+                {node.name}
+            </div>
+        </div>
+    );
+};
+
 const cookies = new Cookies();
 
 class TreeFolders extends React.Component {
@@ -197,6 +229,9 @@ class TreeFolders extends React.Component {
 
   //when navigator tree is clicked, make api calls to github and render children of target
   async onToggle(node, toggled) {
+    if(node.type === "root") {
+      return;
+    }
     if (this.state.cursor) {
       this.state.cursor.active = false;
     }

@@ -172,6 +172,7 @@ const GitHubAPI = {
   //list all repo names of user
   listRepos: async (username = "root", token) => {
     const data = {
+      type: "root",
       toggled: true,
       children: []
     };
