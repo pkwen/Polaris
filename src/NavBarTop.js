@@ -37,17 +37,17 @@ class NavBarTop extends Component {
             onClick={this.githubRedirect}
             style={{ display: this.state.logged ? "none" : "block" }}
           >
-            <i className="top-nav-gh fab fa-github" /> Log in
+            <i className="top-nav-gh fab fa-github" /> Sign In
           </Button>
 
           <Button
             className="navbar-signout"
+            outline
             color="secondary"
             onClick={this.props.signOut}
             style={{ display: this.state.logged ? "block" : "none" }}
           >
-            {" "}
-            Sign Out
+            <i className="top-nav-signout fas fa-sign-out-alt" /> Sign Out
           </Button>
         </nav>
       </div>
