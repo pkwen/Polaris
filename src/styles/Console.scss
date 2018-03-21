@@ -1,31 +1,32 @@
 $primaryColor: #21252c;
 .console {
-    .console-divider {
-        height: 48px;
-        background-color: #21252c;
-        border-top: 1px solid #21258c;
-        border-bottom: 1px solid #21258c;
-        margin-right: 0px;
-        .run-button {
-            margin: 5px 10px 5px 10px;
-        }
-        .clear-button {
-            margin: 5px 10px 5px 10px;
-        }
-    } //   .console-tab {
-    //     width: 80px;
-    //     height: 26px;
-    //     background-color: $primaryColor;
-    //   }
-    .evaluated-code {
-        height: 110px;
-        font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
-        font-weight: 200;
-        color: darkgrey;
-        background-color: #272922;
-        border-bottom: 2px solid black; // border-right: 2px solid black;
-        padding-top: 10px;
-        padding-left: 10px;
-        margin-right: 0px;
+  .console-divider {
+    height: 48px;
+    background-color: #21252c;
+    border-top: 1px solid #21258c;
+    border-bottom: 1px solid #21258c;
+    margin-right: 0px;
+    .run-button {
+      margin: 5px 10px 5px 10px;
     }
+    .clear-button {
+      margin: 5px 10px 5px 10px;
+    }
+  } //   .console-tab {
+  //     width: 80px;
+  //     height: 26px;
+  //     background-color: $primaryColor;
+  //   }
+  .evaluated-code {
+    height: 110px;
+    font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas",
+      "source-code-pro", monospace;
+    font-weight: 200;
+    color: darkgrey;
+    background-color: #272922;
+    border-bottom: 2px solid #191919; // border-right: 2px solid black;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-right: 0px;
+  }
 }

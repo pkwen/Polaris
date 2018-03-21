@@ -1,6 +1,6 @@
 .navbar-top {
   background: #272922;
-  border-bottom: 2px solid black;
+  border-bottom: 2px solid #191919;
   height: 60px;
   margin-bottom: 0px; }
   .navbar-top h1 {
@@ -11,10 +11,11 @@
     float: left; }
   .navbar-top .github-button {
     float: right;
-    width: 180px;
-    height: 58px; }
+    width: 160px;
+    height: 58px;
+    margin-right: 10px; }
   .navbar-top .top-nav-gh {
-    font-size: 28px; }
+    font-size: 32px; }
   .navbar-top .btn.navbar-signout {
     float: right;
     margin-right: 20px;
