@@ -198,7 +198,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
         } else {
           codebase[ws.roomID] = {
             roomID: ws.roomID,
-            content: "",
+            content: `/* Welcome to Polaris Editor.\n\tLet's get right into it! */`,
             sha: ""
           };
         }

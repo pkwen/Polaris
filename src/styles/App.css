@@ -11,11 +11,8 @@
     float: left; }
   .navbar-top .github-button {
     float: right;
-    width: 160px;
-    height: 58px;
-    margin-right: 10px; }
-  .navbar-top .top-nav-gh {
-    font-size: 32px; }
+    margin-right: 20px;
+    margin-top: 10px; }
   .navbar-top .btn.navbar-signout {
     float: right;
     margin-right: 20px;
@@ -37,11 +34,14 @@
     font-size: 100px; }
 
 .tree-folders {
-  padding-left: 20px;
+  padding-left: 15px;
   font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace; }
 
+.spin-div {
+  display: flex;
+  justify-content: center; }
+
 .spinner {
-  margin-left: 40px;
   margin-top: 180px; }
 
 #brace-editor {
@@ -66,9 +66,9 @@
   border-bottom: 1px solid #21258c;
   margin-right: 0px; }
   .console .console-divider .run-button {
-    margin: 5px 10px 5px 10px; }
+    margin: 4px 5px 5px 5px; }
   .console .console-divider .clear-button {
-    margin: 5px 10px 5px 10px; }
+    margin: 4px 5px 5px 5px; }
 
 .console .evaluated-code {
   height: 110px;
@@ -103,8 +103,8 @@ body {
 .spinner {
   -webkit-animation: spin 1s linear infinite;
   animation: spin 1s linear infinite;
-  border: 8px solid #ddd;
-  border-top: 8px solid #42a5f5;
+  border: 5px solid #ddd;
+  border-top: 5px solid #42a5f5;
   border-radius: 50%;
   height: 75px;
   width: 75px; }

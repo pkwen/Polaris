@@ -54,52 +54,50 @@ class TreeFolders extends React.Component {
     }
     return (
       <div>
-        <div className="container">
+        <div className="container text-center spin-div">
           <div
             className="spinner"
             style={{ display: this.state.spinner ? "block" : "none" }}
           />
         </div>
-        <Treebeard
-          data={this.state.data}
-          onToggle={this.onToggle}
-          className="tree-folders"
-        />
-        <Modal
-          isOpen={this.state.show_modal}
-          toggle={this.toggle}
-          className="test_modal"
-        >
-          <ModalHeader toggle={this.toggle}>Create new file</ModalHeader>
-          <ModalBody>
-            <b>Branch</b>
-            <br />
-            <i>{this.state.node.branch}</i>
-            <br />
-            <AvForm onValidSubmit={this.createFile}>
-              <AvGroup>
-                <Label for="path">
-                  <br />
-                  <b>File Name</b>
-                </Label>
-                <AvInput
-                  name="path"
-                  id="path"
-                  onChange={this.handleFileChange}
-                  placeholder="Enter a file name"
-                  required
-                />{" "}
-                <AvFeedback>Please enter a file name</AvFeedback>
-              </AvGroup>
-              <FormGroup>
-                <Button color="success">Create</Button>{" "}
-                <Button color="secondary" onClick={this.toggle}>
-                  Cancel
-                </Button>
-              </FormGroup>
-            </AvForm>
-          </ModalBody>
-        </Modal>
+        <div className="tree-folders">
+          <Treebeard data={this.state.data} onToggle={this.onToggle} />
+          <Modal
+            isOpen={this.state.show_modal}
+            toggle={this.toggle}
+            className="test_modal"
+          >
+            <ModalHeader toggle={this.toggle}>Create new file</ModalHeader>
+            <ModalBody>
+              <b>Branch</b>
+              <br />
+              <i>{this.state.node.branch}</i>
+              <br />
+              <AvForm onValidSubmit={this.createFile}>
+                <AvGroup>
+                  <Label for="path">
+                    <br />
+                    <b>File Name</b>
+                  </Label>
+                  <AvInput
+                    name="path"
+                    id="path"
+                    onChange={this.handleFileChange}
+                    placeholder="Enter a file name"
+                    required
+                  />{" "}
+                  <AvFeedback>Please enter a file name</AvFeedback>
+                </AvGroup>
+                <FormGroup>
+                  <Button color="success">Create</Button>{" "}
+                  <Button color="secondary" onClick={this.toggle}>
+                    Cancel
+                  </Button>
+                </FormGroup>
+              </AvForm>
+            </ModalBody>
+          </Modal>
+        </div>
       </div>
     );
   }

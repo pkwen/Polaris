@@ -1,11 +1,16 @@
 .tree-folders {
   // float: left;
-  padding-left: 20px;
+  // margin-left: 20px;
+  padding-left: 15px;
   font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas",
     "source-code-pro", monospace;
 }
 
+.spin-div {
+  display: flex;
+  justify-content: center;
+}
+
 .spinner {
-  margin-left: 40px;
   margin-top: 180px;
 }
