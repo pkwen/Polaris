@@ -18,7 +18,7 @@ class NavBarTop extends Component {
     }
   }
   render() {
-    const clientID = "2437e80c83661e9e530f";
+    // const clientID = "2437e80c83661e9e530f";
     return (
       <div className="navbar-top">
         <nav>
@@ -30,17 +30,16 @@ class NavBarTop extends Component {
               alt="Logo Here"
             />
           </a>
-
-          <a
-            href={
-              "https://github.com/login/oauth/authorize?scope=repo&client_id=" +
-              clientID
-            }
-            className="navbar-login"
+          <Button
+            outline
+            color="secondary"
+            className="github-button"
+            onClick={this.githubRedirect}
             style={{ display: this.state.logged ? "none" : "block" }}
           >
-            {/* <img src="/assets/github_signin_logo.jpg" /> */}
-          </a>
+            <i className="top-nav-gh fab fa-github" /> Log in
+          </Button>
+
           <Button
             className="navbar-signout"
             color="secondary"

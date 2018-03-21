@@ -11,7 +11,7 @@ class NavBarSide extends Component {
   }
   componentWillMount() {}
   render() {
-    const clientID = "2437e80c83661e9e530f";
+    // const clientID = "2437e80c83661e9e530f";
     return (
       <div>
         {this.state.logged ? (
