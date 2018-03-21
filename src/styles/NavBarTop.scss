@@ -3,7 +3,9 @@ $primaryColor: #21252c;
     background: #272922;
     border-bottom: 2px solid black;
     height: 60px;
-    margin-bottom: 0px; // left: 0;
+    margin-bottom: 0px;
+    // display: flex; // left: 0;
+    // justify-content: space-between;
     //   position: fixed;
     // right: 0;
     // top: 0;
@@ -15,8 +17,9 @@ $primaryColor: #21252c;
     }
     .navbar-logo {
         float: left;
-        margin: 20px;
-        padding: 0 10px;
+        // flex-direction: flex-end;
+        // margin: 20px;
+        // padding: 0 10px;
     }
     .navbar-login {
         float: right;

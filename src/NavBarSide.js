@@ -3,9 +3,17 @@ import TreeFolders from "./TreeFolders.js";
 // import "../node_modules/font-awesome/css/font-awesome.min.css";
 
 class NavBarSide extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      logged: false
+    }
+  }
+  componentWillMount() {
+  }
   render() {
     const clientID = "2437e80c83661e9e530f";
-    const isLoggedIn = this.props.token;
+    const isLoggedIn = this.state.logged;
     return (
       <div>
         {isLoggedIn ? (
@@ -32,9 +40,13 @@ class NavBarSide extends Component {
           newFile={this.props.newFile}
           updateState={this.props.updateState}
           user={this.props.user}
+          changeLogInStatus={this.changeLogInStatus}
         />
       </div>
     );
+  }
+  changeLogInStatus = () => {
+    this.setState({ logged: true })
   }
 }
 

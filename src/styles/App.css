@@ -1,7 +1,6 @@
 .navbar-top {
   background: #272922;
   border-bottom: 2px solid black;
-  box-shadow: 0 8px 6px -6px black;
   height: 60px;
   margin-bottom: 0px; }
   .navbar-top h1 {
@@ -9,9 +8,7 @@
   .navbar-top h2 {
     color: lightgrey; }
   .navbar-top .navbar-logo {
-    float: left;
-    margin: 20px;
-    padding: 0 10px; }
+    float: left; }
   .navbar-top .navbar-login {
     float: right;
     background-color: grey;

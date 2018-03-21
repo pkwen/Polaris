@@ -2,6 +2,8 @@ import React from "react";
 import { Treebeard } from "react-treebeard";
 import { Base64 } from "js-base64";
 import GitHub from "./github.js";
+import Cookies from "universal-cookie";
+
 
 import {
   Button,
@@ -24,6 +26,7 @@ import {
   AvInput,
   AvFeedback
 } from "availity-reactstrap-validation";
+const cookies = new Cookies();
 
 class TreeFolders extends React.Component {
   constructor(props) {
@@ -45,7 +48,11 @@ class TreeFolders extends React.Component {
 
   componentWillMount() {
     let clientCode = window.location.href.match(/\?code=(.*)/);
-    if (!this.state.spinner && clientCode) this.setState({ spinner: true });
+    if (!this.state.spinner && (clientCode || cookies.get("token"))) {
+      this.setState({ spinner: true });
+      this.props.changeLogInStatus();
+    }
+    console.log(this.state.data);
   }
 
   render() {
@@ -129,11 +136,13 @@ class TreeFolders extends React.Component {
     let parentPath = `https://api.github.com/repos/${
       this.state.node.fullName
     }/contents/${this.state.node.path}`;
-    let url = parentPath.match(/\/$/)
+    let url = parentPath.match(/contents\//)
       ? `${parentPath}${file.name}`
       : `${parentPath}/${file.name}`;
     // url += `?ref=${node.branch}`
-    file.path = `${this.state.node.path}/${file.name}`;
+    file.path = (this.state.node.path.match(/\/$/) || this.state.node.path === "") ? 
+                `${this.state.node.path}${file.name}` : 
+                `${this.state.node.path}/${file.name}`;
     await this.props.newFile(url, "initial commit", this.state.node.branch);
     // await this.props.newFile(url, "initial commit", node.branch);
     this.attachChild(this.state.data, this.state.node.parent, file);
@@ -255,6 +264,7 @@ class TreeFolders extends React.Component {
       }
     } else if (node.type === "file") {
       this.props.setBranch(node.branch);
+      console.log(node.path);
       let url = `https://api.github.com/repos/${node.fullName}/contents/${
         node.path
       }?ref=${node.branch}`;

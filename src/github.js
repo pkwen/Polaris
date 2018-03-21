@@ -72,7 +72,7 @@ const GitHubAPI = {
       // toggled: true,
       children: []
     };
-    const endpoint = `https://api.github.com/repos/${fullName}/contents/`;
+    const endpoint = `https://api.github.com/repos/${fullName}/contents`;
     const response = await fetch(endpoint, {
       headers: {
         Authorization: token

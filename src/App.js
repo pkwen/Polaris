@@ -52,7 +52,8 @@ class App extends Component {
       let roomed = window.location.href.match(/room\/(.*)/);
       let roomID = roomed ? roomed[1] : generateRandomString();
       this.setState({ roomID: roomID });
-      window.history.replaceState("", "", `https://warm-plateau-87726.herokuapp.com/room/${roomID}`);
+      window.history.replaceState("", "", `http://localhost:3000/room/${roomID}`);
+      // window.history.replaceState("", "", `https://warm-plateau-87726.herokuapp.com/room/${roomID}`);
       this.socket.send(
         JSON.stringify({
           type: "system",
