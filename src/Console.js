@@ -46,6 +46,7 @@ class Console extends Component {
 
   evaluate = () => {
     try {
+      // eslint-disable-next-line
       let output = eval(this.props.content);
       this.setState({ evaluated_code: output });
     } catch (error) {

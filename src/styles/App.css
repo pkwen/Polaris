@@ -1,4 +1,5 @@
 .navbar-top {
+  font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
   background: #272922;
   border-bottom: 2px solid black;
   height: 60px;
@@ -25,20 +26,24 @@
   height: 700px;
   border-right: 2px solid black;
   border-bottom: 2px solid black;
-  padding-left: 25px;
+  padding-left: 0px;
   padding-right: 0px; }
+  .navbar-side .side-login {
+    margin-top: 180px; }
   .navbar-side .fa-github {
     color: white;
-    font-size: 70px; }
+    margin-bottom: 8px;
+    font-size: 100px; }
 
-.tree-folders h1 {
-  color: green; }
+.tree-folders {
+  padding-left: 20px;
+  font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace; }
 
 #brace-editor {
   margin: 0px; }
 
 .code-editor {
-  font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
+  font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
   padding-left: 0px;
   padding-right: 0px; }
   .code-editor .commit-push {
@@ -47,7 +52,7 @@
     margin-right: 10px; }
 
 .ace_editor {
-  font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace; }
+  font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace; }
 
 .console .console-divider {
   height: 48px;
@@ -62,7 +67,7 @@
 
 .console .evaluated-code {
   height: 110px;
-  font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
+  font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
   font-weight: 200;
   color: darkgrey;
   background-color: #272922;

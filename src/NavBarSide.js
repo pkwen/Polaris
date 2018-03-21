@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import TreeFolders from "./TreeFolders.js";
-// import "../node_modules/font-awesome/css/font-awesome.min.css";
+import { Button } from "reactstrap";
 
 class NavBarSide extends Component {
   constructor(props) {
@@ -13,23 +13,23 @@ class NavBarSide extends Component {
   }
   render() {
     const clientID = "2437e80c83661e9e530f";
-    const isLoggedIn = this.state.logged;
     return (
       <div>
-        {isLoggedIn ? (
+        {this.state.logged ? (
           <p />
         ) : (
-          <a
-            className="side-login"
-            href={
-              "https://github.com/login/oauth/authorize?scope=repo&client_id=" +
-              clientID
-            }
-          >
-            {" "}
+          <div className="side-login text-center">
             <i className="fab fa-github" />
-            <p> Log in through GitHub </p>
-          </a>
+            <br />
+            <Button
+              outline
+              color="secondary"
+              className="github-button"
+              onClick={this.githubRedirect}
+            >
+              Log in using GitHub
+            </Button>
+          </div>
         )}
 
         <TreeFolders

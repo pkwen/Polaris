@@ -4,25 +4,25 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
-  Form,
+  // ModalFooter,
+  // Form,
   FormGroup,
-  Label,
-  Input,
-  FormText,
-  FormFeedback
+  Label
+  // Input,
+  // FormText,
+  // FormFeedback
 } from "reactstrap";
 
 import {
   AvForm,
-  AvField,
+  // AvField,
   AvGroup,
   AvInput,
   AvFeedback
 } from "availity-reactstrap-validation";
 
 import AceEditor from "react-ace";
-import brace from "brace";
+// import brace from "brace";
 import "brace/ext/language_tools";
 import "brace/mode/javascript";
 import "brace/theme/monokai";
@@ -36,6 +36,7 @@ class CodeEditor extends Component {
     super(props);
     this.state = {
       show_modal: false,
+      show_success: false,
       commit_msg: "",
       repo: "",
       directory: "",
@@ -52,8 +53,13 @@ class CodeEditor extends Component {
   };
 
   toggle = () => {
-    // console.log("this.props.path: ", this.props.path);
+    console.log("this.props.path: ", this.props.path);
     this.setState({ show_modal: !this.state.show_modal });
+  };
+
+  toggleSuccess = () => {
+    // console.log("this.props.path: ", this.props.path);
+    this.setState({ show_success: !this.state.show_success });
   };
 
   handleCommitChange = e => {
@@ -72,10 +78,16 @@ class CodeEditor extends Component {
     console.log("state in CodeEditor: ", this.state);
     this.toggle();
     this.props.onPush(this.props.path, this.state.commit_msg);
-    //replace this.state.path with a concat of repo and directory to form path
+    this.toggleSuccess();
   };
 
   render() {
+    // let splitLength = this.props.path.split("/").length;
+    let repoName = this.props.path.split("/")[5];
+    // let fileName = "";
+    // for (let i = 7; i <= splitLength; i++) {
+    //   fileName += "/" + this.props.path.split("/")[i];
+    // }
     return (
       <div>
         <AceEditor
@@ -98,51 +110,31 @@ class CodeEditor extends Component {
             enableLiveAutocompletion: true
           }}
         />
+
         <Button color="success" className="commit-push" onClick={this.toggle}>
           Commit + Push
         </Button>
         <Modal
           isOpen={this.state.show_modal}
           toggle={this.toggle}
-          className="test_modal"
+          className="commit"
         >
-          <ModalHeader toggle={this.toggle}>Commit - Details</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Commit/Push - Details</ModalHeader>
           <ModalBody>
+            <b>Repo</b>
+            <br />
+            <i>{repoName}</i>
+            <br />
+            <br />
+            <b>Branch</b>
+            <br />
+            <i>{this.props.branch}</i>
             <AvForm onValidSubmit={this.onPushToggle}>
               <AvGroup>
-                <Label for="path">Repository Name</Label>
-                <AvInput
-                  name="path"
-                  id="path"
-                  onChange={this.handleRepoChange}
-                  value={this.props.path}
-                  required
-                />{" "}
-                //regex for repo
-                <AvFeedback>Please enter a valid repository</AvFeedback>
-              </AvGroup>
-              <AvGroup>
-                <Label for="path">Directory/File Path</Label>
-                <AvInput
-                  name="path"
-                  id="path"
-                  onChange={this.handleDirectoryChange}
-                  value={this.props.path}
-                  required
-                />{" "}
-                //regex for directory
-                <AvFeedback>
-                  Please enter a valid directory/file path
-                </AvFeedback>
-              </AvGroup>
-              <FormGroup>
-                <FormGroup>
-                  <Label for="branch">Branch</Label>
-                  <Input plaintext>{this.props.branch}</Input>
-                </FormGroup>
-              </FormGroup>
-              <AvGroup>
-                <Label for="commit_msg">Commit Message</Label>
+                <Label for="commit_msg">
+                  <br />
+                  <b>Commit Message</b>
+                </Label>
                 <AvInput
                   name="commit_msg"
                   id="commit_msg"
@@ -152,6 +144,7 @@ class CodeEditor extends Component {
                 <AvFeedback>Please enter a commit message</AvFeedback>
               </AvGroup>
               <FormGroup>
+                <br />
                 <Button color="primary">Submit</Button>{" "}
                 <Button color="secondary" onClick={this.toggle}>
                   Cancel
@@ -159,7 +152,23 @@ class CodeEditor extends Component {
               </FormGroup>
             </AvForm>
           </ModalBody>
-          <ModalFooter />
+        </Modal>
+
+        <Modal
+          isOpen={this.state.show_success}
+          toggle={this.toggleSuccess}
+          className="success_modal"
+        >
+          <ModalHeader toggle={this.toggleSuccess} />
+          <ModalBody>
+            Successfully committed and pushed to GitHub!
+            <FormGroup>
+              <br />
+              <Button color="secondary" onClick={this.toggleSuccess}>
+                Close
+              </Button>
+            </FormGroup>
+          </ModalBody>
         </Modal>
       </div>
     );

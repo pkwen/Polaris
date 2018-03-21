@@ -2,7 +2,7 @@
   margin: 0px; }
 
 .code-editor {
-  font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
+  font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
   padding-left: 0px;
   padding-right: 0px; }
   .code-editor .commit-push {
@@ -11,4 +11,4 @@
     margin-right: 10px; }
 
 .ace_editor {
-  font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace; }
+  font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace; }

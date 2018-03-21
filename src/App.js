@@ -7,7 +7,8 @@ import Console from "./Console.js";
 import GitHub from "./github.js";
 import Cookies from "universal-cookie";
 
-import "./styles/App.css"; //import App.css which is a compilation of all scss files
+//import App.css which is a compilation of all scss files
+import "./styles/App.css";
 
 const cookies = new Cookies();
 
@@ -104,6 +105,7 @@ class App extends Component {
               onAuth={this.onAuth}
               content={this.state.content}
               path={this.state.path}
+              user={this.state.user}
               token={this.state.token}
               sha={this.state.sha}
               updateState={this.updateState}
@@ -167,7 +169,7 @@ class App extends Component {
       .then(res => {
         console.log(res.content.sha);
         this.setState({ sha: res.content.sha });
-        // console.log(res);
+        console.log("successfully committed");
       })
       .catch(err => console.log(err));
   };
@@ -222,7 +224,10 @@ class App extends Component {
     this.setState({ token: "", user: "" });
     cookies.remove("user");
     cookies.remove("token");
-    setTimeout(window.location.assign("https://warm-plateau-87726.herokuapp.com/"), 1000);
+    setTimeout(
+      window.location.assign("https://warm-plateau-87726.herokuapp.com/"),
+      1000
+    );
   };
 
   //called when code in editor is updated to broadcast change to all connected users in real time

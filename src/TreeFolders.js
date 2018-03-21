@@ -1,6 +1,6 @@
 import React from "react";
 import { Treebeard } from "react-treebeard";
-import { Base64 } from "js-base64";
+// import { Base64 } from "js-base64";
 import GitHub from "./github.js";
 import Cookies from "universal-cookie";
 
@@ -11,17 +11,12 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter,
-  Form,
   FormGroup,
-  Label,
-  Input,
-  FormText,
-  FormFeedback
+  Label
 } from "reactstrap";
 
 import {
   AvForm,
-  AvField,
   AvGroup,
   AvInput,
   AvFeedback
@@ -79,9 +74,16 @@ class TreeFolders extends React.Component {
         >
           <ModalHeader toggle={this.toggle}>Create new file</ModalHeader>
           <ModalBody>
+            <b>Branch</b>
+            <br />
+            <i>{this.state.node.branch}</i>
+            <br />
             <AvForm onValidSubmit={this.createFile}>
               <AvGroup>
-                <Label for="path">File Name</Label>
+                <Label for="path">
+                  <br />
+                  <b>File Name</b>
+                </Label>
                 <AvInput
                   name="path"
                   id="path"
@@ -91,30 +93,22 @@ class TreeFolders extends React.Component {
                 />{" "}
                 <AvFeedback>Please enter a file name</AvFeedback>
               </AvGroup>
-
-              <FormGroup>
-                <FormGroup>
-                  <Label for="branch">Branch</Label>
-                  <Input plaintext>{this.state.node.branch}</Input>
-                </FormGroup>
-              </FormGroup>
-
-              <FormGroup>
-                <Button color="primary">Create</Button>{" "}
-                <Button color="secondary" onClick={this.toggle}>
-                  Cancel
-                </Button>
-              </FormGroup>
             </AvForm>
           </ModalBody>
-          <ModalFooter />
+          <ModalFooter>
+            <FormGroup>
+              <Button color="success">Create</Button>{" "}
+              <Button color="secondary" onClick={this.toggle}>
+                Cancel
+              </Button>
+            </FormGroup>
+          </ModalFooter>
         </Modal>
       </div>
     );
   }
 
   toggle = () => {
-    // console.log("this.props.path: ", this.props.path);
     this.setState({ show_modal: !this.state.show_modal });
   };
 
@@ -144,13 +138,7 @@ class TreeFolders extends React.Component {
                 `${this.state.node.path}${file.name}` : 
                 `${this.state.node.path}/${file.name}`;
     await this.props.newFile(url, "initial commit", this.state.node.branch);
-    // await this.props.newFile(url, "initial commit", node.branch);
     this.attachChild(this.state.data, this.state.node.parent, file);
-    // let children = await GitHub.accessElement(node.fullName, node.path);
-    // if (await this.attachChildren(this.state.data, node.parent, children)) {
-    //   console.log('Loading children...');
-    //   node.loading = false;
-    // }
     this.setState({ node: this.state.node });
     // setTimeout(this.props.getSha(url), 30000);
   };
@@ -217,7 +205,6 @@ class TreeFolders extends React.Component {
     if (this.state.cursor) {
       this.state.cursor.active = false;
     }
-    // console.log(node);
     node.active = true;
     if (node.children) {
       node.toggled = toggled;

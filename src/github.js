@@ -2,6 +2,7 @@ import { Base64 } from "js-base64";
 let token = "";
 let user = "";
 const baseURL = "https://api.github.com";
+
 const GitHubAPI = {
   //fetch oauth access token using code in url
   fetchToken: async code => {
@@ -69,7 +70,6 @@ const GitHubAPI = {
   populateTree: async (repo, fullName) => {
     const tree = {
       name: repo,
-      // toggled: true,
       children: []
     };
     const endpoint = `https://api.github.com/repos/${fullName}/contents`;
@@ -264,6 +264,5 @@ const GitHubAPI = {
     return body;
   }
 };
-// }
 
 export default GitHubAPI;

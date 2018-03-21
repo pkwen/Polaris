@@ -11,7 +11,7 @@
 
 .console .evaluated-code {
   height: 110px;
-  font: 12px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
+  font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
   font-weight: 200;
   color: darkgrey;
   background-color: #272922;

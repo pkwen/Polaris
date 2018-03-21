@@ -19,9 +19,8 @@ class NavBarTop extends Component {
   }
   render() {
     const clientID = "2437e80c83661e9e530f";
-    return <div className="navbar-top">
-        {/* <h1>This is NavBarTop h1</h1>
-        <h2>This is NavBarTop h2</h2> */}
+    return (
+      <div className="navbar-top">
         <nav>
           <a href="/" className="navbar-logo">
             <img className="polaris-logo" style={{ height: "58px" }} src="https://i.imgur.com/EAQGmqc.png" alt="Logo Here" />
@@ -34,7 +33,8 @@ class NavBarTop extends Component {
             Sign Out
           </Button>
         </nav>
-      </div>;
+      </div>
+    );
   }
 }
 
