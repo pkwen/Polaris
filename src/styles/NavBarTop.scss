@@ -1,34 +1,35 @@
 $primaryColor: #21252c;
 .navbar-top {
-  font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas",
-    "source-code-pro", monospace;
-  background: #272922;
-  border-bottom: 2px solid black;
-  height: 60px;
-  margin-bottom: 0px; // left: 0;
-  //   position: fixed;
-  // right: 0;
-  // top: 0;
-  h1 {
-    color: white;
-  }
-  h2 {
-    color: lightgrey;
-  }
-  .navbar-logo {
-    float: left;
-    margin: 20px;
-    padding: 0 10px;
-  }
-  .navbar-login {
-    float: right;
-    background-color: grey;
-    width: 180px;
-    height: 58px;
-  }
-  .btn.navbar-signout {
-    float: right;
-    margin-right: 20px;
-    margin-top: 10px;
-  }
+    background: #272922;
+    border-bottom: 2px solid black;
+    height: 60px;
+    margin-bottom: 0px;
+    // display: flex; // left: 0;
+    // justify-content: space-between;
+    //   position: fixed;
+    // right: 0;
+    // top: 0;
+    h1 {
+        color: white;
+    }
+    h2 {
+        color: lightgrey;
+    }
+    .navbar-logo {
+        float: left;
+        // flex-direction: flex-end;
+        // margin: 20px;
+        // padding: 0 10px;
+    }
+    .navbar-login {
+        float: right;
+        background-color: grey;
+        width: 180px;
+        height: 58px;
+    }
+    .btn.navbar-signout {
+        float: right;
+        margin-right: 20px;
+        margin-top: 10px;
+    }
 }

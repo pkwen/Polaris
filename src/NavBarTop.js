@@ -1,37 +1,51 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 class NavBarTop extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      logged: false
+    };
+  }
+  componentWillMount() {
+    let clientCode = window.location.href.match(/\?code=(.*)/);
+    if (clientCode || cookies.get("token")) {
+      this.setState({ logged: true });
+    }
+  }
   render() {
     const clientID = "2437e80c83661e9e530f";
     return (
       <div className="navbar-top">
         <nav>
           <a href="/" className="navbar-logo">
-            Logo Here
+            <img
+              className="polaris-logo"
+              style={{ height: "58px" }}
+              src="https://i.imgur.com/EAQGmqc.png"
+              alt="Logo Here"
+            />
           </a>
-          <Button
-            outline
-            color="secondary"
-            className="navbar-login"
-            onClick={this.githubRedirect}
-          >
-            <i className="fab fa-github" />
-          </Button>
+
           <a
             href={
               "https://github.com/login/oauth/authorize?scope=repo&client_id=" +
               clientID
             }
             className="navbar-login"
-            style={{ display: this.props.user ? "none" : "block" }}
-          />
+            style={{ display: this.state.logged ? "none" : "block" }}
+          >
+            {/* <img src="/assets/github_signin_logo.jpg" /> */}
+          </a>
           <Button
             className="navbar-signout"
-            outline
             color="secondary"
             onClick={this.props.signOut}
-            style={{ display: this.props.user ? "block" : "none" }}
+            style={{ display: this.state.logged ? "block" : "none" }}
           >
             {" "}
             Sign Out

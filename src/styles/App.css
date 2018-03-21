@@ -9,9 +9,7 @@
   .navbar-top h2 {
     color: lightgrey; }
   .navbar-top .navbar-logo {
-    float: left;
-    margin: 20px;
-    padding: 0 10px; }
+    float: left; }
   .navbar-top .navbar-login {
     float: right;
     background-color: grey;

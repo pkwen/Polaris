@@ -123,7 +123,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
     intervalSync(err => {
       console.log(err);
     });
-  }, 60000);
+  }, 60000*15);
 
   // const getRoom = (roomID, callback) => {
   //   db.collection('rooms').find({ roomID: roomID }).toArray((err, res) => {
@@ -174,7 +174,7 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
     ws.send(JSON.stringify(codebase[ws.roomID]));
     ws.on("message", message => {
       const newMsg = JSON.parse(message);
-      if (!newMsg.type && (newMsg.content || newMsg.content === "")) {
+      if (!newMsg.type && typeof newMsg.content === 'string') {
         codebase[newMsg.roomID].content = newMsg.content;
         if (newMsg.sha) {
           codebase[newMsg.roomID].sha = newMsg.sha;
