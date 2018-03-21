@@ -1,5 +1,4 @@
 .navbar-top {
-  font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
   background: #272922;
   border-bottom: 2px solid black;
   height: 60px;
@@ -10,11 +9,12 @@
     color: lightgrey; }
   .navbar-top .navbar-logo {
     float: left; }
-  .navbar-top .navbar-login {
+  .navbar-top .github-button {
     float: right;
-    background-color: grey;
     width: 180px;
     height: 58px; }
+  .navbar-top .top-nav-gh {
+    font-size: 28px; }
   .navbar-top .btn.navbar-signout {
     float: right;
     margin-right: 20px;

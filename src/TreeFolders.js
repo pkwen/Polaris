@@ -9,7 +9,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   FormGroup,
   Label
 } from "reactstrap";

@@ -1,19 +1,19 @@
 $primaryColor: #21252c;
 .navbar-side {
-    overflow: auto;
-    background-color: $primaryColor; // float: left;
-    // float: left;
-    height: 700px;
-    border-right: 2px solid black;
-    border-bottom: 2px solid black; // top: 62px;
-    padding-left: 0px; // height: 708px;
-    padding-right: 0px; // width: 300px;
-    .side-login {
-        margin-top: 180px;
-    }
-    .fa-github {
-        color: white; // margin-left: 40px;
-        margin-bottom: 8px;
-        font-size: 100px;
-    }
+  overflow: auto;
+  background-color: $primaryColor; // float: left;
+  // float: left;
+  height: 700px;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black; // top: 62px;
+  padding-left: 0px; // height: 708px;
+  padding-right: 0px; // width: 300px;
+  .side-login {
+    margin-top: 180px;
+  }
+  .fa-github {
+    color: white; // margin-left: 40px;
+    margin-bottom: 8px;
+    font-size: 100px;
+  }
 }
