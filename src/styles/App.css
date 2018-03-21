@@ -11,10 +11,11 @@
     float: left; }
   .navbar-top .github-button {
     float: right;
-    width: 180px;
-    height: 58px; }
+    width: 160px;
+    height: 58px;
+    margin-right: 10px; }
   .navbar-top .top-nav-gh {
-    font-size: 28px; }
+    font-size: 32px; }
   .navbar-top .btn.navbar-signout {
     float: right;
     margin-right: 20px;
@@ -38,6 +39,13 @@
 .tree-folders {
   padding-left: 20px;
   font: 16px / normal "Roboto Mono", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace; }
+
+.spin-div {
+  display: flex;
+  justify-content: center; }
+
+.spinner {
+  margin-top: 180px; }
 
 #brace-editor {
   margin: 0px; }
@@ -72,7 +80,6 @@
   color: darkgrey;
   background-color: #272922;
   border-bottom: 2px solid black;
-  border-right: 2px solid black;
   padding-top: 10px;
   padding-left: 10px;
   margin-right: 0px; }

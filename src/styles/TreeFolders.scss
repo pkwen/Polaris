@@ -5,7 +5,12 @@
     "source-code-pro", monospace;
 }
 
+
+.spin-div {
+  display: flex;
+  justify-content: center;
+}
+
 .spinner {
-  margin-left: 40px;
   margin-top: 180px;
 }

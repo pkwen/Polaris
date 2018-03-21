@@ -54,7 +54,7 @@ class TreeFolders extends React.Component {
     }
     return (
       <div>
-        <div className="container">
+        <div className="container text-center spin-div">
           <div
             className="spinner"
             style={{ display: this.state.spinner ? "block" : "none" }}
