@@ -1,4 +1,5 @@
-## Polaris Editor (https://i.imgur.com/EAQGmqc.png)
+![logo](https://i.imgur.com/EAQGmqc.png "Polaris")
+## Polaris Editor 
 
 Code anywhere, anytime, without setup.
 
