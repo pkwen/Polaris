@@ -7,5 +7,4 @@ A collaborative browser-based code editor with built in GitHub integration.
 
 Click [here] to try Polaris Editor.
 
-<a href="https://polaris-editor.herokuapp.com" target="_blank">here</a>
-[here]:(https://polaris-editor.herokuapp.com)
+[here]: https://polaris-editor.herokuapp.com
