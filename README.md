@@ -13,7 +13,7 @@ Click [here] to try Polaris Editor.
 ### Screenshots
 
 Text-Editor (Javascript):
-!["Text-Editor (Javascript)"](https://github.com/michael-38/slackr/blob/master/docs/two_way_with_gif.gif)
+!["Text-Editor (Javascript)"](https://github.com/subclinical/Polaris/blob/master/docs/javascript_syntax.png)
 
 GitHub Integration:
-!["GitHub Integration"](https://github.com/michael-38/slackr/blob/master/docs/multi_users.gif)
+!["GitHub Integration"](https://github.com/subclinical/Polaris/blob/master/docs/github_integration.png)
